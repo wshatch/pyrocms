@@ -7,7 +7,7 @@
 
 <h2><?php echo lang('addons:plugins:core_field_types') ?></h2>
 
-<?php if ($core): ?>
+<?php if ( ! empty($core)): ?>
 <table class="table-list" cellspacing="0">
 	<thead>
 		<tr>

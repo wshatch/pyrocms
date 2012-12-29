@@ -389,9 +389,9 @@ $config['proxy_ips'] = '';
 |
 */
 $config['modules_locations'] = array(
-	APPPATH.'modules/' => '../modules/',
-	ADDON_FOLDER.'default/modules/' => '../../../addons/default/modules/',
-	SHARED_ADDONPATH.'modules/' => '../../../addons/shared_addons/modules/'
+	APPPATH.'Module/' => '../Module/',
+	ADDON_FOLDER.'default/Module/' => '../../../addons/default/Module/',
+	SHARED_ADDONPATH.'Module/' => '../../../addons/shared_addons/Module/',
 );
 
 /* End of file config.php */

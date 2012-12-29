@@ -48,12 +48,16 @@ class MX_Router extends CI_Router
 		if (count($segments) == 0) return $segments;
 		
 		/* locate module controller */
-		if ($located = $this->locate($segments)) return $located;
+		if ($located = $this->locate($segments)) {
+			return $located;
+		}
 		
 		/* use a default 404_override controller */
 		if (isset($this->routes['404_override']) and $this->routes['404_override']) {
 			$segments = explode('/', $this->routes['404_override']);
-			if ($located = $this->locate($segments)) return $located;
+			if ($located = $this->locate($segments)) {
+				return $located;
+			}
 		}
 		
 		/* no controller found */
@@ -61,31 +65,15 @@ class MX_Router extends CI_Router
 	}
 	
 	/** Locate the controller **/
-	public function locate($segments) {		
-		
+	public function locate($segments) 
+	{		
 		/**
 		 * Load the site ref for multi-site support
 		 */
-		if ( ! defined('SITE_REF'))
-		{
+		if ( ! defined('SITE_REF')) {
 			require_once BASEPATH.'database/DB'.'.php';
 			
-			# deprecated Remove this for 2.3, as this was too early for a migration
-			if ( ! DB()->table_exists('core_domains'))
-			{
-				// Create alias table
-				DB()->query('	
-					CREATE TABLE `core_domains` (
-					  `id` int NOT NULL AUTO_INCREMENT,
-					  `domain` varchar(100) NOT NULL,
-					  `site_id` int NOT NULL,
-					  `type` enum("park", "redirect") NOT NULL DEFAULT "park",
-					  PRIMARY KEY (`id`),
-					  KEY `domain` (`domain`),
-					  UNIQUE `unique` (`domain`)
-					) ENGINE=InnoDB DEFAULT CHARSET=utf8; ');
-			}
-
+			# TODO Put this in a model somewhere
 			$site = DB()
 				->select('site.name, site.ref, site.domain, alias.domain as alias_domain, alias.type as alias_type')
 				->where('site.domain', SITE_DOMAIN)
@@ -95,8 +83,8 @@ class MX_Router extends CI_Router
 				->row();
 			
 			// If the site is disabled we set the message in a constant for MY_Controller to display
-			if (isset($site->active) and ! $site->active)
-			{
+			if (isset($site->active) and ! $site->active) {
+
 				$status = DB()->where('slug', 'status_message')
 					->get('core_settings')
 					->row();
@@ -105,8 +93,8 @@ class MX_Router extends CI_Router
 			}
 
 			// If this domain is an alias and it is a redirect
-			if ($site->alias_domain !== null and $site->alias_type === 'redirect' and str_replace(array('http://', 'https://'), '', trim(strtolower(BASE_URL), '/')) !== $site->domain)
-			{
+			if ($site->alias_domain !== null and $site->alias_type === 'redirect' and str_replace(array('http://', 'https://'), '', trim(strtolower(BASE_URL), '/')) !== $site->domain) {
+
 				$protocol = ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
 					? 'https' : 'http';
 
@@ -119,10 +107,9 @@ class MX_Router extends CI_Router
 			
 			// Check to see if the site retrieval was successful. If not then
 			// we will let MY_Controller handle the errors.
-			if (isset($site->ref))
-			{
-				foreach (config_item('modules_locations') AS $location => $offset)
-				{
+			if (isset($site->ref)) {
+
+				foreach (config_item('modules_locations') as $location => $offset) {
 					$locations[str_replace('__SITE_REF__', $site->ref, $location)] = str_replace('__SITE_REF__', $site->ref, $offset);
 				}
 				
@@ -139,7 +126,6 @@ class MX_Router extends CI_Router
 				define('ADDONPATH', ADDON_FOLDER.SITE_REF.'/');
 				
 				Modules::$locations = $locations;
-				
 			}
 		}
 		
@@ -148,7 +134,7 @@ class MX_Router extends CI_Router
 		$ext = $this->config->item('controller_suffix').'.php';
 		
 		/* use module route if available */
-		if (isset($segments[0]) and $routes = Modules::parse_routes($segments[0], implode('/', $segments))) 	
+		if (isset($segments[0]) and $routes = Modules::parse_routes(ucfirst($segments[0]), implode('/', $segments))) 	
 		{
 			$segments = $routes;
 		}
@@ -156,41 +142,47 @@ class MX_Router extends CI_Router
 		/* get the segments array elements */
 		list($module, $directory, $controller) = array_pad($segments, 3, null);
 
+		# HACK - Make the module name uppercase
+		if ($module) {
+			$segments[0] = $module = ucfirst($module);
+		}
+
 		/* check modules */
 		foreach (Modules::$locations as $location => $offset) {
 		
-			/* module exists? */
-			if (is_dir($source = $location.$module.'/controllers/')) {
-				
-				$this->module = $module;
-				$this->directory = $offset.$module.'/controllers/';
-				
-				/* module sub-controller exists? */
-				if ($directory and is_file($source.$directory.$ext)) {
+			// module doesnt exist?
+			if ( ! is_dir($source = $location.$module.'/controllers/')) {
+				continue;
+			}
+			
+			$this->module = $module;
+			$this->directory = $offset.$module.'/controllers/';
+			
+			/* module sub-controller exists? */
+			if ($directory and is_file($source.$directory.$ext)) {
+				return array_slice($segments, 1);
+			}
+			
+			/* module sub-directory exists? */
+			if ($directory and is_dir($source.$directory.'/')) {
+
+				$source = $source.$directory.'/';
+				$this->directory .= $directory.'/';
+
+				/* module sub-directory controller exists? */
+				if(is_file($source.$directory.$ext)) {
 					return array_slice($segments, 1);
 				}
-					
-				/* module sub-directory exists? */
-				if ($directory and is_dir($source.$directory.'/')) {
-
-					$source = $source.$directory.'/';
-					$this->directory .= $directory.'/';
-
-					/* module sub-directory controller exists? */
-					if(is_file($source.$directory.$ext)) {
-						return array_slice($segments, 1);
-					}
-				
-					/* module sub-directory sub-controller exists? */
-					if ($controller and is_file($source.$controller.$ext))	{
-						return array_slice($segments, 2);
-					}
+			
+				/* module sub-directory sub-controller exists? */
+				if ($controller and is_file($source.$controller.$ext))	{
+					return array_slice($segments, 2);
 				}
-				
-				/* module controller exists? */			
-				if(is_file($source.$module.$ext)) {
-					return $segments;
-				}
+			}
+			
+			/* module controller exists? */			
+			if (is_file($source.$module.$ext)) {
+				return $segments;
 			}
 		}
 		

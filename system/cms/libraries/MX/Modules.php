@@ -60,6 +60,8 @@ class Modules
 			$module = substr($module, 0, $pos);
 		}
 
+		$module = ucfirst($module);
+
 		if($class = self::load($module)) {
 			
 			if (method_exists($class, $method))	{
@@ -71,7 +73,7 @@ class Modules
 			}
 		}
 		
-		log_message('error', "Module controller failed to run: {$module}/{$method}");
+		throw new Exception("Module controller failed to run: {$module}/{$method}");
 	}
 	
 	/** Load a module controller **/
@@ -83,11 +85,11 @@ class Modules
 		$segments = explode('/', $module);
 
 		/* get the requested controller class name */
-		$alias = strtolower(end($segments));
+		$alias = ucfirst(end($segments));
 
 		/* return an existing controller from the registry */
 		if (isset(self::$registry[$alias])) return self::$registry[$alias];
-			
+		
 		/* find the controller */
 		list($class) = CI::$APP->router->locate($segments);
 
@@ -100,10 +102,10 @@ class Modules
 		/* load the controller class */
 		$class = $class.CI::$APP->config->item('controller_suffix');
 		self::load_file($class, $path);
-		
+
 		/* create and register the new controller */
-		$controller = ucfirst($class);	
-		self::$registry[$alias] = new $controller($params);
+		self::$registry[$alias] = new $class($params);
+
 		return self::$registry[$alias];
 	}
 	
@@ -134,7 +136,7 @@ class Modules
 
 	/** Load a module file **/
 	public static function load_file($file, $path, $type = 'other', $result = true)	{
-		
+
 		$file = str_replace('.php', '', $file);		
 		$location = $path.$file.'.php';
 		
@@ -143,7 +145,7 @@ class Modules
 				log_message('debug', "File already loaded: {$location}");				
 				return $result;
 			}	
-			include_once $location;
+			require $location;
 		} else {
 		
 			/* load config or language array */
@@ -173,14 +175,14 @@ class Modules
 		
 		$path = ltrim(implode('/', $segments).'/', '/');	
 		$module ? $modules[$module] = $path : $modules = array();
-		
+
 		if ( ! empty($segments)) {
 			$modules[array_shift($segments)] = ltrim(implode('/', $segments).'/','/');
 		}	
 
 		foreach (Modules::$locations as $location => $offset) {					
 			foreach($modules as $module => $subpath) {			
-				$fullpath = $location.$module.'/'.$base.$subpath;
+				$fullpath = $location.ucfirst($module).'/'.$base.$subpath;
 				
 				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
 				

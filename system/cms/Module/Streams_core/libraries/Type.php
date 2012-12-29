@@ -58,10 +58,8 @@ class Type
 		// Obj to hold all our field types
 		$this->types = new stdClass;
 		
-		// We either need a prefix or not
-		// This is for legacy and if any 3rd party
 		// field types use this constant
-		(CMS_VERSION < 1.3) ? define('PYROSTREAMS_DB_PRE', '') : define('PYROSTREAMS_DB_PRE', SITE_REF.'_');
+		define('PYROSTREAMS_DB_PRE', SITE_REF.'_');
 		
 		// Since this is PyroStreams core we know where
 		// PyroStreams is, but we set this for backwards
@@ -69,7 +67,7 @@ class Type
 		// Also, now that the Streams API is around, we need to
 		// check if we need to change this based on the
 		// install situation. 
-		if(defined('PYROPATH'))
+		if (defined('PYROPATH'))
 		{
 			define('PYROSTEAMS_DIR', PYROPATH.'modules/streams_core/');
 		}

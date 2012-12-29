@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php 
+
+use \Module\Pages\Model;
+
 /**
  * Pages controller
  *
@@ -26,8 +29,9 @@ class Admin extends Admin_Controller {
 		parent::__construct();
 
 		// Load the required classes
-		$this->load->model('page_m');
-		$this->load->model('page_type_m');
+		$this->page = new Model\Page;
+		$this->page_type = new Model\Type;
+
 		$this->load->model('navigation/navigation_m');
 		$this->lang->load('pages');
 		$this->lang->load('page_types');
@@ -51,7 +55,7 @@ class Admin extends Admin_Controller {
 
 			->append_css('module::index.css')
 
-			->set('pages', $this->page_m->get_page_tree())
+			->set('pages', $this->page->getPageTree())
 			->build('admin/index');
 	}
 
@@ -242,8 +246,8 @@ class Admin extends Admin_Controller {
 			{
 				if (isset($input['navigation_group_id']) and count($input['navigation_group_id']) > 0)
 				{
-					$this->pyrocache->delete_all('page_m');
-					$this->pyrocache->delete_all('navigation_m');
+					$this->cache->delete('page_m');
+					$this->cache->delete('navigation_m');
 				}
 
 				Events::trigger('page_created', $id);

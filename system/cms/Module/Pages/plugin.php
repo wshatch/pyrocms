@@ -14,6 +14,7 @@ class Plugin_Pages extends Plugin
 	public $name = array(
 		'en' => 'Pages',
 	);
+	
 	public $description = array(
 		'en' => 'Output page data or build a list of pages in a page tree.',
 	);

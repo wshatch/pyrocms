@@ -1,31 +1,39 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+namespace Module\Pages\Model;
+
 /**
  * Page type model
  *
  * @author		PyroCMS Dev Team
  * @package		PyroCMS\Core\Modules\Pages\Models
  */
-class Page_type_m extends MY_Model
+class Type extends \Illuminate\Database\Eloquent\Model
 {
-	
+    protected $table = 'page_types';
+
+    public $timestamps = false;
+
     /**
      * Get a page type
      *
-     * @access  public
-     * @param   int - id
+     * @param   int    id
      * @return  mixed
      */
     public function get($id)
     {
         $pt = $this->db
-                ->limit(1)
-                ->where('id', $id)
-                ->get($this->_table)->row();
+            ->limit(1)
+            ->where('id', $id)
+            ->get($this->_table)->row();
     
-        if ( ! $pt) return null;
+        if ( ! $pt) {
+            return null;
+        }
 
         // Do we have things saved as files? If
         // so, we should grab them.
+        // @TODO Move this to an event and delte the whole method
         if ($pt->save_as_files == 'y')
         {
             $this->load->helper('file');
@@ -40,14 +48,12 @@ class Page_type_m extends MY_Model
         return $pt;
     }
 
-    // --------------------------------------------------------------------------
-
     /**
      * Get all
      *
      * Get all of the 
      */
-    public function get_all()
+    public function getAll()
     {
         $pts = $this->db->get($this->_table)->result();
     
@@ -59,15 +65,11 @@ class Page_type_m extends MY_Model
         return $pts;
     }
 
-    // --------------------------------------------------------------------------
-
     /**
      * Create a new page type
 	 *
-	 * 
 	 * @param array $input The input to insert into the DB
 	 * @return mixed
-	 *
      */
     public function insert($input = array(), $skip_validation = false)
     {
@@ -77,8 +79,6 @@ class Page_type_m extends MY_Model
 
         return parent::insert($input);
     }
-
-    // --------------------------------------------------------------------------
 
     /**
      * Update a page type
@@ -96,16 +96,13 @@ class Page_type_m extends MY_Model
         return parent::update($id, $input);
     }
 
-    // --------------------------------------------------------------------------
-
     /**
      * Validation callback to check the
      * page type slug. We want page type slugs
      * to be unique so we can use them as folder
      * names when saving as files.
      *
-     * @access  public
-     * @param   string $slug - the page slug
+     * @param   string $slug  The page slug
      * @return  bool
      */
     public function _check_pt_slug($slug)
@@ -121,11 +118,10 @@ class Page_type_m extends MY_Model
         }
     }
 
-    // --------------------------------------------------------------------------
-
     /**
      * Place files for layout files.
      *
+     * @param   array $input  The page slug
      */
     public function place_page_layout_files($input)
     {
@@ -148,8 +144,6 @@ class Page_type_m extends MY_Model
         write_file($folder.'/'.$input['slug'].'.js', $input['js']);
         write_file($folder.'/'.$input['slug'].'.css', $input['css']);
     }
-
-    // --------------------------------------------------------------------------
 
     /**
      * Get page files
@@ -213,14 +207,12 @@ class Page_type_m extends MY_Model
         }
     }
 
-    // --------------------------------------------------------------------------
-
     /**
-     * Delete 
+     * Super Delete 
      */
-    public function delete($id, $delete_stream = false)
+    public function superDelete($id, $delete_stream = false)
     {
-        $page_type = $this->get($id);
+        $page_type = $this->find($id);
 
         // Are we going to delete the stream?
         if ($delete_stream)
@@ -231,10 +223,8 @@ class Page_type_m extends MY_Model
         }
 
         // Delete the actual page entry.
-        $this->db->limit(1)->where('id', $id)->delete($this->_table);
+        parent::delete($id);
     }
-
-    // --------------------------------------------------------------------------
 
     /**
      * Rename page layout files + the folder.
@@ -251,8 +241,6 @@ class Page_type_m extends MY_Model
             $this->remove_page_layout_folder($slug);
         }
     }
-
-    // --------------------------------------------------------------------------
 
     public function remove_page_layout_folder($slug)
     {

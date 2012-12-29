@@ -12,6 +12,7 @@
  * @copyright   (c) 2008-2009 Kohana Team
  * @package		PyroCMS\Core\Libraries\Exceptions
  */
+
 class MY_Exceptions extends CI_Exceptions
 {
 	/**
@@ -68,13 +69,13 @@ class MY_Exceptions extends CI_Exceptions
         }
         
         //Set the Exception Handler
-        set_exception_handler(array('MY_Exceptions', 'exception_handler'));
+        set_exception_handler(array($this, 'exception_handler'));
 
         // Set the Error Handler
-        set_error_handler(array('MY_Exceptions', 'error_handler'));
-
+        set_error_handler(array($this, 'error_handler'));
+        
         // Set the handler for shutdown to catch Parse errors
-        register_shutdown_function(array('MY_Exceptions', 'shutdown_handler'));
+        register_shutdown_function(array($this, 'shutdown_handler'));
     }
 
     /**
@@ -160,24 +161,8 @@ class MY_Exceptions extends CI_Exceptions
                     // Use the human-readable error name
                     $code = self::$php_errors[$code];
                 }
-
-                if (version_compare(PHP_VERSION, '5.3', '<'))
-                {
-                    // Workaround for a bug in ErrorException::getTrace() that exists in
-                    // all PHP 5.2 versions. @see http://bugs.php.net/bug.php?id=45895
-                    for ($i = count($trace) - 1; $i > 0; --$i)
-                    {
-                        if (isset($trace[$i - 1]['args']))
-                        {
-                            // Re-position the args
-                            $trace[$i]['args'] = $trace[$i - 1]['args'];
-
-                            // Remove the args
-                            unset($trace[$i - 1]['args']);
-                        }
-                    }
-                }
             }
+
             // Start an output buffer
             ob_start();
 

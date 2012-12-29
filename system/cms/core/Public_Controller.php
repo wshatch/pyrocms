@@ -54,9 +54,6 @@ class Public_Controller extends MY_Controller
 			show_error($error, 503);
 		}
 
-		// -- Navigation menu -----------------------------------
-		$this->load->model('pages/page_m');
-
 		// Load the current theme so we can set the assets right away
 		ci()->theme = $this->theme_m->get();
 

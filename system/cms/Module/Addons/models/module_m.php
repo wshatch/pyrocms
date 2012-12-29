@@ -147,11 +147,9 @@ class Module_m extends MY_Model
 		foreach ($result as $row)
 		{
 			// Let's get REAL
-			if ( ! $module = $this->_spawn_class($row->slug, $row->is_core))
+			if ( ! ($module = $this->_spawn_class($row->slug, $row->is_core)))
 			{
-				// If module is not able to spawn a class,
-				// just forget about it and move on, man.
-				continue;
+				throw new Exception("Module {$row->slug} sucks.");
 			}
 
 			list($class, $location) = $module;
@@ -186,11 +184,9 @@ class Module_m extends MY_Model
 			$this->_module_enabled[$row->slug] = $row->enabled;
 			$this->_module_installed[$row->slug] = $row->installed;
 			
-			if ( ! empty($params['is_backend']))
-			{
+			if ( ! empty($params['is_backend'])) {
 				// This user has no permissions for this module
-				if ( $this->current_user->group !== 'admin' and empty($this->permissions[$row->slug]) )
-				{
+				if ( $this->current_user->group !== 'admin' and empty($this->permissions[$row->slug])) {
 					continue;
 				}
 			}
@@ -208,7 +204,6 @@ class Module_m extends MY_Model
 	 *
 	 * Adds a module to the database
 	 *
-	 * @access	public
 	 * @param	array	$module		Information about the module
 	 * @return	object
 	 */
@@ -585,19 +580,19 @@ class Module_m extends MY_Model
 		foreach (array(APPPATH, ADDONPATH, SHARED_ADDONPATH) as $directory)
     	{
 			// some servers return false instead of an empty array
-			if ( ! $directory or ! ($temp_modules = glob($directory.'modules/*', GLOB_ONLYDIR)))
+			if ( ! $directory or ! ($temp_modules = glob($directory.'Module/*', GLOB_ONLYDIR)))
 			{
 				continue;
 			}
 
 			foreach ($temp_modules as $path)
 			{
-				$slug = basename($path);
+				$slug = ucfirst(basename($path));
 
 				// Yeah yeah we know
 				if (in_array($slug, $known_array))
 				{
-					$details_file = $directory.'modules/'.$slug.'/details'.EXT;
+					$details_file = $directory.'Module/'.$slug.'/details'.EXT;
 
 					if (file_exists($details_file) &&
 						filemtime($details_file) > $known_mtime[$slug]['updated_on'] &&
@@ -625,12 +620,12 @@ class Module_m extends MY_Model
 				}
 
 				// This doesn't have a valid details.php file! :o
-				if ( ! $module = $this->_spawn_class($slug, $is_core))
+				if ( ! ($module = $this->_spawn_class($slug, $is_core)))
 				{
 					continue;
 				}
 
-				list ($class) = $module;
+				list($class) = $module;
 
 				// Get some basic info
 				$input = $class->info();
@@ -668,12 +663,12 @@ class Module_m extends MY_Model
 		$path = $is_core ? APPPATH : ADDONPATH;
 
 		// Before we can install anything we need to know some details about the module
-		$details_file = $path.'modules/'.$slug.'/details.php';
+		$details_file = $path.'Module/'.ucfirst($slug).'/details.php';
 
 		// Check the details file exists
 		if ( ! is_file($details_file))
 		{
-			$details_file = SHARED_ADDONPATH.'modules/'.$slug.'/details.php';
+			$details_file = SHARED_ADDONPATH.'Module/'.ucfirst($slug).'/details.php';
 
 			if ( ! is_file($details_file))
 			{

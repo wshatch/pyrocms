@@ -336,7 +336,7 @@ $config['proxy_ips'] = '';
 |
 */
 $config['modules_locations'] = array(
-        dirname(FCPATH).'/system/cms/modules/' => '../../system/cms/modules/',
-    );
+    dirname(FCPATH).'/system/cms/Module/' => '../../system/cms/Module/',
+);
 
 /* End of file config.php */

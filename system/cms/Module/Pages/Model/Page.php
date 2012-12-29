@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php 
+
+namespace Module\Pages\Model;
+
 /**
  * Regular pages model
  *
@@ -6,10 +9,23 @@
  * @author Jerel Unruh
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Pages\Models
- *
  */
-class Page_m extends MY_Model
+class Page extends \Illuminate\Database\Eloquent\Model
 {
+	protected $table = 'pages';
+
+	public $timestamps = false;
+
+	/**
+	 * Relationship: Type
+	 * Pages have types which help link in extra fields, custom CSS, etc.
+	 * 
+	 * @return belongsTo
+	 */
+	public function type()
+    {
+        return $this->belongsTo('\\Module\\Pages\\Model\\Type');
+    }
 
 	/**
 	 * Array containing the validation rules
@@ -89,12 +105,14 @@ class Page_m extends MY_Model
 		)
 	);
 
-    // --------------------------------------------------------------------------
-
-	// For streams
+	/**
+	 * Compiled validate
+	 *
+	 * TODO Add a description for this because I have no idea what it does
+	 * 
+	 * @var array
+	 */
 	public $compiled_validate = array();
-
-    // --------------------------------------------------------------------------
 
 	/**
 	 * Get a page by its URI
@@ -104,18 +122,15 @@ class Page_m extends MY_Model
 	 *
 	 * @return object
 	 */
-	public function get_by_uri($uri, $is_request = false)
+	public function getByUri($uri, $is_request = false)
 	{
 		// it's the home page
-		if ($uri === null)
-		{
-			$page = $this->db
-				->where('is_home', true)
-				->get('pages')
-				->row();
-		}
-		else
-		{
+		if ($uri === null) {
+
+			$page = static::with('Type')->where('is_home', '=', true)->first();
+
+		} else {
+
 			// If the URI has been passed as an array, implode to create a string of uri segments
 			is_array($uri) && $uri = trim(implode('/', $uri), '/');
 
@@ -124,41 +139,35 @@ class Page_m extends MY_Model
 			$page = false;
 			$i = 0;
 
-			while ( ! $page AND $uri AND $i < 15) /* max of 15 in case it all goes wrong (this shouldn't ever be used) */
-			{
-				$page = $this->db
-					->where('uri', $uri)
-					->limit(1)
-					->get('pages')
-					->row();
+			/* max of 15 in case it all goes wrong (this shouldn't ever be used) */
+			while ( ! $page AND $uri AND $i < 15) {
+				
+				$page = $this->with('Type')->where('uri', $uri)->first();
 
 				// if it's not a normal page load (plugin or etc. that is not cached)
 				// then we won't do our recursive search
-				if ( ! $is_request)
-				{
+				if ( ! $is_request) {
 					break;
 				}
 
 				// if we didn't find a page with that exact uri AND there's more than one segment
-				if ( ! $page and strpos($uri, '/') !== false)
-				{
+				if ( ! $page and strpos($uri, '/') !== false) {
 					// pop the last segment off and we'll try again
 					$uri = preg_replace('@^(.+)/(.*?)$@', '$1', $uri);
 				}
+
 				// we didn't find a page and there's only one segment; it's going to 404
-				elseif ( ! $page)
-				{
+				elseif ( ! $page) {
 					break;
 				}
 				++$i;
 			}
 
-			if ($page)
-			{
+			if ($page) {
+
 				// so we found a page but if strict uri matching is required and the unmodified
 				// uri doesn't match the page we fetched then we pretend it didn't happen
-				if ($is_request and (bool)$page->strict_uri and $original_uri !== $uri)
-				{
+				if ($is_request and (bool) $page->strict_uri and $original_uri !== $uri) {
 					return false;
 				}
 
@@ -167,62 +176,25 @@ class Page_m extends MY_Model
 			}
 		}
 
-
 		// looks like we have a 404
-		if ( ! $page) return false;
-
-
-		// ---------------------------------
-		// Legacy Page Chunks Logic
-		// ---------------------------------
-		// This is here so upgrades will not
-		// break entire sites. We can get rid
-		// of this in a newer version.
-		// ---------------------------------
-
-		if ($this->db->table_exists('page_chunks'))
-		{
-			if ($page->chunks = $this->get_chunks($page->id))
-			{
-				$chunk_html = '';
-				foreach ($page->chunks as $chunk)
-				{
-					$chunk_html .= '<section id="'.$chunk->slug.'" class="page-chunk '.$chunk->class.'">'.
-						'<div class="page-chunk-pad">'.
-						(($chunk->type == 'markdown') ? $chunk->parsed : $chunk->body).
-						'</div>'.
-						'</section>'.PHP_EOL;
-				}
-				$page->body = $chunk_html;
-			}
-		}
-
-		// ---------------------------------
-		// End Legacy Logic
-		// ---------------------------------
-
-
-		// Wrap the page with a page layout, otherwise use the default 'Home' layout
-		if ( ! $page->layout = $this->page_type_m->get($page->type_id))
-		{
-			// Some pillock deleted the page layout, use the default and pray to god they didnt delete that too
-			$page->layout = $this->page_type_m->get(1);
+		if ( ! $page) {
+			return false;
 		}
 
 		// ---------------------------------
 		// Get Stream Entry
 		// ---------------------------------
 
-		if ($page->entry_id and $page->layout->stream_id)
+		if ($page->entry_id and $page->type->stream_id)
 		{
-			$this->load->driver('Streams');
+			ci()->load->driver('Streams');
 
 			// Get Streams
-			$stream = $this->streams_m->get_stream($page->layout->stream_id);
+			$stream = ci()->streams_m->get_stream($page->type->stream_id);
 
 			if ($stream)
 			{
-				if ($entry = $this->streams->entries->get_entry($page->entry_id, $stream->stream_slug, $stream->stream_namespace))
+				if ($entry = ci()->streams->entries->get_entry($page->entry_id, $stream->stream_slug, $stream->stream_namespace))
 				{
 					$page = (object) array_merge((array)$entry, (array)$page);
 				}
@@ -290,31 +262,12 @@ class Page_m extends MY_Model
 		return $page;
 	}
 
-    // --------------------------------------------------------------------------
-
-	/**
-	 * Get the home page
-	 *
-	 * @DEPRECATED
-	 * 
-	 * @return object
-	 */
-	public function get_home()
-	{
-		return $this->db
-			->where('is_home', true)
-			->get('pages')
-			->row();
-	}
-
-    // --------------------------------------------------------------------------
-
 	/**
 	 * Build a multi-array of parent > children.
 	 *
 	 * @return array An array representing the page tree.
 	 */
-	public function get_page_tree()
+	public function getPageTree()
 	{
 		$all_pages = $this->db
 			->select('id, parent_id, title')
@@ -400,23 +353,6 @@ class Page_m extends MY_Model
 	public function has_children($parent_id)
 	{
 		return parent::count_by(array('parent_id' => $parent_id)) > 0;
-	}
-
-    // --------------------------------------------------------------------------
-
-	/**
-	 * Return page chunks
-	 *
-	 * @DEPRECATED
-	 *
-	 * @return array An array containing all chunks for a page
-	 */
-	public function get_chunks($id)
-	{
-		return $this->db
-			->order_by('sort')
-			->get_where('page_chunks', array('page_id' => $id))
-			->result();
 	}
 
     // --------------------------------------------------------------------------
@@ -530,7 +466,7 @@ class Page_m extends MY_Model
 	 *
 	 * @return bool `true` on success, `false` on failure.
 	 */
-	public function create($input, $stream = false)
+	public function insert($input, $stream = false)
 	{
 		$this->db->trans_start();
 
@@ -684,7 +620,7 @@ class Page_m extends MY_Model
 	 *
 	 * @return array|bool
 	 */
-	public function delete($id = 0)
+	public function superDelete($id = 0)
 	{
 		$this->db->trans_start();
 
