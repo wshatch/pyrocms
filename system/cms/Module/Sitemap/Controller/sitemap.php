@@ -32,7 +32,7 @@ class Sitemap extends Public_Controller {
 				continue;
 			}
 
-			if ( ! file_exists($module['path'].'/controllers/sitemap.php'))
+			if ( ! file_exists($module['path'].'/Controller/sitemap.php'))
 			{
 				continue;
 			}

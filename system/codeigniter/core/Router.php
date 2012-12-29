@@ -251,7 +251,7 @@ class CI_Router {
 		$temp = str_replace('-', '_', $segments[0]);
 
 		// Does the requested controller exist in the root folder?
-		if (file_exists(APPPATH.'controllers/'.$temp.'.php'))
+		if (file_exists(APPPATH.'Controller/'.$temp.'.php'))
 		{
 			$segments[0] = $temp;
 			empty($segments[1]) OR $segments[1] = str_replace('-', '_', $segments[1]);
@@ -259,7 +259,7 @@ class CI_Router {
 		}
 
 		// Is the controller in a sub-folder?
-		if (is_dir(APPPATH.'controllers/'.$segments[0]))
+		if (is_dir(APPPATH.'Controller/'.$segments[0]))
 		{
 			// Set the directory and remove it from the segment array
 			$this->set_directory(array_shift($segments));
@@ -269,7 +269,7 @@ class CI_Router {
 				empty($segments[1]) OR $segments[1] = str_replace('-', '_', $segments[1]);
 
 				// Does the requested controller exist in the sub-folder?
-				if ( ! file_exists(APPPATH.'controllers/'.$this->fetch_directory().$segments[0].'.php'))
+				if ( ! file_exists(APPPATH.'Controller/'.$this->fetch_directory().$segments[0].'.php'))
 				{
 					if ( ! empty($this->routes['404_override']))
 					{
@@ -286,7 +286,7 @@ class CI_Router {
 			{
 				// Is the method being specified in the route?
 				$segments = explode('/', $this->default_controller);
-				if ( ! file_exists(APPPATH.'controllers/'.$this->fetch_directory().$segments[0].'.php'))
+				if ( ! file_exists(APPPATH.'Controller/'.$this->fetch_directory().$segments[0].'.php'))
 				{
 					$this->directory = '';
 				}

@@ -10,7 +10,7 @@
     },
     "autoload": {
         "classmap": [
-            "system/cms/controllers",
+            "system/cms/Controller",
             "system/cms/libraries"
         ],
         "psr-0": {
