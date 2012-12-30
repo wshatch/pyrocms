@@ -1,5 +1,6 @@
 <?php 
 
+use Library\Events;
 use Module\Pages\Model;
 
 /**

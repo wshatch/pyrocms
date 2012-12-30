@@ -1,44 +1,41 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+namespace Module\Search;
+
 /**
-* Sample Events Class
-*
-* @package 		PyroCMS
-* @subpackage 	Social Module
-* @category 	events
-* @author 		PyroCMS Dev Team
-*/
-class Events_Search
-{
-    protected $ci;
-    
+ * Search Events
+ *
+ * @author  PyroCMS Dev Team
+ * @package PyroCMS\Core\Modules\Search
+ */
+class Events
+{   
     public function __construct()
     {
-        $this->ci =& get_instance();
-
         // Load the search index model
-        $this->ci->load->model('search/search_index_m');
+        ci()->load->model('search/search_index_m');
 
 		// Post a blog to twitter and whatnot
-        Events::register('post_published', array($this, 'index_post'));
-        Events::register('post_updated', array($this, 'index_post'));
-        Events::register('post_deleted', array($this, 'drop_post'));
+        \Library\Events::register('post_published', array($this, 'index_post'));
+        \Library\Events::register('post_updated', array($this, 'index_post'));
+        \Library\Events::register('post_deleted', array($this, 'drop_post'));
 
 		// Post a blog to twitter and whatnot
-        Events::register('page_created', array($this, 'index_page'));
-        Events::register('page_updated', array($this, 'index_page'));
-        Events::register('page_deleted', array($this, 'drop_page'));
+        \Library\Events::register('page_created', array($this, 'index_page'));
+        \Library\Events::register('page_updated', array($this, 'index_page'));
+        \Library\Events::register('page_deleted', array($this, 'drop_page'));
     }
     
     public function index_post($id)
     {
-    	$this->ci->load->model('blog/blog_m');
+    	ci()->load->model('blog/blog_m');
 
-    	$post = $this->ci->blog_m->get($id);
+    	$post = ci()->blog_m->get($id);
 
     	// Only index live articles
     	if ($post->status === 'live')
     	{
-    		$this->ci->search_index_m->index(
+    		ci()->search_index_m->index(
     			'blog', 
     			'blog:post', 
     			'blog:posts', 
@@ -56,7 +53,7 @@ class Events_Search
     	// Remove draft articles
     	else
     	{
-    		$this->ci->search_index_m->drop_index('blog', 'blog:post', $id);
+    		ci()->search_index_m->drop_index('blog', 'blog:post', $id);
     	}
 	}
 
@@ -64,21 +61,21 @@ class Events_Search
     {
     	foreach ($ids as $id)
     	{
-			$this->ci->search_index_m->drop_index('blog', 'blog:post', $id);
+			ci()->search_index_m->drop_index('blog', 'blog:post', $id);
 		}
 	}
     
     public function index_page($id)
     {
-    	$this->ci->load->model('pages/page_m');
+    	ci()->load->model('pages/page_m');
 
     	// Get the page (with the chunks)
-    	$page = $this->ci->page_m->get($id);
+    	$page = ci()->page_m->get($id);
 
     	// Only index live articles
     	if ($page->status === 'live')
     	{
-    		$this->ci->search_index_m->index(
+    		ci()->search_index_m->index(
     			'pages', 
     			'pages:page', 
     			'pages:pages', 
@@ -96,7 +93,7 @@ class Events_Search
     	// Remove draft articles
     	else
     	{
-    		$this->ci->search_index_m->drop_index('pages', 'pages:page', $id);
+    		ci()->search_index_m->drop_index('pages', 'pages:page', $id);
     	}
 	}
 
@@ -104,7 +101,7 @@ class Events_Search
     {
     	foreach ($ids as $id)
     	{
-			$this->ci->search_index_m->drop_index('pages', 'pages:page', $id);
+			ci()->search_index_m->drop_index('pages', 'pages:page', $id);
 		}
 	}
 }

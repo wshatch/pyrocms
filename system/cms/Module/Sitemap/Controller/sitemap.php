@@ -22,7 +22,7 @@ class Sitemap extends Public_Controller {
 		$doc = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" />');
 		
 		// first get a list of enabled modules, use them for the listing
-		$modules = $this->module_m->get_all(array('is_frontend' => 1));
+		$modules = $this->module_m->getAll(array('is_frontend' => 1));
 
 		foreach ($modules as $module)
 		{

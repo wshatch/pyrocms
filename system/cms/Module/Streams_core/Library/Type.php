@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Library\Events;
 
 /**
  * PyroStreams Core Field Type Library
@@ -14,7 +16,6 @@ class Type
 	/**
 	 * We build up these assets for the footer
 	 *
-	 * @access	public
 	 * @var		array
 	 */
 	public $assets = array();
@@ -24,7 +25,6 @@ class Type
 	/**
 	 * Places where our field types may be
 	 *
-	 * @access	public
 	 * @var		array
 	 */
 	public $addon_paths = array();

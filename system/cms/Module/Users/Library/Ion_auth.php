@@ -1,5 +1,7 @@
 <?php
 
+use Library\Events;
+
 /**
 * Name:  Ion Auth
 *

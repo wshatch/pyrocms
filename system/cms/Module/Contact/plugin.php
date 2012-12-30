@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Library\Events;
 
 /**
  * Contact Plugin
@@ -10,8 +12,8 @@
  */
 class Plugin_Contact extends Plugin 
 {
-
 	public $version = '1.0.0';
+
 	public $name = array(
 		'en' => 'Contact',
 	);

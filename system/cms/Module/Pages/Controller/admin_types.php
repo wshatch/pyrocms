@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Library\Events;
+
 /**
  * Admin controller for the Page Types of the Pages module.
  *

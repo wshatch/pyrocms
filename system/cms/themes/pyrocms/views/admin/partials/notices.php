@@ -41,10 +41,8 @@
 <?php endif; ?>
 
 <?php 
-
-	/**
-	 * Admin Notification Event
-	 */
-	Events::trigger('admin_notification');
-	
+/**
+ * Admin Notification Event
+ */
+\Library\Events::trigger('admin_notification');	
 ?>

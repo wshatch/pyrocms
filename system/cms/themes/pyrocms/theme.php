@@ -80,7 +80,7 @@ class Theme_Pyrocms extends Theme {
 			return;
 		}
 
-		$modules = $this->module_m->get_all(array(
+		$modules = $this->module_m->getAll(array(
 			'is_backend' => true,
 			'group' => $this->current_user->group,
 			'lang' => CURRENT_LANGUAGE

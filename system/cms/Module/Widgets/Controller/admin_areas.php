@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Library\Events;
 
 /**
  * Admin controller for adding and managing widget areas.
@@ -11,7 +13,7 @@ class Admin_areas extends Admin_Controller {
 
 	/**
 	 * The current active section
-	 * @access protected
+	 * 
 	 * @var string
 	 */
 	protected $section = 'areas';
@@ -19,7 +21,6 @@ class Admin_areas extends Admin_Controller {
 	/**
 	 * Array that contains the validation rules
 	 *
-	 * @access	protected
 	 * @var		array
 	 */
 	protected $_validation_rules = array(
@@ -37,9 +38,6 @@ class Admin_areas extends Admin_Controller {
 
 	/**
 	 * Constructor method
-	 *
-	 * @access    public
-	 * @return \Admin_areas
 	 */
 	public function __construct()
 	{

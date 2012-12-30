@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Library\Events;
+
 /**
  * Admin Page Layouts controller for the Pages module
  *

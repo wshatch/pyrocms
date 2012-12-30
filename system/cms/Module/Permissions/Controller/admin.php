@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Library\Events;
+
 /**
  * Permissions controller
  *
@@ -86,7 +89,7 @@ class Admin extends Admin_Controller
 		// Get the groups permission rules (no need if this is the admin group)
 		$edit_permissions = ($group_is_admin) ? array() : $this->permission_m->get_group($group_id);
 		// Get all the possible permission rules from the installed modules
-		$permission_modules = $this->module_m->get_all(array('is_backend' => true, 'installed' => true));
+		$permission_modules = $this->module_m->getAll(array('is_backend' => true, 'installed' => true));
 
 		foreach ($permission_modules as &$permission_module)
 		{

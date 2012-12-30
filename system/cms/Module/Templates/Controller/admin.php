@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Library\Events;
+
 /**
  * Email Templates Admin Controller
  *

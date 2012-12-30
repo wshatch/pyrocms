@@ -1,19 +1,20 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Pages;
 
 /**
  * Pages Event Class
  *
  * Current functionality is to add chunks field type.
  * 
- * @package		Pages
- * @category	events
- * @author		PyroCMS - Adam Fairholm
+ * @author     PyroCMS Dev Team
+ * @package    PyroCMS\Core\Modules\Pages
  */
-class Events_Pages {
+class Events {
  
     public function __construct()
     {
-        Events::register('streams_core_add_addon_path', array($this, 'add_pages_ft_folder'));
+        \Library\Events::register('streams_core_add_addon_path', array($this, 'add_pages_ft_folder'));
     }
  
     /**

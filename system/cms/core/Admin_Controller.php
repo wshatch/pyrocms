@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Library\Events;
 
 /**
  * This is the basis for the Admin class that is used throughout PyroCMS.
@@ -6,7 +8,7 @@
  * Code here is run before admin controllers
  * 
  * @copyright   Copyright (c) 2012, PyroCMS LLC
- * @package PyroCMS\Core\Controllers
+ * @package     PyroCMS\Core\Controllers
  */
 class Admin_Controller extends MY_Controller {
 
@@ -82,7 +84,7 @@ class Admin_Controller extends MY_Controller {
 			// This array controls the order of the admin items.
 			$this->template->menu_order = array('lang:cp:nav_content', 'lang:cp:nav_structure', 'lang:cp:nav_data', 'lang:cp:nav_users', 'lang:cp:nav_settings', 'lang:global:profile');
 
-			$modules = $this->module_m->get_all(array(
+			$modules = $this->module_m->getAll(array(
 				'is_backend' => true,
 				'group' => $this->current_user->group,
 				'lang' => CURRENT_LANGUAGE
@@ -90,6 +92,7 @@ class Admin_Controller extends MY_Controller {
 
 			foreach ($modules as $module)
 			{				
+
 				// If we do not have an admin_menu function, we use the
 				// regular way of checking out the Module.php data.
 				if ($module['menu'] and (isset($this->permissions[$module['slug']]) or $this->current_user->group == 'admin'))

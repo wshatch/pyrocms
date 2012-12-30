@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Library\Events;
+
 /**
  * Maintain a central list of keywords to label and organize your content.
  *

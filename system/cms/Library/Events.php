@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Library;
 
 /**
  * Events
@@ -12,7 +14,6 @@
  * @copyright	2010 Dan Horrigan
  * @package		PyroCMS\Core\Libraries
  */
-
 class Events
 {
 	/**
@@ -25,35 +26,24 @@ class Events
 	/**
 	 * Constructor
 	 * 
+	 * @param   array  $enabled_modules  An array of module data
 	 * Load up the modules. 
 	 */
-	public function __construct()
+	public function __construct(array $enabled_modules)
 	{
-		self::_load_modules();
-	}
-
-	/**
-	 * Load Modules
-	 *
-	 * Loads all active modules
-	 */
-	private static function _load_modules()
-	{
-		$_ci = get_instance();
-
 		$is_core = true;
 
-		$_ci->load->model('addons/module_m');
+		ci()->load->model('addons/module_m');
 
-		if ( ! $results = $_ci->enabled_modules)
+		if ( ! $enabled_modules)
 		{
 			return false;
 		}
 
-		foreach ($results as $row)
+		foreach ($enabled_modules as $module)
 		{
 			// This does not have a valid Module.php file! :o
-			if (!$details_class = self::_spawn_class($row['slug'], $row['is_core']))
+			if ( ! $details_class = static::_spawn_class($module['slug'], $module['is_core']))
 			{
 				continue;
 			}
@@ -76,14 +66,14 @@ class Events
 		$path = $is_core ? APPPATH : ADDONPATH;
 
 		// Before we can install anything we need to know some details about the module
-		$events_file = $path.'modules/'.$slug.'/events.php';
+		$events_file = $path.'Module/'.$slug.'/Events.php';
 
 		// Check the details file exists
-		if (!is_file($events_file))
+		if ( ! is_file($events_file))
 		{
-			$events_file = SHARED_ADDONPATH.'modules/'.$slug.'/events.php';
+			$events_file = SHARED_ADDONPATH.'Module/'.$slug.'/Events.php';
 
-			if (!is_file($events_file))
+			if ( ! is_file($events_file))
 			{
 				return false;
 			}
@@ -93,7 +83,7 @@ class Events
 		include_once $events_file;
 
 		// Now call the details class
-		$class = 'Events_'.ucfirst(strtolower($slug));
+		$class = 'Module\\'.ucfirst(strtolower($slug)).'\\Events';
 
 		// Now we need to talk to it
 		return class_exists($class) ? new $class : false;
@@ -188,13 +178,6 @@ class Events
 		// Does not do anything, so send null. false would suggest an error
 		return null;
 	}
-
-	/**
-	 *
-	 * @access	public
-	 * @param	string	
-	 * @return	bool	
-	 */
 
 	/**
 	 * Checks if the event has listeners

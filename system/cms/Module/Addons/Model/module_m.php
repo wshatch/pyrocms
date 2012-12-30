@@ -120,7 +120,7 @@ class Module_m extends MY_Model
 	 * @param   bool    $return_disabled    Whether to return disabled modules
 	 * @return  array
 	 */
-	public function get_all($params = array(), $return_disabled = false)
+	public function getAll($params = array(), $return_disabled = false)
 	{
 		$modules = array();
 

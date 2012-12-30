@@ -35,7 +35,7 @@ class Plugin_Permissions extends Plugin
 			);
 
 		// dynamically build the array for the magic method __call
-		$modules = $this->module_m->get_all(array('installed' => true));
+		$modules = $this->module_m->getAll(array('installed' => true));
 
 		foreach ($modules as $module)
 		{

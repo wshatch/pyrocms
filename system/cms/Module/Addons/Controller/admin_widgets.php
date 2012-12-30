@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Library\Events;
 
 /**
  * Admin controller for the widgets module.

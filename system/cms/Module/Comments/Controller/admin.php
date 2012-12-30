@@ -1,6 +1,8 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Library\Events;
+
 /**
- *
  * @author 		PyroCMS Dev Team
  * @package 	PyroCMS\Core\Modules\Comments\Controllers
  */
@@ -8,7 +10,7 @@ class Admin extends Admin_Controller {
 
 	/**
 	 * Array that contains the validation rules
-	 * @access private
+	 * 
 	 * @var array
 	 */
 	private $validation_rules = array(

@@ -29,7 +29,7 @@ function module_array()
 {
 	$ci =& get_instance();
 
-	$modules = $ci->module_m->get_all();
+	$modules = $ci->module_m->getAll();
 	asort($modules);
 
 	return $modules;

@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Library\Events;
+
 /**
  * Admin controller for the navigation module. Handles actions such as editing links or creating new ones.
  *
@@ -98,7 +101,7 @@ class Admin extends Admin_Controller {
 		// Get Navigation Groups
 		$this->template->groups 		= $this->navigation_m->get_groups();
 		$this->template->groups_select 	= array_for_select($this->template->groups, 'id', 'title');
-		$all_modules				= $this->module_m->get_all(array('is_frontend'=>true));
+		$all_modules				    = $this->module_m->getAll(array('is_frontend'=>true));
 
 		//only allow modules that user has permissions for
 		foreach($all_modules as $module)

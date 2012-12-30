@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Library\Events;
+
 /**
  * Modules controller, lists all installed modules
  *
@@ -6,7 +9,6 @@
  * @author      PyroCMS Dev Team
  * @copyright   Copyright (c) 2012, PyroCMS LLC
  */
-
 class Admin_modules extends Admin_Controller
 {
 	/**
@@ -37,7 +39,7 @@ class Admin_modules extends Admin_Controller
 	{
 		$this->module_m->import_unknown();
 
-		$all_modules = $this->module_m->get_all(null, true);
+		$all_modules = $this->module_m->getAll(null, true);
 
 		$core_modules = $addon_modules = array();
 		foreach ($all_modules as $module)

@@ -1,17 +1,18 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Library\Events;
 
 /**
  * Admin controller for the widgets module.
  * 
  * @author 		PyroCMS Dev Team
  * @package 	PyroCMS\Core\Modules\Widgets\Controllers
- *
  */
 class Admin extends Admin_Controller {
 
 	/**
 	 * The current active section
-	 * @access protected
+	 * 
 	 * @var string
 	 */
 	protected $section = 'instances';
@@ -90,7 +91,6 @@ class Admin extends Admin_Controller {
 	/**
 	 * Manage method, lists all widgets to install, uninstall, etc..
 	 *
-	 * @access	public
 	 * @return	void
 	 */
 	public function manage()
@@ -127,7 +127,6 @@ class Admin extends Admin_Controller {
 	/**
 	 * Enable widget
 	 *
-	 * @access	public
 	 * @param	string	$id			The id of the widget
 	 * @param	bool	$redirect	Optional if a redirect should be done
 	 * @return	void
@@ -147,7 +146,6 @@ class Admin extends Admin_Controller {
 	/**
 	 * Disable widget
 	 *
-	 * @access	public
 	 * @param	string	$id			The id of the widget
 	 * @param	bool	$redirect	Optional if a redirect should be done
 	 * @return	void

@@ -13,7 +13,7 @@ class MY_Controller extends MX_Controller
 {
     /**
      * The name of the module that this controller instance actually belongs to.
-     *
+     * @TODO Store the actual module class here instead of a string
      * @var string 
      */
     public $module;
@@ -136,48 +136,44 @@ class MY_Controller extends MX_Controller
         ci()->permissions = $this->permissions = $this->current_user ? $this->permission_m->get_group($this->current_user->group_id) : array();
 
         // load all modules (the Events library uses them all) and make their details widely available
-        ci()->enabled_modules = $this->module_m->get_all();
+        $enabled_modules = $this->module_m->getAll();
 
-        // now that we have a list of enabled modules
-        $this->load->library('events');
-
-        // set defaults
-        $this->template->module_details = ci()->module_details = $this->module_details = false;
+        // Set the default module details, to avoid breakofdoom on dashboard
+        $this->module_details = array(
+            'name' => null,
+            'slug' => null,
+            'version' => null,
+            'description' => null,
+            'skip_xss' => null,
+            'is_frontend' => null,
+            'is_backend' => null,
+            'menu' => false,
+            'enabled' => true,
+            'sections' => array(),
+            'shortcuts' => array(),
+            'is_core' => null,
+            'is_current' => null,
+            'current_version' => null,
+            'updated_on' => null
+        );
 
         // now pick our current module out of the enabled modules array
-        foreach (ci()->enabled_modules as $module)
+        foreach ($enabled_modules as $module)
         {
-            // TODO Make a migration to upper case the first letters in the DB then remove this
+            // @TODO Make a migration to upper case the first letters in the DB then remove this
             if (ucfirst($module['slug']) === $this->module)
             {
                 // Set meta data for the module to be accessible system wide
-                $this->template->module_details = ci()->module_details = $this->module_details = $module;
-
+                $this->module_details = $module;
                 continue;
             }
         }
 
-        // certain places (such as the Dashboard) we aren't running a module, provide defaults
-        if ( ! $this->module)
-        {
-            $this->module_details = array(
-                'name' => null,
-                'slug' => null,
-                'version' => null,
-                'description' => null,
-                'skip_xss' => null,
-                'is_frontend' => null,
-                'is_backend' => null,
-                'menu' => false,
-                'enabled' => 1,
-                'sections' => array(),
-                'shortcuts' => array(),
-                'is_core' => null,
-                'is_current' => null,
-                'current_version' => null,
-                'updated_on' => null
-            );
-        }
+        // Assign to the template and HMVC too
+        $this->template->module_details = ci()->module_details = $this->module_details;
+
+        // Now we know the enabled modules, go and find all events and register them
+        new \Library\Events($enabled_modules);
 
         // If the module is disabled then show a 404.
         if (empty($this->module_details['enabled'])) {
