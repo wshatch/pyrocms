@@ -8,4 +8,4 @@
 	<?php endforeach ?>
 </span>
 
-<p><?php echo anchor('libraries/download/document/' . $doc->id, 'Download') ?>
+<p><?php echo anchor('files/download/' . $doc->id, 'Download') ?>

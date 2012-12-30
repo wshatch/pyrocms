@@ -19,4 +19,4 @@ $lang['streams:api.field_slug_in_use'] = 'Fält-sluggen används.';
 
 
 /* End of file streams_api_lang.php */  
-/* Location: system/cms/libraries/Streams/language/swedish/streams_api_lang.php */  
+/* Location: system/cms/Library/Streams/language/swedish/streams_api_lang.php */  

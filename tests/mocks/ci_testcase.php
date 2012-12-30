@@ -132,7 +132,7 @@ class CI_TestCase extends PHPUnit_Framework_TestCase {
 
 		if ( ! class_exists('CI_'.$class_name))
 		{
-			require_once BASEPATH.'core/'.$class_name.'.php';
+			require_once BASEPATH.'Core/'.$class_name.'.php';
 		}
 
 		$GLOBALS[strtoupper($global_name)] = 'CI_'.$class_name;

@@ -235,7 +235,7 @@ class Admin_types extends Admin_Controller
 		$data->streams_dropdown = $this->get_stream_dropdown_list();
 
 		// Theme layouts dropdown data.
-		$theme_layouts = $this->template->get_theme_layouts($this->settings->default_theme);
+		$theme_layouts = $this->template->get_theme_layouts(Settings::get('default_theme'));
 		$data->theme_layouts = array();
 		foreach ($theme_layouts as $theme_layout)
 		{
@@ -256,7 +256,6 @@ class Admin_types extends Admin_Controller
 	 * to choose an appropriate stream. These are
 	 * separated by namespace.
 	 *
-	 * @access 	private
 	 * @return 	array
 	 */
 	private function get_stream_dropdown_list()

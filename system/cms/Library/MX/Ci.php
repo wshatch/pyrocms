@@ -1,8 +1,8 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
-require BASEPATH.'core/Controller.php';
-require BASEPATH.'core/Lang.php';
-require BASEPATH.'core/Loader.php';
+require BASEPATH.'Core/Controller.php';
+require BASEPATH.'Core/Lang.php';
+require BASEPATH.'Core/Loader.php';
 
 /* load MX core classes */
 require_once dirname(__FILE__).'/Lang.php';

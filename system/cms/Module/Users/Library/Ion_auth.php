@@ -1,4 +1,5 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
 /**
 * Name:  Ion Auth
 *
@@ -21,13 +22,6 @@
 
 class Ion_auth
 {
-	/**
-	 * CodeIgniter global
-	 *
-	 * @var string
-	 **/
-	protected $ci;
-
 	/**
 	 * account status ('not_activated', etc ...)
 	 *
@@ -84,25 +78,24 @@ class Ion_auth
 	 **/
 	public function __construct()
 	{
-		$this->ci =& get_instance();
-		$this->ci->load->config('users/ion_auth', true);
-		$this->ci->load->library('email');
-		$this->ci->lang->load('users/ion_auth');
-		$this->ci->load->model('users/ion_auth_model');
-		$this->ci->load->helper('cookie');
+		ci()->load->config('users/ion_auth', true);
+		ci()->load->library('email');
+		ci()->lang->load('users/ion_auth');
+		ci()->load->model('users/ion_auth_model');
+		ci()->load->helper('cookie');
 
 		$this->messages = array();
 		$this->errors = array();
-		$this->message_start_delimiter = $this->ci->config->item('message_start_delimiter', 'ion_auth');
-		$this->message_end_delimiter   = $this->ci->config->item('message_end_delimiter', 'ion_auth');
-		$this->error_start_delimiter   = $this->ci->config->item('error_start_delimiter', 'ion_auth');
-		$this->error_end_delimiter     = $this->ci->config->item('error_end_delimiter', 'ion_auth');
+		$this->message_start_delimiter = ci()->config->item('message_start_delimiter', 'ion_auth');
+		$this->message_end_delimiter   = ci()->config->item('message_end_delimiter', 'ion_auth');
+		$this->error_start_delimiter   = ci()->config->item('error_start_delimiter', 'ion_auth');
+		$this->error_end_delimiter     = ci()->config->item('error_end_delimiter', 'ion_auth');
 
 		//auto-login the user if they are remembered
-		if (!$this->logged_in() && get_cookie('identity') && get_cookie('remember_code'))
+		if ( ! $this->logged_in() && get_cookie('identity') && get_cookie('remember_code'))
 		{
-			$this->ci->ion_auth = $this;
-			$this->ci->ion_auth_model->login_remembered_user();
+			ci()->ion_auth = $this;
+			ci()->ion_auth_model->login_remembered_user();
 		}
 	}
 
@@ -114,12 +107,12 @@ class Ion_auth
 	 **/
 	public function __call($method, $arguments)
 	{
-		if ( ! method_exists( $this->ci->ion_auth_model, $method))
+		if ( ! method_exists( ci()->ion_auth_model, $method))
 		{
 			throw new Exception('Undefined method Ion_auth::' . $method . '() called');
 		}
 
-		return call_user_func_array(array($this->ci->ion_auth_model, $method), $arguments);
+		return call_user_func_array(array(ci()->ion_auth_model, $method), $arguments);
 	}
 
 	/**
@@ -130,7 +123,7 @@ class Ion_auth
 	 **/
 	public function activate($id, $code=false)
 	{
-		if ($this->ci->ion_auth_model->activate($id, $code))
+		if (ci()->ion_auth_model->activate($id, $code))
 		{
 			$this->set_message('activate_successful');
 			return true;
@@ -148,7 +141,7 @@ class Ion_auth
 	 **/
 	public function deactivate($id)
 	{
-		if ($this->ci->ion_auth_model->deactivate($id))
+		if (ci()->ion_auth_model->deactivate($id))
 		{
 			$this->set_message('deactivate_successful');
 			return true;
@@ -166,7 +159,7 @@ class Ion_auth
 	 **/
 	public function change_password($identity, $old, $new)
 	{
-	if ($this->ci->ion_auth_model->change_password($identity, $old, $new))
+	if (ci()->ion_auth_model->change_password($identity, $old, $new))
 	{
 		$this->set_message('password_change_successful');
 		return true;
@@ -184,7 +177,7 @@ class Ion_auth
 	 **/
 	public function forgotten_password($identity)    //changed $email to $identity
 	{
-		if ( $this->ci->ion_auth_model->forgotten_password($identity) )   //changed
+		if ( ci()->ion_auth_model->forgotten_password($identity) )   //changed
 		{
 			// Get user information
 			$user = $this->get_user_by_identity($identity);  //changed to get_user_by_identity from email
@@ -230,8 +223,8 @@ class Ion_auth
 	 **/
 	public function forgotten_password_complete($code)
 	{
-	    $identity	= $this->ci->config->item('identity', 'ion_auth');
-	    $user		= $this->ci->ion_auth_model->profile($code, true); //pass the code to profile
+	    $identity	= ci()->config->item('identity', 'ion_auth');
+	    $user		= ci()->ion_auth_model->profile($code, true); //pass the code to profile
 
 	    if (!is_object($user))
 	    {
@@ -239,7 +232,7 @@ class Ion_auth
 		return false;
 	    }
 
-		$new_password = $this->ci->ion_auth_model->forgotten_password_complete($code, $user->salt);
+		$new_password = ci()->ion_auth_model->forgotten_password_complete($code, $user->salt);
 
 		if ($new_password)
 		{
@@ -285,7 +278,7 @@ class Ion_auth
 	 **/
 	public function register($username, $password, $email, $group_id = null, $additional_data = array(), $group_name = false)
 	{
-		$id = $this->ci->ion_auth_model->register($username, $password, $email, $group_id, $additional_data, $group_name);
+		$id = ci()->ion_auth_model->register($username, $password, $email, $group_id, $additional_data, $group_name);
 
 		if ($id !== false)
 		{
@@ -314,10 +307,10 @@ class Ion_auth
 	public function activation_email($id = 0)
 	{
 		// deactivate them and generate the activation code
-		$this->ci->ion_auth_model->deactivate($id);
+		ci()->ion_auth_model->deactivate($id);
 
-		$activation_code 	= $this->ci->ion_auth_model->activation_code;
-		$user				= $this->ci->ion_auth_model->get_user($id)->row();
+		$activation_code 	= ci()->ion_auth_model->activation_code;
+		$user				= ci()->ion_auth_model->get_user($id)->row();
 
 		if ( ! $user)
 		{
@@ -362,7 +355,7 @@ class Ion_auth
 	 **/
 	public function login($identity, $password, $remember=false)
 	{
-		if ($this->ci->ion_auth_model->login($identity, $password, $remember))
+		if (ci()->ion_auth_model->login($identity, $password, $remember))
 		{
 			$this->set_message('login_successful');
 			return true;
@@ -374,7 +367,7 @@ class Ion_auth
 	
 	public function force_login($user_id, $remember = false)
 	{
-		if ($this->ci->ion_auth_model->force_login($user_id, $remember))
+		if (ci()->ion_auth_model->force_login($user_id, $remember))
 		{
 			$this->set_message('login_successful');
 			return true;
@@ -392,11 +385,11 @@ class Ion_auth
 	 **/
 	public function logout()
 	{
-	    $identity = $this->ci->config->item('identity', 'ion_auth');
-	    $this->ci->session->unset_userdata($identity);
-	    $this->ci->session->unset_userdata('group');
-	    $this->ci->session->unset_userdata('id');
-	    $this->ci->session->unset_userdata('user_id');
+	    $identity = ci()->config->item('identity', 'ion_auth');
+	    ci()->session->unset_userdata($identity);
+	    ci()->session->unset_userdata('group');
+	    ci()->session->unset_userdata('id');
+	    ci()->session->unset_userdata('user_id');
 
 	    //delete the remember me cookies if they exist
 	    if (get_cookie('identity'))
@@ -408,7 +401,7 @@ class Ion_auth
 		delete_cookie('remember_code');
 	    }
 
-		$this->ci->session->sess_regenerate(true);
+		ci()->session->sess_regenerate(true);
 
 		$this->set_message('logout_successful');
 		return true;
@@ -422,9 +415,9 @@ class Ion_auth
 	 **/
 	public function logged_in()
 	{
-		$identity = $this->ci->config->item('identity', 'ion_auth');
+		$identity = ci()->config->item('identity', 'ion_auth');
 
-		return (bool) $this->ci->session->userdata($identity);
+		return (bool) ci()->session->userdata($identity);
 	}
 
 	/**
@@ -435,8 +428,8 @@ class Ion_auth
 	 **/
 	public function is_admin()
 	{
-	    $admin_group = $this->ci->config->item('admin_group', 'ion_auth');
-	    $user_group  = $this->ci->session->userdata('group');
+	    $admin_group = ci()->config->item('admin_group', 'ion_auth');
+	    $user_group  = ci()->session->userdata('group');
 
 	    return $user_group == $admin_group;
 	}
@@ -449,7 +442,7 @@ class Ion_auth
 	 **/
 	public function is_group($check_group)
 	{
-	    $user_group = $this->ci->session->userdata('group');
+	    $user_group = ci()->session->userdata('group');
 
 	    if(is_array($check_group))
 	    {
@@ -467,10 +460,10 @@ class Ion_auth
 	 **/
 	public function profile()
 	{
-	    $session  = $this->ci->config->item('identity', 'ion_auth');
-	    $identity = $this->ci->session->userdata($session);
+	    $session  = ci()->config->item('identity', 'ion_auth');
+	    $identity = ci()->session->userdata($session);
 
-	    return $this->ci->ion_auth_model->profile($identity);
+	    return ci()->ion_auth_model->profile($identity);
 	}
 
 	/**
@@ -481,7 +474,7 @@ class Ion_auth
 	 **/
 	public function get_users($group_name=false, $limit=null, $offset=null)
 	{
-		return $this->ci->ion_auth_model->get_users($group_name, $limit, $offset)->result();
+		return ci()->ion_auth_model->get_users($group_name, $limit, $offset)->result();
 	}
 
 	/**
@@ -492,7 +485,7 @@ class Ion_auth
 	 **/
 	public function get_users_count($group_name=false)
 	{
-		return $this->ci->ion_auth_model->get_users_count($group_name);
+		return ci()->ion_auth_model->get_users_count($group_name);
 	}
 
 	/**
@@ -503,7 +496,7 @@ class Ion_auth
 	 **/
 	public function get_users_array($group_name=false, $limit=null, $offset=null)
 	{
-		return $this->ci->ion_auth_model->get_users($group_name, $limit, $offset)->result_array();
+		return ci()->ion_auth_model->get_users($group_name, $limit, $offset)->result_array();
 	}
 
 	/**
@@ -514,7 +507,7 @@ class Ion_auth
 	 **/
 	public function get_newest_users($limit = 10)
 	{
-	    return $this->ci->ion_auth_model->get_newest_users($limit)->result();
+	    return ci()->ion_auth_model->get_newest_users($limit)->result();
 	}
 
 	/**
@@ -525,7 +518,7 @@ class Ion_auth
 	 **/
 	public function get_newest_users_array($limit = 10)
 	{
-	    return $this->ci->ion_auth_model->get_newest_users($limit)->result_array();
+	    return ci()->ion_auth_model->get_newest_users($limit)->result_array();
 	}
 
 	/**
@@ -536,7 +529,7 @@ class Ion_auth
 	 **/
 	public function get_active_users($group_name = false)
 	{
-	    return $this->ci->ion_auth_model->get_active_users($group_name)->result();
+	    return ci()->ion_auth_model->get_active_users($group_name)->result();
 	}
 
 	/**
@@ -547,7 +540,7 @@ class Ion_auth
 	 **/
 	public function get_active_users_array($group_name = false)
 	{
-	    return $this->ci->ion_auth_model->get_active_users($group_name)->result_array();
+	    return ci()->ion_auth_model->get_active_users($group_name)->result_array();
 	}
 
 	/**
@@ -558,7 +551,7 @@ class Ion_auth
 	 **/
 	public function get_inactive_users($group_name = false)
 	{
-	    return $this->ci->ion_auth_model->get_inactive_users($group_name)->result();
+	    return ci()->ion_auth_model->get_inactive_users($group_name)->result();
 	}
 
 	/**
@@ -569,7 +562,7 @@ class Ion_auth
 	 **/
 	public function get_inactive_users_array($group_name = false)
 	{
-	    return $this->ci->ion_auth_model->get_inactive_users($group_name)->result_array();
+	    return ci()->ion_auth_model->get_inactive_users($group_name)->result_array();
 	}
 
 	/**
@@ -580,7 +573,7 @@ class Ion_auth
 	 **/
 	public function get_user($id=false)
 	{
-	    return $this->ci->ion_auth_model->get_user($id)->row();
+	    return ci()->ion_auth_model->get_user($id)->row();
 	}
 
 	/**
@@ -591,7 +584,7 @@ class Ion_auth
 	 **/
 	public function get_user_by_email($email)
 	{
-	    return $this->ci->ion_auth_model->get_user_by_email($email)->row();
+	    return ci()->ion_auth_model->get_user_by_email($email)->row();
 	}
 
 	/**
@@ -602,7 +595,7 @@ class Ion_auth
 	 **/
 	public function get_users_by_email($email)
 	{
-		return $this->ci->ion_auth_model->get_users_by_email($email)->result();
+		return ci()->ion_auth_model->get_users_by_email($email)->result();
 	}
 
 	/**
@@ -613,7 +606,7 @@ class Ion_auth
 	 **/
 	public function get_user_by_username($username)
 	{
-		return $this->ci->ion_auth_model->get_user_by_username($username)->row();
+		return ci()->ion_auth_model->get_user_by_username($username)->row();
 	}
 
 	/**
@@ -624,7 +617,7 @@ class Ion_auth
 	 **/
 	public function get_users_by_username($username)
 	{
-		return $this->ci->ion_auth_model->get_users_by_username($username)->result();
+		return ci()->ion_auth_model->get_users_by_username($username)->result();
 	}
 
 	/**
@@ -635,7 +628,7 @@ class Ion_auth
 	 **/
 	public function get_user_by_identity($identity)
 	{
-		return $this->ci->ion_auth_model->get_user_by_identity($identity)->row();
+		return ci()->ion_auth_model->get_user_by_identity($identity)->row();
 	}
 
 	/**
@@ -646,7 +639,7 @@ class Ion_auth
 	 **/
 	public function get_user_array($id=false)
 	{
-	    return $this->ci->ion_auth_model->get_user($id)->row_array();
+	    return ci()->ion_auth_model->get_user($id)->row_array();
 	}
 
 
@@ -658,7 +651,7 @@ class Ion_auth
 	 **/
 	public function update_user($id, $data, $profile_data)
 	{
-		 if ($this->ci->ion_auth_model->update_user($id, $data, $profile_data))
+		 if (ci()->ion_auth_model->update_user($id, $data, $profile_data))
 		 {
 			$this->set_message('update_successful');
 			return true;
@@ -677,7 +670,7 @@ class Ion_auth
 	 **/
 	public function delete_user($id)
 	{
-		 if ($this->ci->ion_auth_model->delete_user($id))
+		 if (ci()->ion_auth_model->delete_user($id))
 		 {
 			$this->set_message('delete_successful');
 			return true;
@@ -780,7 +773,7 @@ class Ion_auth
 		$_output = '';
 		foreach ($this->messages as $message)
 		{
-			$_output .= $this->message_start_delimiter . $this->ci->lang->line($message) . $this->message_end_delimiter;
+			$_output .= $this->message_start_delimiter . ci()->lang->line($message) . $this->message_end_delimiter;
 		}
 
 		return $_output;
@@ -814,7 +807,7 @@ class Ion_auth
 		$_output = '';
 		foreach ($this->errors as $error)
 		{
-			$_output .= $this->error_start_delimiter . $this->ci->lang->line($error) . $this->error_end_delimiter;
+			$_output .= $this->error_start_delimiter . ci()->lang->line($error) . $this->error_end_delimiter;
 		}
 
 		return $_output;
@@ -830,7 +823,7 @@ class Ion_auth
 	 **/
         public function username_check($username)
         {
-                return $this->ci->ion_auth_model->username_check($username);
+                return ci()->ion_auth_model->username_check($username);
         }
         
         /** email_check
@@ -843,7 +836,7 @@ class Ion_auth
 	 **/
         public function email_check($email)
         {
-                return $this->ci->ion_auth_model->email_check($email);
+                return ci()->ion_auth_model->email_check($email);
         }
 
 }

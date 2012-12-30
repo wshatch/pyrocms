@@ -494,7 +494,7 @@ class MY_Exceptions extends CI_Exceptions
      */
     private static function is_extension($file)
     {
-        foreach(array('libraries/', 'core/') as $folder)
+        foreach(array('Library/', 'Core/') as $folder)
         {
             if(strpos($file, APPPATH . $folder . config_item('subclass_prefix')) === 0)
             {

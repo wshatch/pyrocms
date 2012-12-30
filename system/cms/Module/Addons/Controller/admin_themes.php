@@ -45,15 +45,11 @@ class Admin_themes extends Admin_Controller
 
 		$data = array();
 
-		foreach ($themes as $theme)
-		{
-			if ( ! isset($theme->type) or $theme->type != 'admin')
-			{
-				if ($theme->slug == $this->settings->default_theme)
-				{
+		foreach ($themes as $theme) {
+			if ( ! isset($theme->type) or $theme->type != 'admin') {
+				if ($theme->slug == Settings::get('default_theme')) {
 					$theme->is_default = true;
 				}
-
 				$data['themes'][] = $theme;
 			}
 		}
@@ -188,13 +184,11 @@ class Admin_themes extends Admin_Controller
 	 */
 	public function upload()
 	{
-		if ( ! $this->settings->addons_upload)
-		{
+		if ( ! Settings::get('addons_upload')) {
 			show_error('Uploading add-ons has been disabled for this site. Please contact your administrator');
 		}
 
-		if ($this->input->post('btnAction') == 'upload')
-		{
+		if ($this->input->post('btnAction') == 'upload') {
 			$config['upload_path'] = FCPATH.UPLOAD_PATH;
 			$config['allowed_types'] = 'zip';
 			$config['max_size'] = '2048';
@@ -202,18 +196,15 @@ class Admin_themes extends Admin_Controller
 
 			$this->load->library('upload', $config);
 
-			if ($this->upload->do_upload())
-			{
+			if ($this->upload->do_upload()) {
 				$upload_data = $this->upload->data();
 
 				// Check if we already have a dir with same name
-				if ($this->template->theme_exists($upload_data['raw_name']))
-				{
+				if ($this->template->theme_exists($upload_data['raw_name'])) {
 					$this->session->set_flashdata('error', lang('themes.already_exists_error'));
 				}
 
-				else
-				{
+				else {
 					// Now try to unzip
 					$this->load->library('unzip');
 
@@ -227,11 +218,9 @@ class Admin_themes extends Admin_Controller
 				}
 
 				// Delete uploaded file
-				@unlink($upload_data['full_path']);
+				unlink($upload_data['full_path']);
 			}
-
-			else
-			{
+			else {
 				$this->session->set_flashdata('error', $this->upload->display_errors());
 			}
 
@@ -256,55 +245,44 @@ class Admin_themes extends Admin_Controller
 		$name_array = $theme_name ? array($theme_name) : $this->input->post('action_to');
 
 		// Delete multiple
-		if ( ! empty($name_array))
-		{
+		if ( ! empty($name_array)) {
 			$deleted = 0;
 			$to_delete = 0;
 			$deleted_names = array();
 
-			foreach ($name_array as $theme_name)
-			{
+			foreach ($name_array as $theme_name) {
 				$theme_name = urldecode($theme_name);
 				$to_delete++;
 
-				if ($this->settings->default_theme == $theme_name)
-				{
+				if (Settings::get('default_theme') == $theme_name) {
 					$this->session->set_flashdata('error', lang('themes.default_delete_error'));
 				}
 
-				else
-				{
+				else {
 					$theme_dir = ADDONPATH.'themes/'.$theme_name;
 
-					if (is_really_writable($theme_dir))
-					{
+					if (is_really_writable($theme_dir)) {
 						delete_files($theme_dir, true);
 
-						if (@rmdir($theme_dir))
-						{
+						if (rmdir($theme_dir)) {
 							$deleted++;
 							$deleted_names[] = $theme_name;
 						}
 					}
-
-					else
-					{
+					else {
 						$this->session->set_flashdata('error', sprintf(lang('themes.delete_error'), $theme_dir));
 					}
 				}
 			}
 
-			if ($deleted == $to_delete)
-			{
+			if ($deleted == $to_delete) {
 				// Fire an event. One or more themes have been deleted.
 				Events::trigger('theme_deleted', $deleted_names);
 
 				$this->session->set_flashdata('success', sprintf(lang('themes.mass_delete_success'), $deleted, $to_delete));
 			}
 		}
-
-		else
-		{
+		else {
 			$this->session->set_flashdata('error', lang('themes.delete_select_error'));
 		}
 

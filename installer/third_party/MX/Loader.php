@@ -141,7 +141,7 @@ class MX_Loader extends CI_Loader
 			
 		($_alias = strtolower($object_name)) OR $_alias = $class;
 		
-		list($path, $_library) = Modules::find($library, $this->_module, 'libraries/');
+		list($path, $_library) = Modules::find($library, $this->_module, 'Library/');
 		
 		/* load library config file as params */
 		if ($params == NULL) {

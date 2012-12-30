@@ -6,7 +6,7 @@
  * @copyright   Copyright (c) 2012, PyroCMS LLC
  * @package 	PyroCMS\Core\Libraries 
  */
-require APPPATH."libraries/MX/Lang.php";
+require APPPATH."Library/MX/Lang.php";
 
 /**
  * General Language library class for using in PyroCMS

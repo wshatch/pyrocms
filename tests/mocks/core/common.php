@@ -43,7 +43,7 @@ if ( ! function_exists('config_item'))
 
 if ( ! function_exists('load_class'))
 {
-	function load_class($class, $directory = 'libraries', $prefix = 'CI_')
+	function load_class($class, $directory = 'Library', $prefix = 'CI_')
 	{
 		if ($directory !== 'core' OR $prefix !== 'CI_')
 		{

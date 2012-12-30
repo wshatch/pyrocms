@@ -61,7 +61,6 @@ class Admin extends Admin_Controller
 		// Load the required classes
 		$this->load->model('user_m');
 		$this->load->model('groups/group_m');
-		$this->load->helper('user');
 		$this->load->library('form_validation');
 		$this->lang->load('user');
 

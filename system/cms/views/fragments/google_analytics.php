@@ -1,9 +1,9 @@
-<?php if ($this->settings->ga_tracking): ?>
+<?php if (Settings::get('ga_tracking')): ?>
 
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '<?php echo $this->settings->ga_tracking;?>'], ['_trackPageview']);
+  _gaq.push(['_setAccount', '<?php echo Settings::get('ga_tracking') ?>'], ['_trackPageview']);
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -13,4 +13,4 @@
 
 </script>
 
-<?php endif; ?>
+<?php endif ?>

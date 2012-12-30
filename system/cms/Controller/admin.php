@@ -9,16 +9,6 @@
 class Admin extends Admin_Controller
 {
 	/**
-	 * Constructor method
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->load->helper('users/user');
-	}
-
-	/**
 	 * Show the control panel
 	 */
 	public function index()

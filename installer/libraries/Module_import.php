@@ -1,9 +1,9 @@
 <?php
 
-include PYROPATH.'core/MY_Model.php';
+include PYROPATH.'Core/MY_Model.php';
 
 // All modules talk to the Module class, best get that!
-include PYROPATH.'libraries/Module.php';
+include PYROPATH.'Library/Module.php';
 
 class Module_import
 {
@@ -109,18 +109,17 @@ class Module_import
 	{
 		// Install settings and streams core first. Other modules may need them.
 		$this->install('settings', true);
-		ci()->load->library('settings/settings');
 		$this->install('streams_core', true);
 
 		// Are there any modules to install on this path?
-		if ($modules = glob(PYROPATH.'modules/*', GLOB_ONLYDIR))
+		if ($modules = glob(PYROPATH.'Module/*', GLOB_ONLYDIR))
 		{
 			// Loop through modules
 			foreach ($modules as $module_name)
 			{
 				$slug = basename($module_name);
 
-				if ($slug == 'streams_core' or $slug == 'settings')
+				if ($slug == 'Streams_core' or $slug == 'Settings')
 				{
 					continue;
 				}
@@ -160,12 +159,12 @@ class Module_import
 		$path = $is_core ? PYROPATH : ADDONPATH;
 
 		// Before we can install anything we need to know some details about the module<<<<<<< HEAD
-		$details_file = "{$path}modules/{$slug}/details.php";
+		$details_file = "{$path}Module/{$slug}/details.php";
 
 		// If it didn't exist as a core module or an addon then check shared_addons
 		if ( ! is_file($details_file))
 		{
-			$details_file = "{SHARED_ADDONPATH}modules/{$slug}/details.php";
+			$details_file = "{SHARED_ADDONPATH}Module/{$slug}/details.php";
 
 			if ( ! is_file($details_file))
 			{

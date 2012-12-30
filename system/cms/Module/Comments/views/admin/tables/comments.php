@@ -50,7 +50,7 @@
 					<td><?php echo format_date($comment->created_on) ?></td>
 					
 					<td class="align-center buttons buttons-small">
-						<?php if ($this->settings->moderate_comments): ?>
+						<?php if (Settings::get('moderate_comments')): ?>
 							<?php if ($comment->is_active): ?>
 								<?php echo anchor('admin/comments/unapprove/'.$comment->id, lang('buttons:deactivate'), 'class="button deactivate"') ?>
 							<?php else: ?>

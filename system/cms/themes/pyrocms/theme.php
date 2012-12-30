@@ -121,29 +121,26 @@ class Theme_Pyrocms extends Theme {
 	 */
 	public function get_analytics()
 	{
-		if ( ! ($this->settings->ga_email and $this->settings->ga_password and $this->settings->ga_profile))
+		if ( ! (Settings::get('ga_email') and Settings::get('ga_password') and Settings::get('ga_profile')))
 		{
 			return;
 		}
 		
 		// Not false? Return it
-		if ($cached_response = $this->cache->get('analytics'))
-		{
+		if (($cached_response = $this->cache->get('analytics'))) {
 			$data['analytic_visits'] = $cached_response['analytic_visits'];
 			$data['analytic_views'] = $cached_response['analytic_views'];
 		}
 
-		else
-		{
-			try
-			{
+		else {
+			try {
 				$this->load->library('analytics', array(
-					'username' => $this->settings->ga_email,
-					'password' => $this->settings->ga_password
+					'username' => Settings::get('ga_email'),
+					'password' => Settings::get('ga_password'),
 				));
 
 				// Set by GA Profile ID if provided, else try and use the current domain
-				$this->analytics->setProfileById('ga:'.$this->settings->ga_profile);
+				$this->analytics->setProfileById('ga:'.Settings::get('ga_profile'));
 
 				$end_date = date('Y-m-d');
 				$start_date = date('Y-m-d', strtotime('-1 month'));
@@ -154,10 +151,8 @@ class Theme_Pyrocms extends Theme {
 				$views = $this->analytics->getPageviews();
 
 				/* build tables */
-				if (count($visits))
-				{
-					foreach ($visits as $date => $visit)
-					{
+				if (count($visits)) {
+					foreach ($visits as $date => $visit) {
 						$year = substr($date, 0, 4);
 						$month = substr($date, 4, 2);
 						$day = substr($date, 6, 2);
@@ -178,9 +173,7 @@ class Theme_Pyrocms extends Theme {
 				// Call the model or library with the method provided and the same arguments
 				$this->cache->set('analytics', array('analytic_visits' => $flot_data_visits, 'analytic_views' => $flot_data_views), 60 * 60 * 6); // 6 hours
 			}
-
-			catch (Exception $e)
-			{
+			catch (Exception $e) {
 				$data['messages']['notice'] = sprintf(lang('cp_google_analytics_no_connect'), anchor('admin/settings', lang('cp_nav_settings')));
 			}
 		}

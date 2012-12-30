@@ -20,7 +20,6 @@ class Users extends Public_Controller
 
 		// Load the required classes
 		$this->load->model('user_m');
-		$this->load->helper('user');
 		$this->lang->load('user');
 		$this->load->library('form_validation');
 	}

@@ -61,9 +61,9 @@ class Streams extends CI_Driver_Library {
 		$this->CI->load->model(array('streams_core/row_m', 'streams_core/streams_m', 'streams_core/fields_m'));
 		
 		// Load the language file
-		if(is_dir(APPPATH.'libraries/Streams'))
+		if(is_dir(APPPATH.'Library/Streams'))
 		{
-			$this->CI->lang->load('streams_api', 'english', false, true, APPPATH.'libraries/Streams/');
+			$this->CI->lang->load('streams_api', 'english', false, true, APPPATH.'Library/Streams/');
 		}
 	}
 

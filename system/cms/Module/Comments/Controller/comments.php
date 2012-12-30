@@ -112,26 +112,22 @@ class Comments extends Public_Controller
 			// ALLOW ZEH COMMENTS!? >:D
 			$result = $this->_allow_comment();
 
-			foreach ($comment as &$data)
-			{
+			foreach ($comment as &$data) {
 				// Remove {pyro} tags and html
 				$data = escape_tags($data);
 			}
 
 			// Run Akismet or the crazy CSS bot checker
-			if ($result['status'] !== true)
-			{
+			if ($result['status'] !== true) {
 				$this->session->set_flashdata('comment', $comment);
 				$this->session->set_flashdata('error', $result['message']);
 			}
 			else
 			{
 				// Save the comment
-				if ($comment_id = $this->comment_m->insert($comment))
-				{
+				if ($comment_id = $this->comment_m->insert($comment)) {
 					// Approve the comment straight away
-					if (!$this->settings->moderate_comments or (isset($this->current_user->group) and $this->current_user->group == 'admin'))
-					{
+					if ( ! Settings::get('moderate_comments') or (isset($this->current_user->group) and $this->current_user->group == 'admin')) {
 						$this->session->set_flashdata('success', lang('comments:add_success'));
 
 						// Add an event so third-party devs can hook on
@@ -139,16 +135,14 @@ class Comments extends Public_Controller
 					}
 
 					// Do we need to approve the comment?
-					else
-					{
+					else {
 						$this->session->set_flashdata('success', lang('comments:add_approve'));
 					}
 
 					$comment['comment_id'] = $comment_id;
 
 					// If markdown is allowed we will parse the body for the email
-					if (Settings::get('comment_markdown'))
-					{
+					if (Settings::get('comment_markdown')) {
 						$comment['comment'] = parse_markdown($comment['comment']);
 					}
 

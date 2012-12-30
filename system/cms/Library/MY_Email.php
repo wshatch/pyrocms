@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
 /**
  * MY_Email
  * Allows for email config settings to be stored in the db.

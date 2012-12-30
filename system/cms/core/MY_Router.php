@@ -1,6 +1,6 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
-require APPPATH."libraries/MX/Router.php";
+require APPPATH."Library/MX/Router.php";
 
 /**
  * The Router Handler Library.

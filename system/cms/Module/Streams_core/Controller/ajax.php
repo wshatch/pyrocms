@@ -52,7 +52,7 @@ class Ajax extends MY_Controller {
 		$namespace = $this->input->post('namespace');
 		
 		// Load paramaters
-		require_once(APPPATH.'modules/streams_core/libraries/Parameter_fields.php');
+		require_once(APPPATH.'modules/streams_core/Library/Parameter_fields.php');
 		
 		$parameters = new Parameter_fields();
 	

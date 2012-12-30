@@ -11,7 +11,8 @@
     "autoload": {
         "classmap": [
             "system/cms/Controller",
-            "system/cms/libraries"
+            "system/cms/Core",
+            "system/cms/Library"
         ],
         "psr-0": {
             "Module" : "system/cms"

@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  Load the global functions
  * ------------------------------------------------------
  */
-	require_once(BASEPATH.'core/Common.php');
+	require_once(BASEPATH.'Core/Common.php');
 
 /*
  * ------------------------------------------------------
@@ -219,7 +219,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  */
 	// Load the base controller class
-	require BASEPATH.'core/Controller.php';
+	require BASEPATH.'Core/Controller.php';
 
 	/**
 	 * Reference to the CI_Controller method.
@@ -233,9 +233,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		return CI_Controller::get_instance();
 	}
 
-	if (file_exists(APPPATH.'core/'.$CFG->config['subclass_prefix'].'Controller.php'))
+	if (file_exists(APPPATH.'Core/'.$CFG->config['subclass_prefix'].'Controller.php'))
 	{
-		require APPPATH.'core/'.$CFG->config['subclass_prefix'].'Controller.php';
+		require APPPATH.'Core/'.$CFG->config['subclass_prefix'].'Controller.php';
 	}
 
 	// Load the local application controller

@@ -119,13 +119,13 @@ class Modules
 		}
 		
 		/* autoload core classes */
-		if(is_file($location = APPPATH.'core/'.$class.'.php')) {
+		if(is_file($location = APPPATH.'Core/'.$class.'.php')) {
 			include_once $location;
 			return;
 		}		
 		
 		/* autoload library classes */
-		if(is_file($location = APPPATH.'libraries/'.$class.'.php')) {
+		if(is_file($location = APPPATH.'Library/'.$class.'.php')) {
 			include_once $location;
 			return;
 		}		
@@ -181,7 +181,7 @@ class Modules
 			foreach($modules as $module => $subpath) {			
 				$fullpath = $location.$module.'/'.$base.$subpath;
 				
-				if ($base == 'libraries/' AND is_file($fullpath.ucfirst($file_ext))) 
+				if ($base == 'Library/' AND is_file($fullpath.ucfirst($file_ext))) 
 					return array($fullpath, ucfirst($file));
 					
 				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);

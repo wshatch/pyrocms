@@ -112,7 +112,7 @@ class Widget_Twitter_feed extends Widgets
 
 			$tweets = json_decode(@file_get_contents($this->feed_url.$url_segments, false, $context));
 
-			$this->cache->set('twitter-'.$options['username'].'-'.$options['number'], $tweets, $this->settings->twitter_cache);
+			$this->cache->set('twitter-'.$options['username'].'-'.$options['number'], $tweets, Settings::get('twitter_cache'));
 		}
 
 		$patterns = array(

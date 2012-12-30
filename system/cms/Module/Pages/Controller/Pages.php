@@ -198,10 +198,8 @@ var_dump($page);
         // Not got a meta title? Use slogan for homepage or the normal page title for other pages
         if ( ! $meta_title)
         {
-            $meta_title = $page->is_home ? $this->settings->site_slogan : $page->title;
+            $meta_title = $page->is_home ? Settings::get('site_slogan') : $page->title;
         }
-
-        // ---------------------------------
 
         // We do this before parsing the page contents so that 
         // title, meta, & breadcrumbs can be overridden with tags in the page content
@@ -307,10 +305,10 @@ var_dump($page);
         
         $data = array(
             'rss' => array(
-                'title' => ($page->meta_title ? $page->meta_title : $page->title).' | '.$this->settings->site_name,
+                'title' => ($page->meta_title ? $page->meta_title : $page->title).' | '.Settings::get('site_name'),
                 'description' => $page->meta_description,
                 'link' => site_url($url_segments),
-                'creator_email' => $this->settings->contact_email,
+                'creator_email' => Settings::get('contact_email'),
                 'items' => array(),
             ),
         );

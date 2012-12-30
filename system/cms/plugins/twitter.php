@@ -86,7 +86,7 @@ class Plugin_Twitter extends Plugin
 		{
 			$tweets = json_decode(file_get_contents($this->feed_url.'&screen_name='.$username.'&count='.$limit));
 
-			$this->cache->set('twitter-'.$username, $this->settings->twitter_cache, $tweets);
+			$this->cache->set('twitter-'.$username, Settings::get('twitter_cache'), $tweets);
 		}
 
 		$patterns = array(

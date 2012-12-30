@@ -13,7 +13,6 @@ class Migration_Convert_user_profiles_table extends CI_Migration {
         }
 
     	$this->load->language('users/user');
-    	$this->load->library('settings/Settings');
 
     	// Load up the streams driver and convert the profiles table
     	// into a stream.

@@ -1,5 +1,9 @@
 <?php
 
+namespace Module\Settings\Model;
+
+use \CI_Model;
+
 /**
  * PyroCMS Setting Model
  *
@@ -8,13 +12,12 @@
  * @author		PyroCMS Dev Team
  * @package		PyroCMS\Core\Modules\Settings\Models
  */
-
-class Setting_m extends CI_Model {
+class Setting extends CI_Model {
 
 	/**
 	 * Gets a single setting using the key.
 	 *
-	 * @param	mixed	$where
+	 * @param	string	$key
 	 * @return	object
 	 */
 	public function get($key)
@@ -95,4 +98,4 @@ class Setting_m extends CI_Model {
 
 }
 
-/* End of file setting_m.php */
+/* End of file Setting.php */

@@ -49,12 +49,6 @@ class Type
 		// This defaults to english.
 		$langs = $this->CI->config->item('supported_languages');
 
-		// Needed for installer
-		if ( ! class_exists('Settings'))
-		{
-			$this->CI->load->library('settings/Settings');
-		}
-
 		// Obj to hold all our field types
 		$this->types = new stdClass;
 		

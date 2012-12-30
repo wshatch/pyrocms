@@ -914,19 +914,19 @@ class CI_Loader {
 			if (strtolower(trim($subdir, '/')) == strtolower($class) && ! class_exists('CI_Driver_Library'))
 			{
 				// We aren't instantiating an object here, just making the base class available
-				require BASEPATH.'libraries/Driver.php';
+				require BASEPATH.'Library/Driver.php';
 			}
 		}
 
 		// We'll test for both lowercase and capitalized versions of the file name
 		foreach (array(ucfirst($class), strtolower($class)) as $class)
 		{
-			$subclass = APPPATH.'libraries/'.$subdir.config_item('subclass_prefix').$class.'.php';
+			$subclass = APPPATH.'Library/'.$subdir.config_item('subclass_prefix').$class.'.php';
 
 			// Is this a class extension request?
 			if (file_exists($subclass))
 			{
-				$baseclass = BASEPATH.'libraries/'.ucfirst($class).'.php';
+				$baseclass = BASEPATH.'Library/'.ucfirst($class).'.php';
 
 				if ( ! file_exists($baseclass))
 				{
@@ -965,7 +965,7 @@ class CI_Loader {
 			$is_duplicate = FALSE;
 			foreach ($this->_ci_library_paths as $path)
 			{
-				$filepath = $path.'libraries/'.$subdir.$class.'.php';
+				$filepath = $path.'Library/'.$subdir.$class.'.php';
 
 				// Does the file exist? No? Bummer...
 				if ( ! file_exists($filepath))

@@ -782,7 +782,6 @@ class Row_m extends MY_Model {
 	 * Get a row. Also has the option
 	 * to format that data before returning it.
 	 *
-	 * @access	public
 	 * @param	int
 	 * @param	obj
 	 * @param	[bool]
@@ -1044,7 +1043,6 @@ class Row_m extends MY_Model {
 	/**
 	 * Update a row in a stream
 	 *
-	 * @access	public
 	 * @param	obj
 	 * @param 	string
 	 * @param	int

@@ -13,7 +13,6 @@
 /**
  * Checks to see if a user is logged in or not.
  * 
- * @access public
  * @return bool
  */
 function is_logged_in()
@@ -26,7 +25,6 @@ function is_logged_in()
 /**
  * Checks if a group has access to module or role
  * 
- * @access public
  * @param string $module sameple: pages
  * @param string $role sample: put_live
  * @return bool
@@ -58,7 +56,6 @@ function group_has_role($module, $role)
 /**
  * Checks if role has access to module or returns error 
  * 
- * @access public
  * @param string $module sample: pages
  * @param string $role sample: edit_live
  * @param string $redirect_to (default: 'admin') Url to redirect to if no access
@@ -95,8 +92,7 @@ function role_or_die($module, $role, $redirect_to = 'admin', $message = '')
 function user_displayname($user, $linked = true)
 {
     // User is numeric and user hasn't been pulled yet isn't set.
-    if (is_numeric($user))
-    {
+    if (is_numeric($user)) {
         $user = ci()->ion_auth->get_user($user);
     }
 
@@ -104,27 +100,22 @@ function user_displayname($user, $linked = true)
     $name = empty($user['display_name']) ? $user['username'] : $user['display_name'];
 
     // Static var used for cache
-    if ( ! isset($_users))
-    {
+    if ( ! isset($_users)) {
         static $_users = array();
     }
 
     // check if it exists
-    if (isset($_users[$user['id']]))
-    {
-        if( ! empty( $_users[$user['id']]['profile_link'] ) and $linked)
-        {
+    if (isset($_users[$user['id']])) {
+        if ( ! empty( $_users[$user['id']]['profile_link'] ) and $linked) {
             return $_users[$user['id']]['profile_link'];
         }
-        else
-        {
+        else {
             return $name;
         }
     }
 
     // Set cached variable.
-    if (ci()->settings->enable_profiles and $linked)
-    {
+    if (Settings::get('enable_profiles') and $linked) {
         $_users[$user['id']]['profile_link'] = anchor('user/'.$user['id'], $name);
         return $_users[$user['id']]['profile_link'];
     }

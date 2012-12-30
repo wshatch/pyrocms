@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Settings\Library;
+
 /**
  * PyroCMS Settings Library
  *
@@ -28,11 +31,19 @@ class Settings {
 	);
 
 	/**
+	 * Settings cache
+	 *
+	 * @var	array
+	 */
+	private static $settingModel;
+
+	/**
 	 * Settings Construct
 	 */
 	public function __construct()
 	{
-		ci()->load->model('settings/setting_m');
+		static::$settingModel = new \Module\Settings\Model\Setting;
+
 		ci()->lang->load('settings/settings');
 	}
 
@@ -45,7 +56,7 @@ class Settings {
 	 */
 	public function __get($key)
 	{
-		return self::get($key);
+		return static::get($key);
 	}
 
 	/**
@@ -59,7 +70,7 @@ class Settings {
 	 */
 	public function __set($key, $value)
 	{
-		return self::set($key, $value);
+		return static::set($key, $value);
 	}
 
 	/**
@@ -72,18 +83,20 @@ class Settings {
 	 */
 	public static function get($key)
 	{
-		if (isset(self::$cache[$key]))
+		if (isset(static::$cache[$key]))
 		{
-			return self::$cache[$key];
+			return static::$cache[$key];
 		}
 
-		$setting = ci()->setting_m->get($key);
+		$setting = static::$settingModel->get($key);
 
 		// Setting doesn't exist, maybe it's a config option
-		$value = $setting ? ($setting->value ?: $setting->default) : config_item($key);
+		$value = $setting 
+			? is_null($setting->value) ? $setting->default : $setting->value
+			: config_item($key);
 
 		// Store it for later
-		self::$cache[$key] = $value;
+		static::$cache[$key] = $value;
 
 		return $value;
 	}
@@ -103,10 +116,10 @@ class Settings {
 		{
 			if (is_scalar($value))
 			{
-				$setting = ci()->setting_m->update($key, array('value' => $value));
+				$setting = static::$settingModel->update($key, array('value' => $value));
 			}
 
-			self::$cache[$key] = $value;
+			static::$cache[$key] = $value;
 
 			return true;
 		}
@@ -127,7 +140,7 @@ class Settings {
 	{
 		// store the temp value in the cache so that all subsequent calls
 		// for this request will use it instead of the database value
-		self::$cache[$key] = $value;
+		static::$cache[$key] = $value;
 	}
 
 	/**
@@ -137,21 +150,21 @@ class Settings {
 	 *
 	 * @return	array
 	 */
-	public static function get_all()
+	public static function getAll()
 	{
-		if (self::$cache)
+		if (static::$cache)
 		{
-			return self::$cache;
+			return static::$cache;
 		}
 
-		$settings = ci()->setting_m->getAll();
+		$settings = static::$settingModel->getAll();
 
 		foreach ($settings as $setting)
 		{
-			self::$cache[$setting['slug']] = $setting['value'];
+			static::$cache[$setting->slug] = is_null($setting->value) ? $setting->default : $setting->value;
 		}
 
-		return self::$cache;
+		return static::$cache;
 	}
 
 	/**
@@ -181,7 +194,7 @@ class Settings {
 	 */
 	public static function delete($name)
 	{
-		return ci()->setting_m->delete($key);
+		return static::$settingModel->delete($key);
 	}
 
 	/**
@@ -305,7 +318,7 @@ class Settings {
 			case 'radio':
 
 				$form_control = '';
-				foreach (self::_format_options($setting->options) as $value => $label)
+				foreach (static::_format_options($setting->options) as $value => $label)
 				{
 					$form_control .= '<label class="inline">' . form_radio(array(
 						'id'		=> $setting->slug,
@@ -336,9 +349,9 @@ class Settings {
 		{
 			list($value, $key) = explode('=', $option);
 
-			if (ci()->lang->line('settings:form_option_' . $key) !== false)
+			if (lang('settings:form_option_' . $key) !== false)
 			{
-				$key = ci()->lang->line('settings:form_option_' . $key);
+				$key = lang('settings:form_option_' . $key);
 			}
 
 			$select_array[$value] = $key;

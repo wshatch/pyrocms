@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH."libraries/MX/Controller.php";
+require APPPATH."Library/MX/Controller.php";
 
 /**
  * Code here is run before ALL controllers
@@ -58,19 +58,21 @@ class MY_Controller extends MX_Controller
         // Migration logic helps to make sure PyroCMS is running the latest changes
         $this->load->library('migration');
         
-        if ( ! ($schema_version = $this->migration->current()))
-        {
+        if ( ! ($schema_version = $this->migration->current())) {
             show_error($this->migration->error_string());
         }
 
         // Result of schema version migration
-        elseif (is_numeric($schema_version))
-        {
+        elseif (is_numeric($schema_version)) {
             log_message('debug', 'PyroCMS was migrated to version: ' . $schema_version);
         }
 
+        // @TODO Switch to use L4's alias system
+        class_exists('Settings') or class_alias('\\Module\\Settings\\Library\\Settings', 'Settings');
+
         // With that done, load settings
-        $this->load->library('settings/settings');
+        $this->settings = new Settings;
+        $this->settings->getAll();
 
         // And session stuff too
         $this->load->driver('session');
@@ -205,6 +207,12 @@ class MY_Controller extends MX_Controller
 
     public function setupDatabase()
     {
+        // @TODO Get rid of this for 3.0
+        if ( ! class_exists('CI_Model'))
+        {
+            load_class('Model', 'core');
+        }
+
         $prefix = SITE_REF.'_';
 
         // By changing the prefix we are essentially "namespacing" each site

@@ -682,7 +682,7 @@ class Streams_cp extends CI_Driver {
 				}
 				
 				// Get our standard params
-				require_once(PYROSTEAMS_DIR.'libraries/Parameter_fields.php');
+				require_once PYROSTEAMS_DIR.'Library/Parameter_fields.php';
 				
 				$data['parameters'] = new Parameter_fields();
 				

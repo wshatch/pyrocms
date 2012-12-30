@@ -24,10 +24,7 @@ class Admin extends Admin_Controller {
 	{
 		parent::__construct();
 
-		$this->load->model('setting_m');
-		$this->load->library('settings');
 		$this->load->library('form_validation');
-		$this->lang->load('settings');
 		$this->template->append_js('module::settings.js');
 		$this->template->append_css('module::settings.css');
 	}
@@ -46,7 +43,7 @@ class Admin extends Admin_Controller {
 		// Loop through each setting
 		foreach ($settings as $key => $setting)
 		{
-			$setting->form_control = $this->settings->form_control($setting);
+			$setting->form_control = Settings::form_control($setting);
 
 			if (empty($setting->module))
 			{
