@@ -266,10 +266,11 @@ class MY_Controller extends MX_Controller
 }
 
 /**
- * Returns the CodeIgniter object.
+ * CI
  *
  * Example: ci()->db->get('table');
- *
+ * 
+ * @deprecated All of CodeIgniter is being deprecated, so stop using this ASAP
  * @return \CI_Controller
  */
 function ci()

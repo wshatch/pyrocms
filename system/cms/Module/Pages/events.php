@@ -10,28 +10,21 @@
  * @author		PyroCMS - Adam Fairholm
  */
 class Events_Pages {
-    
-    protected $CI;
  
-  	// --------------------------------------------------------------------------
-   
     public function __construct()
-    {        
+    {
         Events::register('streams_core_add_addon_path', array($this, 'add_pages_ft_folder'));
     }
  
- 	// --------------------------------------------------------------------------
-   
     /**
      * Add pages field_types folder to the
      * field type folder list. 
      *
-     * @access	public
      * @return	void
      */
     public function add_pages_ft_folder($type)
     {
-        if (get_instance()->db->table_exists('page_chunks'))
+        if (ci()->pdb->hasTable('page_chunks'))
         {
             $type->add_ft_path('pages_ft_path', APPPATH.'modules/pages/field_types/');
         }
