@@ -48,6 +48,7 @@ class Installer extends CI_Controller
 
 	/** @var array The view variables for creating the language menu */
 	private $language_nav = array();
+
 	/**
 	 * At start this controller should:
 	 * 1. Load the array of supported servers
@@ -65,8 +66,7 @@ class Installer extends CI_Controller
 		// Get the supported languages
 		$this->_discover_languages();
 
-		if ($this->session->userdata('language'))
-		{
+		if ($this->session->userdata('language')) {
 			$this->config->set_item('language', $this->session->userdata('language'));
 		}
 		$current_language = $this->config->item('language');
@@ -86,7 +86,7 @@ class Installer extends CI_Controller
 
 		// set the supported languages to be saved in Settings for emails and .etc
 		// modules > settings > Module.php uses this
-		require_once(PYROPATH.'/config/language.php');
+		require PYROPATH.'/config/language.php';
 
 		// Check that the language configuration has been loaded.
 		isset($config) or exit('Could not load language configuration.');

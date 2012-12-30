@@ -2,9 +2,6 @@
 
 include PYROPATH.'Core/MY_Model.php';
 
-// All modules talk to the Module class, best get that!
-include PYROPATH.'Library/Module.php';
-
 class Module_import
 {
 	public function __construct(array $params)
@@ -53,15 +50,7 @@ class Module_import
 		$details_class->upload_path = 'uploads/default/';
 
 		// Run the install method to get it into the database
-		try  {
-			$details_class->install();
-		} 
-		catch (Exception $e) {
-			// TODO Do something useful
-			exit('HEY '.$e->getMessage()." in ".$e->getFile()."<br />");
-
-			return false;
-		}
+		$details_class->install();
 
 		// Looks like it installed ok, add a record
 		return $this->add($module);

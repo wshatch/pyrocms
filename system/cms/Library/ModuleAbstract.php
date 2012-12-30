@@ -2,6 +2,8 @@
 
 namespace Library;
 
+use \Illuminate\Database\Connection;
+
 /**
  * PyroCMS Module Definition
  *
@@ -78,7 +80,7 @@ abstract class ModuleAbstract {
 	 *
 	 * @param Illuminate\Database\Connection $pdb The Laravel database connection
 	 */
-	public function __construct(Illuminate\Database\Connection $pdb = null)
+	public function __construct(Connection $pdb = null)
 	{
 		$pdb and $this->pdb = $pdb;
 	}
@@ -105,6 +107,11 @@ abstract class ModuleAbstract {
 	{
 		static $ci;
 		isset($ci) OR $ci =& get_instance();
+
+		if ( ! isset($ci->{$var})) {
+			throw new \OutOfBoundsException("CodeIgniter does not have a \"{$var}\" library or model loaded.");
+		}
+
 		return $ci->{$var};
 	}
 }

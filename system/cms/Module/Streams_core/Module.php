@@ -152,11 +152,11 @@ class Module extends \Library\ModuleAbstract
 	{
 		if (defined('PYROPATH'))
 		{
-			require_once(PYROPATH.'modules/streams_core/config/streams.php');
+			require_once(PYROPATH.'Module/Streams_core/config/streams.php');
 		}
 		elseif (defined('APPPATH'))
 		{
-			require_once(APPPATH.'modules/streams_core/config/streams.php');
+			require_once(APPPATH.'Modules/Streams_core/config/streams.php');
 		}
 
 		return (isset($config)) ? $config : false;

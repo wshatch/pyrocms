@@ -1,6 +1,6 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
-require APPPATH.'third_party/MX/Loader.php';
+require APPPATH.'Library/MX/Loader.php';
 
 /**
  * This is the loader class used throughout PyroCMS.
@@ -70,7 +70,7 @@ class MY_Loader extends MX_Loader
 	 *
 	 * @return \MY_Loader
 	 */
-	function initialize($controller = null)
+	public function initialize($controller = null)
 	{
 		parent::initialize();
 

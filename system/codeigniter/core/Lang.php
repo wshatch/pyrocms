@@ -97,7 +97,7 @@ class CI_Lang {
 		}
 
 		// Load the base file, so any others found can override it
-		$basepath = BASEPATH.'language/'.$idiom.'/'.$langfile;
+		$basepath = BASEPATH.'Language/'.$idiom.'/'.$langfile;
 		if (($found = file_exists($basepath)) === TRUE)
 		{
 			include($basepath);
@@ -106,7 +106,7 @@ class CI_Lang {
 		// Do we have an alternative path to look in?
 		if ($alt_path !== '')
 		{
-			$alt_path .= 'language/'.$idiom.'/'.$langfile;
+			$alt_path .= 'Language/'.$idiom.'/'.$langfile;
 			if (file_exists($alt_path))
 			{
 				include($alt_path);
@@ -117,7 +117,7 @@ class CI_Lang {
 		{
 			foreach (get_instance()->load->get_package_paths(TRUE) as $package_path)
 			{
-				$package_path .= 'language/'.$idiom.'/'.$langfile;
+				$package_path .= 'Language/'.$idiom.'/'.$langfile;
 				if ($basepath !== $package_path && file_exists($package_path))
 				{
 					include($package_path);
@@ -129,12 +129,12 @@ class CI_Lang {
 
 		if ($found !== TRUE)
 		{
-			show_error('Unable to load the requested language file: language/'.$idiom.'/'.$langfile);
+			throw new Exception('Unable to load the requested language file: Language/'.$idiom.'/'.$langfile);
 		}
 
 		if ( ! isset($lang) OR ! is_array($lang))
 		{
-			log_message('error', 'Language file contains no data: language/'.$idiom.'/'.$langfile);
+			log_message('error', 'Language file contains no data: Language/'.$idiom.'/'.$langfile);
 
 			if ($return === TRUE)
 			{
