@@ -87,11 +87,9 @@ class Pages extends Public_Controller
         $page = $this->page->getByUri($url_segments);
 
         // If page is missing or not live (and the user does not have permission) show 404
-        if ( ! $page or ($page->status == 'draft' and ! $this->permission_m->has_role(array('put_live', 'edit_live'))))
-        {
+        if ( ! $page or ($page->status == 'draft' and ! $this->permission_m->has_role(array('put_live', 'edit_live')))) {
             // Load the '404' page. If the actual 404 page is missing (oh the irony) bitch and quit to prevent an infinite loop.
-            if ( ! ($page = $this->cache->method('page_m', 'get_by_uri', array('404'))))
-            {
+            if ( ! ($page = $this->page->getByUri(404))) {
                 show_error('The page you are trying to view does not exist and it also appears as if the 404 page has been deleted.');
             }
         }

@@ -8,15 +8,12 @@
 /**
  * Get the site's ID based on SITE_REF
  */
-if(!function_exists('site_id'))
+if ( ! function_exists('site_id'))
 {
 	function site_id()
 	{
-		// Get ready
-		$CI = get_instance();
-
 		// Run query
-		$r = $CI->db->query("SELECT id FROM core_sites WHERE ref = '".$CI->db->escape_str(SITE_REF)."' LIMIT 1")->row(0);
+		$r = ci()->db->query("SELECT id FROM core_sites WHERE ref = '".ci()->db->escape_str(SITE_REF)."' LIMIT 1")->row();
 
 		return $r->id;
 	}

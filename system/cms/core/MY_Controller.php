@@ -71,8 +71,8 @@ class MY_Controller extends MX_Controller
         class_exists('Settings') or class_alias('\\Module\\Settings\\Library\\Settings', 'Settings');
 
         // With that done, load settings
-        $this->settings = new Settings;
-        $this->settings->getAll();
+        $settings = new Settings;
+        $settings->getAll();
 
         // And session stuff too
         $this->load->driver('session');
