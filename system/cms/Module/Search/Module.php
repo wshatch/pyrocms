@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Search;
 
 /**
  * Search module
@@ -6,7 +8,7 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Search
  */
-class Module_Search extends Module
+class Module extends \Library\ModuleAbstract
 {
     public $version = '1.0.0';
 
@@ -65,11 +67,10 @@ class Module_Search extends Module
 		$this->load->model('search/search_index_m');
 		$this->load->library('keywords/keywords');
 
-		foreach ($this->db->get('pages')->result() as $page)
-		{
+		foreach ($this->db->get('pages')->result() as $page) {
+
 			// Only index live articles
-	    	if ($page->status === 'live')
-	    	{
+	    	if ($page->status === 'live') {
 	    		$hash = $this->keywords->process($page->meta_keywords);
 
 	    		$this->db
@@ -84,7 +85,7 @@ class Module_Search extends Module
 	    			$page->id,
 	    			$page->uri,
 	    			$page->title,
-	    			$page->meta_description ? $page->meta_description : null, 
+	    			$page->meta_description ?: null, 
 	    			array(
 	    				'cp_edit_uri' 	=> 'admin/pages/edit/'.$page->id,
 	    				'cp_delete_uri' => 'admin/pages/delete/'.$page->id,

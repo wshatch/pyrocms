@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php 
+
+namespace Module\Contact;
 
 /**
  * Contact module
@@ -6,7 +8,7 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Contact
  */
-class Module_Contact extends Module
+class Module extends \Library\ModuleAbstract
 {
 	public $version = '1.1.0';
 

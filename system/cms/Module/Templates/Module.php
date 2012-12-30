@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Templates;
 
 /**
  * Templates Module
@@ -6,8 +8,8 @@
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Templates
  */
-class Module_Templates extends Module {
-
+class Module extends \Library\ModuleAbstract
+{
 	public $version = '1.1.0';
 
 	public function info()

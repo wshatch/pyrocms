@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Pages;
 
 /**
  * Pages Module
@@ -6,7 +8,7 @@
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Pages
  */
-class Module_Pages extends Module
+class Module extends \Library\ModuleAbstract
 {
 	public $version = '2.2.0';
 

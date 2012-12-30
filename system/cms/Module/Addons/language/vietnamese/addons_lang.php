@@ -34,7 +34,7 @@ $lang['addons:modules:upgrade_error']           = 'Không thể nâng cấp mô 
 $lang['addons:modules:upgrade_success']         = 'Mô đun "%s" đã được nâng cấp.';
 $lang['addons:modules:already_exists_error']    = 'Mô đun "%s" đã tồn tại trong hệ thống.';
 $lang['addons:modules:module_not_specified']    = 'Bạn phải chỉ rõ mô đun.';
-$lang['addons:modules:details_error']           = 'Có lỗi trong file details.php thuộc mô đun %s. Hãy sửa rồi cài đặt lại mô đun.';
+$lang['addons:modules:details_error']           = 'Có lỗi trong file Module.php thuộc mô đun %s. Hãy sửa rồi cài đặt lại mô đun.';
 
 $lang['addons:modules:manually_remove']         = 'Bạn phải tự loại bỏ "%s" để có thể hoàn tất việc loại bỏ mô đun.';
 $lang['addons:modules:upload_title']            = 'Tải lên';

@@ -26,7 +26,7 @@ $lang['addons:modules:upgrade_error']			= 'אין אפשרות לשדרג מוד
 $lang['addons:modules:upgrade_success']			= 'מודול "%s" שודרג בהצלחה.';
 $lang['addons:modules:already_exists_error']	= 'מודול עם שם "%s" כבר קיים.';
 $lang['addons:modules:module_not_specified']	= 'אתם חייבים לבחור מודול.';
-$lang['addons:modules:details_error']			= 'שגיעה בקובץ details.php של מודול %s . תקנו את השגיעה והתקינו את המודול מחדש.';
+$lang['addons:modules:details_error']			= 'שגיעה בקובץ Module.php של מודול %s . תקנו את השגיעה והתקינו את המודול מחדש.';
 
 $lang['addons:modules:manually_remove']			= 'הנכם חייבים למחוק "%s" באופן ידני כדי להסיר את המודול לגמרי.';
 $lang['addons:modules:upload_title']			= 'העלאת מודול';

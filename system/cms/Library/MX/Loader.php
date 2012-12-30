@@ -190,7 +190,7 @@ class MX_Loader extends CI_Loader
 			return CI::$APP->$_alias;
 			
 		/* check module */
-		list($path, $_model) = Modules::find(strtolower($model), $this->_module, 'models/');
+		list($path, $_model) = Modules::find(strtolower($model), $this->_module, 'Model/');
 		
 		if ($path == false) {
 			

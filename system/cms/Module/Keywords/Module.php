@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Keywords;
 
 /**
  * Keywords module
@@ -6,8 +8,8 @@
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Keywords
  */
-class Module_Keywords extends Module {
-
+class Module extends \Library\ModuleAbstract
+{
     public $version = '1.1.0';
 
     public $_tables = array('keywords', 'keywords_applied');

@@ -31,7 +31,7 @@ $lang['addons:modules:upgrade_error']           = 'Moduulia "%s" ei voitu päivi
 $lang['addons:modules:upgrade_success']         = 'Moduuli "%s" päivitettiin onnistuneesti.';
 $lang['addons:modules:already_exists_error']    = 'Moduuli nimeltään "%s" on jo olemassa.';
 $lang['addons:modules:module_not_specified']    = 'Sinun tulee valita moduuli.';
-$lang['addons:modules:details_error']           = '%s moduulin details.php tiedostoa luettaessa tapahtui virhe. Korjaa virhe ja asenna uudestaan.';
+$lang['addons:modules:details_error']           = '%s moduulin Module.php tiedostoa luettaessa tapahtui virhe. Korjaa virhe ja asenna uudestaan.';
 
 $lang['addons:modules:manually_remove']         = 'Sinun tulee manuaalisesti poistaa "%s" moduuli, jotta se poistuu kokonaan.';
 $lang['addons:modules:upload_title']            = 'Lataa moduuli';

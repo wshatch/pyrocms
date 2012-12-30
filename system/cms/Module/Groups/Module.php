@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Groups;
 
 /**
  * Groups module
@@ -6,7 +8,7 @@
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Groups
  */
- class Module_Groups extends Module
+class Module extends \Library\ModuleAbstract
 {
     public $version = '1.1.0';
 

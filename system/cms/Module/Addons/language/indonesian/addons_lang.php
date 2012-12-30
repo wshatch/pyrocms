@@ -26,7 +26,7 @@ $lang['addons:modules:upgrade_error']           = 'Tidak dapat memperbaharui mod
 $lang['addons:modules:upgrade_success']         = 'Modul "%s" berhasil diperbaharui.';
 $lang['addons:modules:already_exists_error']    = 'Modul dengan nama "%s" sudah ada.';
 $lang['addons:modules:module_not_specified']    = 'Anda harus menyebutkan modul.';
-$lang['addons:modules:details_error']           = 'Terjadi kesalahan di dalam file details.php dari modul %s. Perbaiki kesalahan, kemudian instal ulang modul.';
+$lang['addons:modules:details_error']           = 'Terjadi kesalahan di dalam file Module.php dari modul %s. Perbaiki kesalahan, kemudian instal ulang modul.';
 
 $lang['addons:modules:manually_remove']         = 'Anda harus membuang "%s" secara manual untuk membereskan penghapusan modul.';
 $lang['addons:modules:upload_title']            = 'Upload Modul';

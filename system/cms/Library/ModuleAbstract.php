@@ -1,4 +1,7 @@
-<?php  defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Library;
+
 /**
  * PyroCMS Module Definition
  *
@@ -8,7 +11,7 @@
  * @author		PyroCMS Dev Team
  * @copyright   Copyright (c) 2012, PyroCMS LLC
  */
-abstract class Module {
+abstract class ModuleAbstract {
 
 	/**
 	 * The version of the module.

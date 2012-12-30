@@ -24,7 +24,7 @@ $lang['addons:modules:uninstall_error']			= 'تعذّرت إزالة تثبيت 
 $lang['addons:modules:uninstall_success']		= 'تمت إزالة تثبيت الوحدة "%s".';
 $lang['addons:modules:already_exists_error']	= 'يوجد وحدة اسمها "%s" مُثبّتة مثبقاً.';
 $lang['addons:modules:module_not_specified']	= 'يجب تحديد وحدة.';
-$lang['addons:modules:details_error']			= 'هناك خطأ في ملف details.php الخاص بوحدة %s. صحّح الخطأ، ثم قم بإعادة تثبيت الوحدة.';
+$lang['addons:modules:details_error']			= 'هناك خطأ في ملف Module.php الخاص بوحدة %s. صحّح الخطأ، ثم قم بإعادة تثبيت الوحدة.';
 
 $lang['addons:modules:manually_remove']			= 'يجب أن تزيل "%s" يدوياً لإزالة هذه الوحدة بالكامل.';
 $lang['addons:modules:upload_title']			= 'رفع وحدة';

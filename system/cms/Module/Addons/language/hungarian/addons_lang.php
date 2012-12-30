@@ -26,7 +26,7 @@ $lang['addons:modules:upgrade_error']           = 'Nem lehetett frissíteni a k�
 $lang['addons:modules:upgrade_success']         = 'A(z) "%s" nevű modul sikeresen frissítve lett.';
 $lang['addons:modules:already_exists_error']    = 'Már létezik a(z) "%s" modul';
 $lang['addons:modules:module_not_specified']    = 'Meg kell adni előbb egy modult.';
-$lang['addons:modules:details_error']           = 'Egy hiba lépett fel a details.php nevű fájlban, a(z) %s modullal kapcsolatban. Javítsd a hibát, és telepítsd újra a modult.';
+$lang['addons:modules:details_error']           = 'Egy hiba lépett fel a Module.php nevű fájlban, a(z) %s modullal kapcsolatban. Javítsd a hibát, és telepítsd újra a modult.';
 
 $lang['addons:modules:manually_remove']         = 'Kézileg kell törölni a(z) "%s" nevű modult, hogy teljesen le legyen törölve.';
 $lang['addons:modules:upload_title']            = 'Modul telepítése';

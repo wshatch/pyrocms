@@ -99,7 +99,7 @@ class Admin extends Admin_Controller
 
 	/**
 	 * Display the help string from a module's
-	 * details.php file in a modal window
+	 * Module.php file in a modal window
 	 *
 	 * @param	string	$slug	The module to fetch help for
 	 *

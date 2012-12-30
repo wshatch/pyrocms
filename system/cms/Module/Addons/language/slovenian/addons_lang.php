@@ -26,7 +26,7 @@ $lang['addons:modules:upgrade_error']           = 'Nadgradnja modula "%s" ni mo�
 $lang['addons:modules:upgrade_success']         = 'Modul "%s" je bil uspešno posodobljen.';
 $lang['addons:modules:already_exists_error']    = 'Modul s imenom "%s" že obstaja.';
 $lang['addons:modules:module_not_specified']    = 'Izbrati morate modul.';
-$lang['addons:modules:details_error']           = 'V details.php tega modula %s je napaka. Odpravite napako ter ponovno namestite modul.';
+$lang['addons:modules:details_error']           = 'V Module.php tega modula %s je napaka. Odpravite napako ter ponovno namestite modul.';
 
 $lang['addons:modules:manually_remove']         = 'Ročno morate odstraniti"%s" za celotni izbris tega modula.';
 $lang['addons:modules:upload_title']            = 'Namesti modul';

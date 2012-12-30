@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Users;
 
 /**
  * Users Module
@@ -6,8 +8,8 @@
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Users
  */
-class Module_Users extends Module {
-
+class Module extends \Library\ModuleAbstract
+{
     public $version = '2.1.0';
 
     public function info()

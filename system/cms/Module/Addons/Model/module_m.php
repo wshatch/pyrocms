@@ -619,7 +619,7 @@ class Module_m extends MY_Model
 					continue;
 				}
 
-				// This doesn't have a valid details.php file! :o
+				// This doesn't have a valid Module.php file! :o
 				if ( ! ($module = $this->_spawn_class($slug, $is_core)))
 				{
 					continue;
@@ -653,7 +653,7 @@ class Module_m extends MY_Model
 	/**
 	 * Spawn Class
 	 *
-	 * Checks to see if a details.php exists and returns a class
+	 * Checks to see if a Module.php exists and returns a class
 	 *
 	 * @param	string	$slug	The folder name of the module
 	 * @return	array
@@ -663,12 +663,12 @@ class Module_m extends MY_Model
 		$path = $is_core ? APPPATH : ADDONPATH;
 
 		// Before we can install anything we need to know some details about the module
-		$details_file = $path.'Module/'.ucfirst($slug).'/details.php';
+		$details_file = $path.'Module/'.ucfirst($slug).'/Module.php';
 
 		// Check the details file exists
 		if ( ! is_file($details_file))
 		{
-			$details_file = SHARED_ADDONPATH.'Module/'.ucfirst($slug).'/details.php';
+			$details_file = SHARED_ADDONPATH.'Module/'.ucfirst($slug).'/Module.php';
 
 			if ( ! is_file($details_file))
 			{
@@ -681,12 +681,12 @@ class Module_m extends MY_Model
 		include_once $details_file;
 
 		// Now call the details class
-		$class = 'Module_'.ucfirst(strtolower($slug));
+		$class = 'Module\\'.ucfirst(strtolower($slug)).'\\Module';
 
 		// Now we need to talk to it
 		if ( ! class_exists($class))
 		{
-			throw new Exception("Module $slug has an incorrect details.php class. It should be called '$class'.");
+			throw new Exception("Module $slug has an incorrect Module.php class. It should be called 'Module\\$class\\Module'.");
 		}
 
 		return array(new $class, dirname($details_file));
@@ -695,7 +695,7 @@ class Module_m extends MY_Model
 	/**
 	 * Help
 	 *
-	 * Retrieves help string from details.php
+	 * Retrieves help string from Module.php
 	 *
 	 * @param	string	$slug	The module slug
 	 * @return	bool
@@ -712,7 +712,7 @@ class Module_m extends MY_Model
 			{
 				list ($class, $location) = $module;
 
-				// Check for a hep language file, if not show the default help text from the details.php file
+				// Check for a hep language file, if not show the default help text from the Module.php file
 				if (file_exists($location.'/language/'.$default.'/help_lang.php'))
 				{
 					$this->lang->load($slug.'/help');
@@ -764,7 +764,7 @@ class Module_m extends MY_Model
 	/**
 	 * Help
 	 *
-	 * Retrieves version number from details.php
+	 * Retrieves version number from Module.php
 	 *
 	 * @param   string  $slug   The module slug
 	 * @return  bool

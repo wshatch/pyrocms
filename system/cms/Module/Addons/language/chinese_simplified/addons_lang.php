@@ -24,7 +24,7 @@ $lang['addons:modules:uninstall_error']			= '無法卸載名稱為 "%s" 的模�
 $lang['addons:modules:uninstall_success']		= '"%s" 模組已經卸載';
 $lang['addons:modules:already_exists_error']	= '一個相同名稱的模組 "%s" 已經存在。';
 $lang['addons:modules:module_not_specified']	= '您必須指定一個模組';
-$lang['addons:modules:details_error']			= '%s 模組當中的 details.php 有錯誤，請更正該錯誤，並重新安裝。';
+$lang['addons:modules:details_error']			= '%s 模組當中的 Module.php 有錯誤，請更正該錯誤，並重新安裝。';
 
 $lang['addons:modules:manually_remove']			= '您必須手動移除 "%s"，才能完整移除此模組。';
 $lang['addons:modules:upload_title']			= '上傳模組';

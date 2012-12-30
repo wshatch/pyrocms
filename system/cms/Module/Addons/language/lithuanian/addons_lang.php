@@ -26,7 +26,7 @@ $lang['addons:modules:upgrade_error']           = 'Nepavyko atnaujinti modulio "
 $lang['addons:modules:upgrade_success']         = 'Modulis "%s" atnaujintas sėkmingai.';
 $lang['addons:modules:already_exists_error']    = 'Modulis vardu "%s" jau egzistuoja.';
 $lang['addons:modules:module_not_specified']    = 'Turite nurodyti modulį.';
-$lang['addons:modules:details_error']           = 'Įvyko klaida faile details.php  %s modulyje. Ištaisykite klaidą ir perinstaliuokite modulį.';
+$lang['addons:modules:details_error']           = 'Įvyko klaida faile Module.php  %s modulyje. Ištaisykite klaidą ir perinstaliuokite modulį.';
 
 $lang['addons:modules:manually_remove']         = 'Jūs turite pašalinti rankiniu būdu "%s" visiškai pašalinti modulį.';
 $lang['addons:modules:upload_title']            = 'Įkelti modulį';

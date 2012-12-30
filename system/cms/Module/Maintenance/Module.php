@@ -1,11 +1,14 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Maintenance;
+
 /**
  * Maintenance Module
  *
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Maintenance
  */
-class Module_Maintenance extends Module
+class Module extends \Library\ModuleAbstract
 {
 	public $version = '1.0.0';
 

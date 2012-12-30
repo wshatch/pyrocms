@@ -24,7 +24,7 @@ $lang['addons:modules:uninstall_error']		  	= 'nie można odinstalować modułu 
 $lang['addons:modules:uninstall_success']		  = 'Moduł "%s" został odinstalowany.';
 $lang['addons:modules:already_exists_error']	= 'Moduł o nazwie "%s" już istnieje.';
 $lang['addons:modules:module_not_specified']	= 'Musisz wybrać moduł.';
-$lang['addons:modules:details_error']			    = 'Wystąpił błąd w pliku details.php w module %s. Popraw błąd i wykonaj reinstalacje tego modułu.';
+$lang['addons:modules:details_error']			    = 'Wystąpił błąd w pliku Module.php w module %s. Popraw błąd i wykonaj reinstalacje tego modułu.';
 
 $lang['addons:modules:manually_remove']			  = 'Musisz ręcznie usunąć "%s" aby w pełni usunąć ten moduł.';
 $lang['addons:modules:upload_title']			    = 'Załaduj moduł';

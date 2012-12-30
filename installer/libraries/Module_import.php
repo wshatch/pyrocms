@@ -34,9 +34,8 @@ class Module_import
 	 */
 	public function install($slug, $is_core = false)
 	{
-		if ( ! ($details_class = $this->_spawn_class($slug, $is_core)))
-		{
-			exit("The module $slug is missing a details.php");
+		if ( ! ($details_class = $this->_spawn_class($slug, $is_core))) {
+			throw new Exception("The module $slug is missing a Module.php");
 		}
 
 		// Get some basic info
@@ -54,12 +53,10 @@ class Module_import
 		$details_class->upload_path = 'uploads/default/';
 
 		// Run the install method to get it into the database
-		try 
-		{
+		try  {
 			$details_class->install();
 		} 
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 			// TODO Do something useful
 			exit('HEY '.$e->getMessage()." in ".$e->getFile()."<br />");
 
@@ -147,24 +144,24 @@ class Module_import
 	/**
 	 * Spawn Class
 	 *
-	 * Checks to see if a details.php exists and returns a class
+	 * Checks to see if a Module.php exists and returns a class
 	 *
 	 * @param string $slug    The folder name of the module
 	 * @param bool   $is_core
 	 *
-	 * @return    Module
+	 * @return    Library\Module
 	 */
 	private function _spawn_class($slug, $is_core = false)
 	{
 		$path = $is_core ? PYROPATH : ADDONPATH;
 
 		// Before we can install anything we need to know some details about the module<<<<<<< HEAD
-		$details_file = "{$path}Module/{$slug}/details.php";
+		$details_file = "{$path}Module/{$slug}/Module.php";
 
 		// If it didn't exist as a core module or an addon then check shared_addons
 		if ( ! is_file($details_file))
 		{
-			$details_file = "{SHARED_ADDONPATH}Module/{$slug}/details.php";
+			$details_file = "{SHARED_ADDONPATH}Module/{$slug}/Module.php";
 
 			if ( ! is_file($details_file))
 			{
@@ -176,7 +173,7 @@ class Module_import
 		include_once $details_file;
 
 		// Now call the details class
-		$class = 'Module_'.ucfirst(strtolower($slug));
+		$class = 'Module\\'.ucfirst(strtolower($slug)).'\\Module';
 
 		// Now we need to talk to it
 		return class_exists($class) ? new $class($this->pdb) : false;

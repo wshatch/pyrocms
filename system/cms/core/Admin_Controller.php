@@ -91,12 +91,12 @@ class Admin_Controller extends MY_Controller {
 			foreach ($modules as $module)
 			{				
 				// If we do not have an admin_menu function, we use the
-				// regular way of checking out the details.php data.
+				// regular way of checking out the Module.php data.
 				if ($module['menu'] and (isset($this->permissions[$module['slug']]) or $this->current_user->group == 'admin'))
 				{
 					// Legacy module routing. This is just a rough
 					// re-route and modules should change using their 
-					// upgrade() details.php functions.
+					// upgrade() Module.php functions.
 					if ($module['menu'] == 'utilities') $module['menu'] = 'data';
 					if ($module['menu'] == 'design') $module['menu'] = 'structure';
 

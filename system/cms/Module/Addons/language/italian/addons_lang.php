@@ -26,7 +26,7 @@ $lang['addons:modules:uninstall_error']			= 'Impossibile disinstallare il modulo
 $lang['addons:modules:uninstall_success']		= 'Il modulo "%s" è stato disinstallato.';
 $lang['addons:modules:already_exists_error']	= 'Esiste già un modulo chiamato "%s".';
 $lang['addons:modules:module_not_specified']	= 'Devi specificare un modulo.';
-$lang['addons:modules:details_error']			= 'C\'è un errore nel file details.php del modulo %s. Correggi l\'errore e reinstalla il modulo.';
+$lang['addons:modules:details_error']			= 'C\'è un errore nel file Module.php del modulo %s. Correggi l\'errore e reinstalla il modulo.';
 
 $lang['addons:modules:manually_remove']			= 'Devi rimuovere manualmente "%s" per rimuovere definitivamente il modulo.';
 $lang['addons:modules:upload_title']			= 'Carica un Modulo';

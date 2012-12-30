@@ -15,7 +15,8 @@
             "system/cms/Library"
         ],
         "psr-0": {
-            "Module" : "system/cms"
+            "Module" : "system/cms",
+            "Library" : "system/cms"
         }
     }
 }

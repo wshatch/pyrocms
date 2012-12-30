@@ -24,7 +24,7 @@ $lang['addons:modules:uninstall_error']			= 'Não foi possível remover o módul
 $lang['addons:modules:uninstall_success']		= 'O módulo "%s" foi removido.';
 $lang['addons:modules:already_exists_error']	= 'O módulo com nome "%s" já existe.';
 $lang['addons:modules:module_not_specified']	= 'Você precisa especificar qual módulo.';
-$lang['addons:modules:details_error']			= 'Há um erro no arquivo details.php do módulo %s. Corrija o erro, reinstale o módulo.';
+$lang['addons:modules:details_error']			= 'Há um erro no arquivo Module.php do módulo %s. Corrija o erro, reinstale o módulo.';
 
 $lang['addons:modules:manually_remove']			= 'Você precisa remover manualmente o módulo "%s" para exclui-lo completamente.';
 $lang['addons:modules:upload_title']			= 'Envio de módulo';

@@ -1,7 +1,7 @@
 <?php
 
-use \Module\Pages\Model\Page;
-use \Module\Pages\Model\Type;
+use Module\Pages\Model\Page;
+use Module\Pages\Model\Type;
 
 /**
  * The public controller for the Pages module.

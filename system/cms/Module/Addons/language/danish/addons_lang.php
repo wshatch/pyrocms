@@ -26,7 +26,7 @@ $lang['addons:modules:upgrade_error']           = 'Kunne ikke opgradere modulet 
 $lang['addons:modules:upgrade_success']         = 'Modulet "%s" er opgraderet.';
 $lang['addons:modules:already_exists_error']    = 'Et modul med navnet "%s" findes allerede.';
 $lang['addons:modules:module_not_specified']    = 'Du skal specificere et modul.';
-$lang['addons:modules:details_error']           = 'Der er en fejl i filen details.php vedrørende %s modulet. Ret fejlen og geninstallér modulet.';
+$lang['addons:modules:details_error']           = 'Der er en fejl i filen Module.php vedrørende %s modulet. Ret fejlen og geninstallér modulet.';
 
 $lang['addons:modules:manually_remove']         = 'Du skal fjerne "%s" manuelt for at fjerne modulet fuldstændigt.';
 $lang['addons:modules:upload_title']            = 'Upload modul';

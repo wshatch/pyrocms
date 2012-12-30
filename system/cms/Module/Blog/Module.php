@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Blog;
 
 /**
  * Blog module
@@ -6,7 +8,7 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Blog
  */
-class Module_Blog extends Module
+class Module extends \Library\ModuleAbstract
 {
 	public $version = '2.0.0';
 
@@ -36,17 +38,17 @@ class Module_Blog extends Module
 				'ar' => 'أنشر المقالات على مدوّنتك.',
 				'br' => 'Escrever publicações de blog',
 				'pt' => 'Escrever e editar publicações no blog',
-				'cs' => 'Publikujte nové články a příspěvky na blog.', #update translation
+				'cs' => 'Publikujte nové články a příspěvky na blog.', #translate
 				'da' => 'Skriv blogindlæg',
-				'de' => 'Veröffentliche neue Artikel und Blog-Einträge', #update translation
+				'de' => 'Veröffentliche neue Artikel und Blog-Einträge', #translate
 				'sl' => 'Objavite blog prispevke',
 				'fi' => 'Kirjoita blogi artikkeleita.',
 				'el' => 'Δημιουργήστε άρθρα και εγγραφές στο ιστολόγιο σας.',
-				'es' => 'Escribe entradas para los artículos y blog (web log).', #update translation
-				'fr' => 'Envoyez de nouveaux posts et messages de blog.', #update translation
+				'es' => 'Escribe entradas para los artículos y blog (web log).', #translate
+				'fr' => 'Envoyez de nouveaux posts et messages de blog.', #translate
 				'he' => 'ניהול בלוג',
 				'id' => 'Post entri blog',
-				'it' => 'Pubblica notizie e post per il blog.', #update translation
+				'it' => 'Pubblica notizie e post per il blog.', #translate
 				'lt' => 'Rašykite naujienas bei blog\'o įrašus.',
 				'nl' => 'Post nieuwsartikelen en blogs op uw site.',
 				'pl' => 'Dodawaj nowe wpisy na blogu',

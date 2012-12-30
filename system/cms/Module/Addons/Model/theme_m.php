@@ -156,7 +156,7 @@ class Theme_m extends MY_Model
             $theme->description    = '';
             $theme->version        = '??';
 
-            //load the theme details.php file
+            //load the theme Module.php file
             $details = $this->_spawn_class($slug, $is_core);
 
             //assign values
@@ -258,7 +258,7 @@ class Theme_m extends MY_Model
     /**
      * Spawn Class
      *
-     * Checks to see if a details.php exists and returns a class
+     * Checks to see if a Module.php exists and returns a class
      *
      * @param string $slug The folder name of the theme
      * @param bool $is_core

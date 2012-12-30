@@ -52,7 +52,7 @@ class Events
 
 		foreach ($results as $row)
 		{
-			// This does not have a valid details.php file! :o
+			// This does not have a valid Module.php file! :o
 			if (!$details_class = self::_spawn_class($row['slug'], $row['is_core']))
 			{
 				continue;

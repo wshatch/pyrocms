@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Streams_core;
 
 /**
  * PyroStreams Core Module
@@ -9,9 +11,8 @@
  * @license        http://parse19.com/pyrostreams/docs/license
  * @link           http://parse19.com/pyrostreams
  */
-class Module_Streams_core extends Module
+class Module extends \Library\ModuleAbstract
 {
-
 	public $version = '1.3.0';
 
 	/**
@@ -56,8 +57,7 @@ class Module_Streams_core extends Module
 	 */
 	public function install()
 	{
-		if ( ! ($config = $this->_load_config()))
-		{
+		if ( ! ($config = $this->_load_config())) {
 			return false;
 		}
 
@@ -122,8 +122,7 @@ class Module_Streams_core extends Module
 	 */
 	public function uninstall()
 	{
-		if ( ! ($config = $this->_load_config()))
-		{
+		if ( ! ($config = $this->_load_config())) {
 			return false;
 		}
 

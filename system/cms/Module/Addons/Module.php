@@ -1,12 +1,16 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php 
+
+namespace Module\Addons;
+
+use Module\Settings\Library\Settings;
 
 /**
  * Addons Module
  *
  * @author PyroCMS Dev Team
- * @package PyroCMS\Core\Modules\Modules
+ * @package PyroCMS\Core\Modules\Addons
  */
-class Module_Addons extends Module
+class Module extends \Library\ModuleAbstract
 {
 	public $version = '2.0.0';
 
@@ -94,8 +98,7 @@ class Module_Addons extends Module
 		);
 	
 		// Add upload options to various modules
-		if ( ! class_exists('Module_import') and Settings::get('addons_upload'))
-		{
+		if ( ! class_exists('Module_import') and Settings::get('addons_upload')) {
 			$info['sections']['modules']['shortcuts'] = array(
 				array(
 					'name' => 'global:upload',

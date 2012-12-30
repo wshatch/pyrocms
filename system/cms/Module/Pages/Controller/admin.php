@@ -1,6 +1,6 @@
 <?php 
 
-use \Module\Pages\Model;
+use Module\Pages\Model;
 
 /**
  * Pages controller

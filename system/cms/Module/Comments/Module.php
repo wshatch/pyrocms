@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+namespace Module\Comments;
 
 /**
  * Comments module
@@ -6,9 +8,8 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Comments
  */
-class Module_Comments extends Module
+class Module extends \Library\ModuleAbstract
 {
-
 	public $version = '1.1.0';
 
 	public function info()

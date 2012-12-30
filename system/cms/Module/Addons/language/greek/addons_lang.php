@@ -27,7 +27,7 @@ $lang['addons:modules:upgrade_error']			= 'Δεν ήταν δυνατό να ε�
 $lang['addons:modules:upgrade_success']			= 'Το πρόσθετο "%s" ενημερώθηκε με επιτυχία.';
 $lang['addons:modules:already_exists_error']	= 'Υπάρχει ήδη ένα πρόσθετο με το όνομα "%s".';
 $lang['addons:modules:module_not_specified']	= 'Πρέπει να επιλέξετε ένα πρόσθετο.';
-$lang['addons:modules:details_error']			= 'Υπάρχει ένα σφάλμα στο αρχείο details.php του πρόσθετου %s. Διορθώστε το σφάλμα, και επανεγκαταστήστε το πρόσθετο.';
+$lang['addons:modules:details_error']			= 'Υπάρχει ένα σφάλμα στο αρχείο Module.php του πρόσθετου %s. Διορθώστε το σφάλμα, και επανεγκαταστήστε το πρόσθετο.';
 
 $lang['addons:modules:manually_remove']			= 'Πρέπει να αφαιρέσετε χειροκίνητα το "%s" για να απομακρύνετε πλήρως το πρόσθετο.';
 $lang['addons:modules:upload_title']			= 'Ανέβασμα πρόσθετου';

@@ -26,7 +26,7 @@ $lang['addons:modules:upgrade_error']			= 'Module "%s" kan niet worden bijgewerk
 $lang['addons:modules:upgrade_success']			= 'Module "%s" is succesvol opgewaardeerd.';
 $lang['addons:modules:already_exists_error']	= 'De module "%s" bestaat al.';
 $lang['addons:modules:module_not_specified']	= 'U moet een module opgeven.';
-$lang['addons:modules:details_error']			= 'Er is een fout in het details.php bestand van de %s module. Corrigeer de fout, installeer daarna de module opnieuw.';
+$lang['addons:modules:details_error']			= 'Er is een fout in het Module.php bestand van de %s module. Corrigeer de fout, installeer daarna de module opnieuw.';
 
 $lang['addons:modules:manually_remove']			= 'U moet "%s" handmatig verwijderen om de module te deinstalleren.';
 $lang['addons:modules:upload_title']			= 'Upload Module';

@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Sitemap;
 
 /**
  * Sitemap Module
@@ -6,8 +8,8 @@
  * @author		PyroCMS Dev Team
  * @package		PyroCMS\Core\Modules\Sitemap
  */
-class Module_Sitemap extends Module {
-
+class Module extends \Library\ModuleAbstract
+{
 	public $version = '1.3.0';
 
 	public function info()

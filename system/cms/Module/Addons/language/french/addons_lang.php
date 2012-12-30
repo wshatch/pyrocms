@@ -27,7 +27,7 @@ $lang['addons:modules:upgrade_error'] = 'Impossible de mettre à jour le module 
 $lang['addons:modules:upgrade_success'] = 'Module "%s" mis à jour avec succès.';
 $lang['addons:modules:already_exists_error'] = 'Un module ayant le nom "%s" existe déjà.';
 $lang['addons:modules:module_not_specified'] = 'Vous devez indiquer un module.';
-$lang['addons:modules:details_error'] = 'Il y a une erreur dans le fichier details.php du module %s. Corrigez cette erreur, ensuite ré-installer le module.';
+$lang['addons:modules:details_error'] = 'Il y a une erreur dans le fichier Module.php du module %s. Corrigez cette erreur, ensuite ré-installer le module.';
 
 $lang['addons:modules:manually_remove'] = 'Vous devez supprimer "%s" manuellement pour supprimer complètement le module.';
 $lang['addons:modules:upload_title'] = 'Uploader le module';

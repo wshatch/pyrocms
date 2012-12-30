@@ -85,7 +85,7 @@ class Installer extends CI_Controller
 		$this->load->add_package_path(PYROPATH);
 
 		// set the supported languages to be saved in Settings for emails and .etc
-		// modules > settings > details.php uses this
+		// modules > settings > Module.php uses this
 		require_once(PYROPATH.'/config/language.php');
 
 		// Check that the language configuration has been loaded.

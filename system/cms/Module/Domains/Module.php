@@ -1,11 +1,14 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Domains;
+
 /**
  * Domains module
  *
  * @author  Ryan Thompson - AI Web Systems, Inc.
  * @package PyroCMS\Core\Modules\Domains
  */
-class Module_Domains extends Module
+class Module extends \Library\ModuleAbstract
 {
 	public $version = '1.0.0';
 

@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+namespace Module\Files;
 
 /**
  * Files module
@@ -6,7 +8,7 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Files
  */
-class Module_Files extends Module
+class Module extends \Library\ModuleAbstract
 {
 	public $version = '2.1.0';
 

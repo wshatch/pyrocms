@@ -28,7 +28,7 @@ class Migration_Add_streams extends CI_Migration {
 			// No streams entry in the modules table, so let's
 			// add it. This would happen by going to Add-ons, but
 			// why make the user go through the extra setp
-			require_once(APPPATH.'modules/streams/details.php');
+			require_once(APPPATH.'modules/streams/Module.php');
 			
 			if(!class_exists('Module_streams')) return false;
 			

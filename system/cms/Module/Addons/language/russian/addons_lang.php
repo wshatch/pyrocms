@@ -33,7 +33,7 @@ $lang['addons:modules:uninstall_error']			= 'Во время удаления м
 $lang['addons:modules:uninstall_success']		= 'Модуль "%s" удалён.';
 $lang['addons:modules:already_exists_error']	= 'Модуль "%s" уже установлен.';
 $lang['addons:modules:module_not_specified']	= 'Укажите модуль.';
-$lang['addons:modules:details_error']			= 'В файле details.php модуля "%s" - ошибка. Сначала исправьте ошибку, а затем переустановите модуль.';
+$lang['addons:modules:details_error']			= 'В файле Module.php модуля "%s" - ошибка. Сначала исправьте ошибку, а затем переустановите модуль.';
 
 $lang['addons:modules:manually_remove']			= 'Вы должны самостоятельно удалить модуль "%s" с сервера.';
 $lang['addons:modules:upload_title']			= 'Загрузка модуля';
