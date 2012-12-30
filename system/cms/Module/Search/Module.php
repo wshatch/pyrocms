@@ -67,16 +67,16 @@ class Module extends \Library\ModuleAbstract
 		$this->load->model('search/search_index_m');
 		$this->load->library('keywords/keywords');
 
-		foreach ($this->db->get('pages')->result() as $page) {
+		foreach ($this->pdb->table('pages')->get() as $page) {
 
 			// Only index live articles
 	    	if ($page->status === 'live') {
 	    		$hash = $this->keywords->process($page->meta_keywords);
 
-	    		$this->db
-	    			->set('meta_keywords', $hash)
+	    		$this->pdb
+	    			->table('pages')
 	    			->where('id', $page->id)
-	    			->update('pages');
+	    			->update(array('meta_keywords' => $hash));
 
 	    		$this->search_index_m->index(
 	    			'pages',
