@@ -1,17 +1,21 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Comments;
+
 /**
  * Comments Plugin
  *
  * @author   PyroCMS Dev Team
  * @package  PyroCMS\Core\Modules\Comments\Plugins
  */
-class Plugin_Comments extends Plugin
+class Plugin extends \Library\PluginAbstract
 {
-
 	public $version = '1.0.0';
+
 	public $name = array(
 		'en' => 'Comments',
 	);
+
 	public $description = array(
 		'en' => 'Display information about site comments.',
 	);

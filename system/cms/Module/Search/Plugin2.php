@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+namespace Module\Search;
+
 /**
  * Search Plugin
  *
@@ -7,7 +10,7 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Search\Plugins
  */
-class Plugin_Search extends Plugin
+class Plugin extends \Library\PluginAbstract
 {
 
 	public $version = '1.0.0';

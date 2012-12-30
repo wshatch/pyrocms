@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Files;
+
 /**
  * Files Plugin
  *
@@ -8,13 +11,14 @@
  * @author		PyroCMS Dev Team
  * @package		PyroCMS\Core\Modules\Files\Plugins
  */
-class Plugin_Files extends Plugin
+class Plugin extends \Library\PluginAbstract
 {
-
 	public $version = '1.0.0';
+
 	public $name = array(
 		'en' => 'Files',
 	);
+
 	public $description = array(
 		'en' => 'List files in specified folders and output images with cropping.',
 	);

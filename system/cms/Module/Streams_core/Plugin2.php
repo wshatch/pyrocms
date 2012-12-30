@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Streams_core;
 
 /**
  * Streams Core Plugin
@@ -12,13 +14,14 @@
  * @license   http://parse19.com/pyrostreams/docs/license
  * @link      http://parse19.com/pyrostreams
  */
-class Plugin_Streams_core extends Plugin
+class Plugin extends \Library\PluginAbstract
 {
-
 	public $version = '1.0.0';
+
 	public $name = array(
 		'en' => 'Streams Core',
 	);
+
 	public $description = array(
 		'en' => 'A basic plugin for working with stream data.',
 	);
@@ -95,14 +98,11 @@ class Plugin_Streams_core extends Plugin
 		}
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Multiple Related Entries
 	 *
 	 * This works with the multiple relationship field
 	 *
-	 * @access	public
 	 * @return	array
 	 */
 	public function multiple()
@@ -170,18 +170,16 @@ class Plugin_Streams_core extends Plugin
 		return $rows['rows'];
 	}
 
-	// --------------------------------------------------------------------------
 	
 	/**
 	 * Join multiple
 	 *
 	 * Multiple join callback
 	 *
-	 * @access	public
 	 * @param	array - array of settings
 	 * @return	void
 	 */
-	public function join_multiple($data)
+	public function joinMultiple($data)
 	{
 		$this->row_m->sql['join'][] = "LEFT JOIN `{$this->db->dbprefix($data['join_table'])}` ON `{$this->db->dbprefix($data['join_table'])}`.`{$data['join_stream']->stream_slug}_id` = `{$this->db->dbprefix($data['join_stream']->stream_prefix.$data['join_stream']->stream_slug)}`.`id`";
 		$this->row_m->sql['where'][] = "`{$this->db->dbprefix($data['join_table'])}`.`row_id` = '{$data['row_id']}'";

@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Variables;
+
 /**
  * Variable Plugin
  *
@@ -7,13 +10,14 @@
  * @author   PyroCMS Dev Team
  * @package  PyroCMS\Core\Modules\Variables\Plugins
  */
-class Plugin_Variables extends Plugin
+class Plugin extends \Library\PluginAbstract
 {
-
 	public $version = '1.0.0';
+
 	public $name = array(
 		'en' => 'Variables',
 	);
+
 	public $description = array(
 		'en' => 'Set and retrieve variable data.',
 	);

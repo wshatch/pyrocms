@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Pages;
+
 /**
  * Pages Plugin
  *
@@ -7,7 +10,7 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Pages\Plugins
  */
-class Plugin_Pages extends Plugin
+class Plugin extends \Library\PluginAbstract
 {
 	public $version = '1.0.0';
 
@@ -161,15 +164,12 @@ class Plugin_Pages extends Plugin
 	{
 		// Lex tags are parsed by default. If you want to
 		// turn off parsing Lex tags, just set parse_tags to 'no'
-		if (str_to_bool($parse_tags))
-		{
-			$parser = new Lex\Parser();
+		if (str_to_bool($parse_tags)) {
+			$parser = new Lex\Parser;
 			$parser->scopeGlue(':');
-
 			return $parser->parse($content, array(), array($this->parser, 'parser_callback'));
 		}
-		else
-		{
+		else {
 			return $content;
 		}
 	}
@@ -206,20 +206,16 @@ class Plugin_Pages extends Plugin
 			->get('pages')
 			->result_array();
 
-		if ($pages)
-		{
-			foreach ($pages as &$page)
-			{
+		if ($pages) {
+			foreach ($pages as &$page) {
 				// Grab all the chunks that make up the body for this page
 				$page['chunks'] = $this->db
 					->get_where('page_chunks', array('page_id' => $page['id']))
 					->result_array();
 
 				$page['body'] = '';
-				if ($page['chunks'])
-				{
-					foreach ($page['chunks'] as $chunk)
-					{
+				if ($page['chunks']) {
+					foreach ($page['chunks'] as $chunk) {
 						$page['body'] .= '<div class="page-chunk ' . $chunk['slug'] . '">' .
 							(($chunk['type'] == 'markdown') ? $chunk['parsed'] : $chunk['body']) .
 							'</div>' . PHP_EOL;
@@ -261,8 +257,7 @@ class Plugin_Pages extends Plugin
 
 		// If we have a start URI, let's try and
 		// find that ID.
-		if ($start)
-		{
+		if ($start) {
 			$page = $this->page_m->get_by_uri($start);
 
 			if ( ! $page) {
@@ -316,23 +311,19 @@ class Plugin_Pages extends Plugin
 		$children_ids = $this->attribute('children');
 		$child_id     = $this->attribute('child');
 
-		if ( ! $children_ids)
-		{
+		if ( ! $children_ids) {
 			return (int) $this->_check_page_is($child_id);
 		}
 
 		$children_ids = explode(',', $children_ids);
 		$children_ids = array_map('trim', $children_ids);
 
-		if ($child_id)
-		{
+		if ($child_id) {
 			$children_ids[] = $child_id;
 		}
 
-		foreach ($children_ids as $child_id)
-		{
-			if ( ! $this->_check_page_is($child_id))
-			{
+		foreach ($children_ids as $child_id) {
+			if ( ! $this->_check_page_is($child_id)) {
 				return (int) false;
 			}
 		}
@@ -370,20 +361,16 @@ class Plugin_Pages extends Plugin
 		$descendent_id = $this->attribute('descendent');
 		$parent_id     = $this->attribute('parent');
 
-		if ($child_id and $descendent_id)
-		{
-			if ( ! is_numeric($child_id))
-			{
+		if ($child_id and $descendent_id) {
+			if ( ! is_numeric($child_id)) {
 				$child_id = ($child = $this->page_m->get_by(array('slug' => $child_id))) ? $child->id : 0;
 			}
 
-			if ( ! is_numeric($descendent_id))
-			{
+			if ( ! is_numeric($descendent_id)) {
 				$descendent_id = ($descendent = $this->page_m->get_by(array('slug' => $descendent_id))) ? $descendent->id : 0;
 			}
 
-			if ( ! ($child_id and $descendent_id))
-			{
+			if ( ! ($child_id and $descendent_id)) {
 				return false;
 			}
 
@@ -392,10 +379,8 @@ class Plugin_Pages extends Plugin
 			return in_array($child_id, $descendent_ids);
 		}
 
-		if ($child_id and $parent_id)
-		{
-			if ( ! is_numeric($child_id))
-			{
+		if ($child_id and $parent_id) {
+			if ( ! is_numeric($child_id)) {
 				$parent_id = ($parent = $this->page_m->get_by(array('slug' => $parent_id))) ? $parent->id : 0;
 			}
 
@@ -423,18 +408,15 @@ class Plugin_Pages extends Plugin
 
 		extract($params);
 
-		if ( ! $tree)
-		{
+		if ( ! $tree) {
 			$this->db
 				->select('id, parent_id, slug, uri, title')
 				->where_not_in('slug', $this->disable);
 			
 			// check if they're logged in
-			if ( isset($this->current_user->group) )
-			{
+			if ( isset($this->current_user->group) ) {
 				// admins can see them all
-				if ($this->current_user->group != 'admin')
-				{
+				if ($this->current_user->group != 'admin') {
 					$id_list = array();
 					
 					$page_list = $this->db
@@ -442,21 +424,18 @@ class Plugin_Pages extends Plugin
 						->get('pages')
 						->result();
 
-					foreach ($page_list as $list_item)
-					{
+					foreach ($page_list as $list_item) {
 						// make an array of allowed user groups
 						$group_array = explode(',', $list_item->restricted_to);
 
 						// if restricted_to is 0 or empty (unrestricted) or if the current user's group is allowed
-						if ( ($group_array[0] < 1) or in_array($this->current_user->group_id, $group_array) )
-						{
+						if ( ($group_array[0] < 1) or in_array($this->current_user->group_id, $group_array) ) {
 							$id_list[] = $list_item->id;
 						}
 					}
 					
 					// if it's an empty array then evidently all pages are unrestricted
-					if ( count($id_list) > 0 )
-					{
+					if ( count($id_list) > 0 ) {
 						// select only the pages they have permissions for
 						$this->db->where_in('id', $id_list);
 					}
@@ -479,8 +458,7 @@ class Plugin_Pages extends Plugin
 				->get('pages')
 				->result();
 
-			if ($pages)
-			{
+			if ($pages) {
 				foreach ($pages as $page)
 				{
 					$tree[$page->parent_id][] = $page;
@@ -488,15 +466,13 @@ class Plugin_Pages extends Plugin
 			}
 		}
 
-		if ( ! isset($tree[$parent_id]))
-		{
+		if ( ! isset($tree[$parent_id])) {
 			return;
 		}
 
 		$html = '';
 
-		foreach ($tree[$parent_id] as $item)
-		{
+		foreach ($tree[$parent_id] as $item) {
 			$html .= '<li';
 			$html .= (current_url() == site_url($item->uri)) ? ' class="current">' : '>';
 			$html .= ($link === true) ? '<a href="' . site_url($item->uri) . '">' . $item->title . '</a>' : $item->title;
@@ -509,8 +485,7 @@ class Plugin_Pages extends Plugin
 				'list_tag'     => $list_tag
 			));
 			
-			if ($nested_list)
-			{
+			if ($nested_list) {
 				$html .= '<' . $list_tag . '>' . $nested_list . '</' . $list_tag . '>';
 			}
 			

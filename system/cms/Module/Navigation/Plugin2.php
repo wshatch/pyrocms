@@ -1,17 +1,21 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Navigation;
+
 /**
  * Navigation Plugin
  *
  * @author     PyroCMS Dev Team
  * @package    PyroCMS\Core\Modules\Navigation\Plugins
  */
-class Plugin_Navigation extends Plugin
+class Plugin extends \Library\PluginAbstract
 {
-
 	public $version = '1.0.0';
+
 	public $name = array(
 		'en' => 'Navigation',
 	);
+
 	public $description = array(
 		'en' => 'Build navigation links including links in dropdown menus.',
 	);

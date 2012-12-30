@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Settings;
+
 /**
  * Settings Plugin
  *
@@ -7,13 +10,14 @@
  * @author   PyroCMS Dev Team
  * @package  PyroCMS\Core\Modules\Settings\Plugins
  */
-class Plugin_Settings extends Plugin
+class Plugin extends \Library\PluginAbstract
 {
-
 	public $version = '1.0.0';
+
 	public $name = array(
 		'en' => 'Settings',
 	);
+
 	public $description = array(
 		'en' => 'Retrieve a setting from the database.',
 	);
@@ -32,10 +36,9 @@ class Plugin_Settings extends Plugin
 		$settings = Settings::get_all();
 		ksort($settings);
 
-		foreach ($settings as $slug => $value)
-		{
+		foreach ($settings as $slug => $value) {
 			$info[$slug]['description'] = array(
-				'en' => 'Retrieve the value for setting '.$slug.'.'
+				'en' => "Retrieve the value for setting {$slug}.",
 			);
 			$info[$slug]['single'] = true;
 			$info[$slug]['double'] = false;

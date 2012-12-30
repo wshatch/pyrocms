@@ -34,15 +34,13 @@ class Admin_plugins extends Admin_Controller
 
 		$this->load->helper('directory');
 
-		$this->load->library('plugins');
-
 		$is_core = true;
 		// Find all the plugins available.
 		foreach (array(APPPATH, ADDONPATH, SHARED_ADDONPATH) as $directory)
 		{
 			$index = $is_core ? 'core_plugins' : 'plugins';
-			$data[$index] = array_merge($data[$index], $this->_gather_plugin_info($directory.'modules/*/plugin.php'));
-			$data[$index] = array_merge($data[$index], $this->_gather_plugin_info($directory.'plugins/*.php'));
+			$data[$index] = array_merge($data[$index], $this->_gather_plugin_info($directory.'Module/*/Plugin.php'));
+			$data[$index] = array_merge($data[$index], $this->_gather_plugin_info($directory.'Plugin/*.php'));
 
 			$is_core = false;
 		}
@@ -107,7 +105,6 @@ class Admin_plugins extends Admin_Controller
 					'version' => (isset($plugin->version)) ? $plugin->version : null,
 					'self_doc' => (method_exists($plugin, '_self_doc') ? $plugin->_self_doc() : array()),
 				));
-
 			}
 
 			if ($module_path)

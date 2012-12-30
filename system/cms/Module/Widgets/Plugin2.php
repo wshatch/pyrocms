@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Widgets;
+
 /**
  * Widgets Plugin
  *
@@ -7,14 +10,15 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Widgets\Plugins
  */
-class Plugin_Widgets extends Plugin
+class Plugin extends \Library\PluginAbstract
 {
-
 	public $version = '1.0.0';
+
 	public $name = array(
 		'en' => 'Widgets',
 		'ar' => 'الودجتس',
 	);
+
 	public $description = array(
 		'en' => 'Display widgets by widget area or individually.',
 		'ar' => 'عرض الودجتس في مساحة ودجت أو لوحدها.',

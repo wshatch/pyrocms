@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
 
 /**
  * CodeIgniter Dwoo Parser Class
@@ -9,18 +9,12 @@
  * @license	 http://philsturgeon.co.uk/code/dbad-license
  * @link		http://philsturgeon.co.uk/code/codeigniter-dwoo
  */
-
 class MY_Parser extends CI_Parser {
-
-	private $_ci;
 
 	public function __construct($config = array())
 	{
-		$this->_ci = & get_instance();
+		$this->plugins = new \Library\Plugins;
 	}
-
-	// --------------------------------------------------------------------
-
 	/**
 	 *  Parse a view file
 	 *
@@ -34,12 +28,10 @@ class MY_Parser extends CI_Parser {
 	 */
 	public function parse($template, $data = array(), $return = false, $is_include = false, $streams_parse = array())
 	{
-		$string = $this->_ci->load->view($template, $data, true);
+		$string = ci()->load->view($template, $data, true);
 
 		return $this->_parse($string, $data, $return, $is_include, $streams_parse);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 *  String parse
@@ -57,8 +49,6 @@ class MY_Parser extends CI_Parser {
 		return $this->_parse($string, $data, $return, $is_include, $streams_parse);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 *  Parse
 	 *
@@ -73,17 +63,17 @@ class MY_Parser extends CI_Parser {
 	protected function _parse($string, $data, $return = false, $is_include = false, $streams_parse = array())
 	{
 		// Start benchmark
-		$this->_ci->benchmark->mark('parse_start');
+		ci()->benchmark->mark('parse_start');
 
 		// Convert from object to array
 		is_array($data) or $data = (array) $data;
 
-		$data = array_merge($data, $this->_ci->load->get_vars());
+		$data = array_merge($data, ci()->load->get_vars());
 
 		if ($streams_parse and isset($streams_parse['stream']) and isset($streams_parse['namespace']))
 		{
-			$this->_ci->load->driver('Streams');
-			$parsed = $this->_ci->streams->parse->parse_tag_content($string, $data, $streams_parse['stream'], $streams_parse['namespace']);
+			ci()->load->driver('Streams');
+			$parsed = ci()->streams->parse->parse_tag_content($string, $data, $streams_parse['stream'], $streams_parse['namespace']);
 		}
 		else
 		{
@@ -94,19 +84,17 @@ class MY_Parser extends CI_Parser {
 		}
 		
 		// Finish benchmark
-		$this->_ci->benchmark->mark('parse_end');
+		ci()->benchmark->mark('parse_end');
 		
 		// Return results or not ?
 		if ( ! $return)
 		{
-			$this->_ci->output->append_output($parsed);
+			ci()->output->append_output($parsed);
 			return;
 		}
 
 		return $parsed;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Callback from template parser
@@ -116,15 +104,13 @@ class MY_Parser extends CI_Parser {
 	 */
 	public function parser_callback($plugin, $attributes, $content)
 	{
-		$this->_ci->load->library('plugins');
-
-		$return_data = $this->_ci->plugins->locate($plugin, $attributes, $content);
+		$return_data = $this->plugins->locate($plugin, $attributes, $content);
 
 		if (is_array($return_data) && $return_data)
 		{
-			if ( ! $this->_is_multi($return_data))
+			if ( ! $this->isMulti($return_data))
 			{
-				$return_data = $this->_make_multi($return_data);
+				$return_data = $this->makeMulti($return_data);
 			}
 
 			# TODO What was this doing other than throw warnings in 2.0? Phil
@@ -150,10 +136,8 @@ class MY_Parser extends CI_Parser {
 			$return_data = $parsed_return;
 		}
 
-		return $return_data ?: null;
+		return $return_data;
 	}
-
-	// ------------------------------------------------------------------------
 
 	/**
 	 * Ensure we have a multi array
@@ -161,12 +145,10 @@ class MY_Parser extends CI_Parser {
 	 * @param	array
 	 * @return	 int
 	 */
-	private function _is_multi($array)
+	private function isMulti($array)
 	{
 		return (count($array) != count($array, 1));
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Forces a standard array in multidimensional.
@@ -175,7 +157,7 @@ class MY_Parser extends CI_Parser {
 	 * @param	int		Used for recursion
 	 * @return	array	The multi array
 	 */
-	private function _make_multi($flat, $i=0)
+	private function makeMulti($flat, $i=0)
 	{
 		$multi = array();
 		$return = array();
@@ -187,7 +169,5 @@ class MY_Parser extends CI_Parser {
 		return $return;
 	}
 }
-
-// END MY_Parser Class
 
 /* End of file MY_Parser.php */

@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Module\Blog;
+
 /**
  * Blog Plugin
  *
@@ -7,13 +10,14 @@
  * @author   PyroCMS Dev Team
  * @package  PyroCMS\Core\Modules\Blog\Plugins
  */
-class Plugin_Blog extends Plugin
+class Plugin extends \Library\PluginAbstract
 {
-
 	public $version = '1.0.0';
+
 	public $name = array(
 		'en' => 'Blog',
 	);
+
 	public $description = array(
 		'en' => 'A plugin to display information such as blog categories and posts.',
 	);
