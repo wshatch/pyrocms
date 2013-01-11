@@ -201,19 +201,19 @@ class Modules
 		if ($base == 'views/') {
 			if (defined('ADMIN_THEME')) {
 				// check system folder
-				if (is_file(APPPATH.'themes/'.ADMIN_THEME.'/'.$base.$path.$file_ext))
+				if (is_file(APPPATH.'Theme/'.ADMIN_THEME.'/'.$base.$path.$file_ext))
 				{
-					return array(APPPATH.'themes/'.ADMIN_THEME.'/'.$base.$path, $file);	
+					return array(APPPATH.'Theme/'.ADMIN_THEME.'/'.$base.$path, $file);	
 				}
 				// check shared addons folder
-				elseif (is_file(SHARED_ADDONPATH.'themes/'.ADMIN_THEME.'/'.$base.$path.$file_ext))
+				elseif (is_file(SHARED_ADDONPATH.'Theme/'.ADMIN_THEME.'/'.$base.$path.$file_ext))
 				{
-					return array(SHARED_ADDONPATH.'themes/'.ADMIN_THEME.'/'.$base.$path, $file);	
+					return array(SHARED_ADDONPATH.'Theme/'.ADMIN_THEME.'/'.$base.$path, $file);	
 				}
 				// check addons folder
-				elseif (is_file(ADDONPATH.'themes/'.ADMIN_THEME.'/'.$base.$path.$file_ext))
+				elseif (is_file(ADDONPATH.'Theme/'.ADMIN_THEME.'/'.$base.$path.$file_ext))
 				{
-					return array(ADDONPATH.'themes/'.ADMIN_THEME.'/'.$base.$path, $file);	
+					return array(ADDONPATH.'Theme/'.ADMIN_THEME.'/'.$base.$path, $file);	
 				}
 			}
 			else {

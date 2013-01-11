@@ -264,14 +264,12 @@ class Module_m extends MY_Model
 	 */
 	public function exists($slug)
 	{
-		if ( ! $slug)
-		{
+		if ( ! $slug) {
 			return false;
 		}
 
 		// We already know about this module
-		if (isset($this->_module_exists[$slug]))
-		{
+		if (isset($this->_module_exists[$slug])) {
 			return $this->_module_exists[$slug];
 		}
 
@@ -290,14 +288,12 @@ class Module_m extends MY_Model
 	 */
 	public function enabled($slug)
 	{
-		if ( ! $slug)
-		{
+		if ( ! $slug) {
 			return false;
 		}
 
 		// We already know about this module
-		if (isset($this->_module_enabled[$slug]))
-		{
+		if (isset($this->_module_enabled[$slug])) {
 			return $this->_module_enabled[$slug];
 		}
 
@@ -318,14 +314,12 @@ class Module_m extends MY_Model
 	 */
 	public function installed($slug)
 	{
-		if ( ! $slug)
-		{
+		if ( ! $slug) {
 			return false;
 		}
 
 		// We already know about this module
-		if (isset($this->_module_installed[$slug]))
-		{
+		if (isset($this->_module_installed[$slug])) {
 			return $this->_module_installed[$slug];
 		}
 
@@ -345,8 +339,7 @@ class Module_m extends MY_Model
 	 */
 	public function enable($slug)
 	{
-		if ( ! $this->exists($slug))
-		{
+		if ( ! $this->exists($slug)) {
 			return false;
 		}
 
@@ -368,8 +361,7 @@ class Module_m extends MY_Model
 	 */
 	public function disable($slug)
 	{
-		if ( ! $this->exists($slug))
-		{
+		if ( ! $this->exists($slug)) {
 			return false;
 		}
 		
@@ -391,14 +383,11 @@ class Module_m extends MY_Model
 	 */
 	private function module_widget_task($slug, $task)
 	{
-		foreach(array(APPPATH, ADDONPATH, SHARED_ADDONPATH) as $path)
-		{
-			foreach((array) glob($path.'modules/'.$slug.'/widgets/*', GLOB_ONLYDIR) as $widget_path)
-			{
+		foreach (array(APPPATH, ADDONPATH, SHARED_ADDONPATH) as $path) {
+			foreach ((array) glob($path.'modules/'.$slug.'/widgets/*', GLOB_ONLYDIR) as $widget_path) {
 				$widget = basename($widget_path);
 
-				switch($task)
-				{
+				switch ($task) {
 					case 'enable':
 						$this->db
 							->where('slug', $widget)
@@ -426,16 +415,14 @@ class Module_m extends MY_Model
 	 */
 	public function install($slug, $is_core = false, $insert = false)
 	{
-		if ( ! $module = $this->_spawn_class($slug, $is_core))
-		{
+		if ( ! $module = $this->_spawn_class($slug, $is_core)) {
 			return false;
 		}
 
 		list($class) = $module;
 
 		// They've just finished uploading it so we need to make a record
-		if ($insert)
-		{
+		if ($insert) {
 			// Get some info for the db
 			$input = $class->info();
 
@@ -451,7 +438,10 @@ class Module_m extends MY_Model
 		}
 
 		// TURN ME ON BABY!
-		$this->db->where('slug', $slug)->update($this->_table, array('enabled' => true, 'installed' => true));
+		$this->db->where('slug', $slug)->update($this->_table, array(
+			'enabled' => true, 
+			'installed' => true
+		));
 		
 		// enable it
 		$this->_module_exists[$slug] = true;
@@ -476,8 +466,7 @@ class Module_m extends MY_Model
 	 */
 	public function uninstall($slug, $is_core = false)
 	{
-		if ( ! $module = $this->_spawn_class($slug, $is_core))
-		{
+		if ( ! $module = $this->_spawn_class($slug, $is_core)) {
 			// the files are missing so let's clean the "modules" table
 			return $this->delete($slug);
 		}
@@ -489,13 +478,11 @@ class Module_m extends MY_Model
 		$class->upload_path	= 'uploads/'.SITE_REF.'/';
 
 		// Run the uninstall method to drop the module's tables
-		if ( ! $class->uninstall())
-		{
+		if ( ! $class->uninstall()) {
 			return false;
 		}
 
-		if ($this->delete($slug))
-		{
+		if ($this->delete($slug)) {
 			// Get some info for the db
 			$input = $class->info();
 
@@ -523,14 +510,12 @@ class Module_m extends MY_Model
 	public function upgrade($slug)
 	{
 		// Get info on the new module
-		if ( ! ($module = $this->_spawn_class($slug, true) or $module = $this->_spawn_class($slug, false)))
-		{
+		if ( ! ($module = $this->_spawn_class($slug, true) or $module = $this->_spawn_class($slug, false))) {
 			return false;
 		}
 
 		// Get info on the old module
-		if ( ! $old_module = $this->get($slug))
-		{
+		if ( ! $old_module = $this->get($slug)) {
 			return false;
 		}
 
@@ -544,8 +529,7 @@ class Module_m extends MY_Model
 		$class->upload_path	= 'uploads/'.SITE_REF.'/';
 
 		// Run the update method to get it into the database
-		if ($class->upgrade($old_version))
-		{
+		if ($class->upgrade($old_version)) {
 			// Update version number
 			$this->db->where('slug', $slug)->update($this->_table, array('version' => $class->version));
 			
@@ -568,36 +552,31 @@ class Module_m extends MY_Model
 
 		// Loop through the known array and assign it to a single dimension because
 		// in_array can not search a multi array.
-		if (is_array($known) && count($known) > 0)
-		{
-			foreach ($known as $item)
-			{
-				array_unshift($known_array, $item['slug']);
-				$known_mtime[$item['slug']] = $item;
+		if (is_array($known) && count($known) > 0) {
+			foreach ($known as $item) {
+				array_unshift($known_array, $item->slug);
+				$known_mtime[$item->slug] = $item;
 			}
 		}
 
-		foreach (array(APPPATH, ADDONPATH, SHARED_ADDONPATH) as $directory)
-    	{
+		foreach (array(APPPATH, ADDONPATH, SHARED_ADDONPATH) as $directory) {
 			// some servers return false instead of an empty array
-			if ( ! $directory or ! ($temp_modules = glob($directory.'Module/*', GLOB_ONLYDIR)))
-			{
+			if ( ! $directory or ! ($temp_modules = glob($directory.'Module/*', GLOB_ONLYDIR))) {
 				continue;
 			}
 
-			foreach ($temp_modules as $path)
-			{
-				$slug = ucfirst(basename($path));
+			foreach ($temp_modules as $path) {
+				$slug = strtolower(basename($path));
 
 				// Yeah yeah we know
-				if (in_array($slug, $known_array))
-				{
-					$details_file = $directory.'Module/'.$slug.'/details'.EXT;
+				if (in_array($slug, $known_array)) {
+					$details_file = "{$directory}Module/{$slug}/Module.php";
 
-					if (file_exists($details_file) &&
-						filemtime($details_file) > $known_mtime[$slug]['updated_on'] &&
-						$module = $this->_spawn_class($slug, $is_core))
-					{
+					if (
+						file_exists($details_file) &&
+						filemtime($details_file) > $known_mtime[$slug]->updated_on &&
+						$module = $this->_spawn_class($slug, $is_core)
+					) {
 						list($class) = $module;
 
 						// Get some basic info
@@ -620,8 +599,7 @@ class Module_m extends MY_Model
 				}
 
 				// This doesn't have a valid Module.php file! :o
-				if ( ! ($module = $this->_spawn_class($slug, $is_core)))
-				{
+				if ( ! ($module = $this->_spawn_class($slug, $is_core))) {
 					continue;
 				}
 
@@ -662,15 +640,17 @@ class Module_m extends MY_Model
 	{
 		$path = $is_core ? APPPATH : ADDONPATH;
 
+		$slug = ucfirst($slug);
+
 		// Before we can install anything we need to know some details about the module
-		$details_file = $path.'Module/'.ucfirst($slug).'/Module.php';
+		$file = "{$path}Module/{$slug}/Module.php";
 
 		// Check the details file exists
-		if ( ! is_file($details_file))
+		if ( ! is_file($file))
 		{
-			$details_file = SHARED_ADDONPATH.'Module/'.ucfirst($slug).'/Module.php';
+			$file = SHARED_ADDONPATH.'Module/'.$slug.'/Module.php';
 
-			if ( ! is_file($details_file))
+			if ( ! is_file($file))
 			{
 				// we return false to let them know that the module isn't here, keep looking
 				return false;
@@ -678,10 +658,10 @@ class Module_m extends MY_Model
 		}
 
 		// Sweet, include the file
-		include_once $details_file;
+		include_once $file;
 
 		// Now call the details class
-		$class = 'Module\\'.ucfirst(strtolower($slug)).'\\Module';
+		$class = "Module\\{$slug}\\Module";
 
 		// Now we need to talk to it
 		if ( ! class_exists($class))
@@ -689,7 +669,7 @@ class Module_m extends MY_Model
 			throw new Exception("Module $slug has an incorrect Module.php class. It should be called 'Module\\$class\\Module'.");
 		}
 
-		return array(new $class, dirname($details_file));
+		return array(new $class, dirname($file));
 	}
 
 	/**
@@ -702,28 +682,22 @@ class Module_m extends MY_Model
 	 */
 	public function help($slug)
 	{
-		foreach (array(false, true) as $is_core)
-    	{
+		foreach (array(false, true) as $is_core) {
 			$languages = $this->config->item('supported_languages');
 			$default = $languages[$this->config->item('default_language')]['folder'];
 
 			//first try it as a core module
-			if ($module = $this->_spawn_class($slug, $is_core))
-			{
-				list ($class, $location) = $module;
+			if ($module = $this->_spawn_class($slug, $is_core)) {
+				list($class, $location) = $module;
 
 				// Check for a hep language file, if not show the default help text from the Module.php file
-				if (file_exists($location.'/language/'.$default.'/help_lang.php'))
-				{
+				if (file_exists($location.'/language/'.$default.'/help_lang.php')) {
 					$this->lang->load($slug.'/help');
 
-					if (lang('help_body'))
-					{
+					if (lang('help_body')) {
 						return lang('help_body');
 					}
-				}
-				else
-				{
+				} else {
 					return $class->help();
 				}
 			}
@@ -742,16 +716,13 @@ class Module_m extends MY_Model
 	 */
 	public function roles($slug)
 	{
-		foreach (array(false, true) as $is_core)
-    	{
+		foreach (array(false, true) as $is_core) {
 			//first try it as a core module
-			if ($module = $this->_spawn_class($slug, $is_core))
-			{
+			if ($module = $this->_spawn_class($slug, $is_core)) {
 				list($class) = $module;
 				$info = $class->info();
 
-				if ( ! empty($info['roles']))
-				{
+				if ( ! empty($info['roles'])) {
 					$this->lang->load($slug.'/permission');
 					return $info['roles'];
 				}

@@ -186,15 +186,18 @@ class Admin_modules extends Admin_Controller
 	 */
 	public function install($slug)
 	{
-		if ($this->module_m->install($slug)) {
+		$slug = strtolower($slug);
+
+		if ($this->module_m->install(strtolower($slug))) {
 			// Fire an event. A module has been enabled when installed. 
 			Events::trigger('module_enabled', $slug);
 							
 			// Clear the module cache
 			$this->cache->clear('module_m');
+
 			$this->session->set_flashdata('success', sprintf(lang('addons:modules:install_success'), $slug));
-		}
-		else {
+			
+		} else {
 			$this->session->set_flashdata('error', sprintf(lang('addons:modules:install_error'), $slug));
 		}
 

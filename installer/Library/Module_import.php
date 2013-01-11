@@ -103,9 +103,9 @@ class Module_import
 			// Loop through modules
 			foreach ($modules as $module_name)
 			{
-				$slug = basename($module_name);
+				$slug = strtolower(basename($module_name));
 
-				if ($slug == 'Streams_core' or $slug == 'Settings')
+				if ($slug == 'streams_core' or $slug == 'settings')
 				{
 					continue;
 				}
@@ -144,6 +144,8 @@ class Module_import
 	{
 		$path = $is_core ? PYROPATH : ADDONPATH;
 
+		$slug = ucfirst($slug);
+
 		// Before we can install anything we need to know some details about the module<<<<<<< HEAD
 		$details_file = "{$path}Module/{$slug}/Module.php";
 
@@ -162,7 +164,7 @@ class Module_import
 		include_once $details_file;
 
 		// Now call the details class
-		$class = 'Module\\'.ucfirst(strtolower($slug)).'\\Module';
+		$class = "Module\\{$slug}\\Module";
 
 		// Now we need to talk to it
 		return class_exists($class) ? new $class($this->pdb) : false;
