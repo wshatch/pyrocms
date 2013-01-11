@@ -41,6 +41,8 @@ class MY_Controller extends MX_Controller
 
         $this->benchmark->mark('my_controller_start');
 
+        $this->pick_language();
+
         // No record? Probably DNS'ed but not added to multisite
         if ( ! defined('SITE_REF')) {
             show_error('This domain is not set up correctly. Please go to '.anchor('sites').' and log in to add this site.');
@@ -78,8 +80,7 @@ class MY_Controller extends MX_Controller
         $this->load->driver('session');
 
         // Lock front-end language
-        if ( ! ($this instanceof Admin_Controller and ($site_lang = AUTO_LANGUAGE)))
-        {
+        if ( ! ($this instanceof Admin_Controller and ($site_lang = AUTO_LANGUAGE))) {
             $site_public_lang = explode(',', Settings::get('site_public_lang'));
 
             $site_lang = in_array(AUTO_LANGUAGE, $site_public_lang) ? AUTO_LANGUAGE : Settings::get('site_lang');
@@ -96,22 +97,18 @@ class MY_Controller extends MX_Controller
         $this->load->vars($pyro);
 
         // Set php locale time
-        if (isset($langs[CURRENT_LANGUAGE]['codes']) and sizeof($locale = (array) $langs[CURRENT_LANGUAGE]['codes']) > 1)
-        {
+        if (isset($langs[CURRENT_LANGUAGE]['codes']) and sizeof($locale = (array) $langs[CURRENT_LANGUAGE]['codes']) > 1) {
             array_unshift($locale, LC_TIME);
             call_user_func_array('setlocale', $locale);
             unset($locale);
         }
 
         // Reload languages
-        if (AUTO_LANGUAGE !== CURRENT_LANGUAGE)
-        {
+        if (AUTO_LANGUAGE !== CURRENT_LANGUAGE) {
             $this->config->set_item('language', $langs[CURRENT_LANGUAGE]['folder']);
             $this->lang->is_loaded = array();
             $this->lang->load(array('errors', 'global', 'users/user', 'settings/settings', 'files/files'));
-        }
-        else
-        {
+        } else {
             $this->lang->load(array('global', 'users/user', 'files/files'));
         }
 
@@ -158,11 +155,9 @@ class MY_Controller extends MX_Controller
         );
 
         // now pick our current module out of the enabled modules array
-        foreach ($enabled_modules as $module)
-        {
+        foreach ($enabled_modules as $module) {
             // @TODO Make a migration to upper case the first letters in the DB then remove this
-            if (ucfirst($module['slug']) === $this->module)
-            {
+            if (ucfirst($module['slug']) === $this->module) {
                 // Set meta data for the module to be accessible system wide
                 $this->module_details = $module;
                 continue;
@@ -260,6 +255,104 @@ class MY_Controller extends MX_Controller
         $conn->setFetchMode(PDO::FETCH_OBJ);
 
         return $conn;
+    }
+
+    /**
+     * Determines the language to use.
+     *
+     * This is called from the Codeigniter hook system.
+     * The hook is defined in system/cms/config/hooks.php
+     */
+    private function pick_language()
+    {
+        require APPPATH.'/config/language.php';
+
+        // Re-populate $_GET
+        parse_str($_SERVER['QUERY_STRING'], $_GET);
+
+        // If we've been redirected from HTTP to HTTPS on admin, ?session= will be set to maintain language
+        if ($_SERVER['SERVER_PORT'] == 443 and ! empty($_GET['session'])) {
+            session_start($_GET['session']);
+        } else {
+            session_start();
+        }
+
+        // Lang set in URL via ?lang=something
+        if ( ! empty($_GET['lang'])) {
+            // Turn en-gb into en
+            $lang = strtolower(substr($_GET['lang'], 0, 2));
+
+            log_message('debug', 'Set language in URL via GET: '.$lang);
+        }
+
+        // Lang has already been set and is stored in a session
+        elseif ( ! empty($_SESSION['lang_code'])) {
+            $lang = $_SESSION['lang_code'];
+
+            log_message('debug', 'Set language in Session: '.$lang);
+        }
+
+        // Lang has is picked by a user.
+        elseif ( ! empty($_COOKIE['lang_code'])) {
+            $lang = strtolower($_COOKIE['lang_code']);
+
+            log_message('debug', 'Set language in Cookie: '.$lang);
+        }
+
+        // Still no Lang. Lets try some browser detection then
+        elseif ( ! empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            // explode languages into array
+            $accept_langs = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+
+            $supported_langs = array_keys($config['supported_languages']);
+
+            log_message('debug', 'Checking browser languages: '.implode(', ', $accept_langs));
+
+            // Check them all, until we find a match
+            foreach ($accept_langs as $accept_lang) {
+                if (strpos($accept_lang, '-') === 2) {
+                    // Turn pt-br into br
+                    $lang = strtolower(substr($accept_lang, 3, 2));
+
+                    // Check its in the array. If so, break the loop, we have one!
+                    if (in_array($lang, $supported_langs)) {
+                        log_message('debug', 'Accept browser language: '.$accept_lang);
+
+                        break;
+                    }
+                }
+
+                // Turn en-gb into en
+                $lang = strtolower(substr($accept_lang, 0, 2));
+
+                // Check its in the array. If so, break the loop, we have one!
+                if (in_array($lang, $supported_langs)) {
+                    log_message('debug', 'Accept browser language: '.$accept_lang);
+
+                    break;
+                }
+            }
+        }
+
+        // If no language has been worked out - or it is not supported - use the default
+        if (empty($lang) or ! array_key_exists($lang, $config['supported_languages'])) {
+            $lang = $config['default_language'];
+            log_message('debug', 'Set language default: '.$lang);
+        }
+
+        // Whatever we decided the lang was, save it for next time to avoid working it out again
+        $_SESSION['lang_code'] = $lang;
+
+        // Load CI config class
+        $CI_config =& load_class('Config');
+
+        // Set the language config. Selects the folder name from its key of 'en'
+        $CI_config->set_item('language', $config['supported_languages'][$lang]['folder']);
+
+        // Sets a constant to use throughout ALL of CI.
+        define('AUTO_LANGUAGE', $lang);
+
+        log_message('debug', 'Defined const AUTO_LANGUAGE: '.AUTO_LANGUAGE);
     }
 }
 

@@ -27,8 +27,7 @@ class Pages extends Public_Controller
 
         // No page is mentioned and we are not using pages as default
         //  (eg blog on homepage)
-        if ( ! $this->uri->segment(1) and $this->router->default_controller != 'pages')
-        {
+        if ( ! $this->uri->segment(1) and $this->router->default_controller !== 'pages') {
             redirect('');
         }
     }
@@ -41,25 +40,19 @@ class Pages extends Public_Controller
     public function _remap($method)
     {
         // This page has been routed to with pages/view/whatever
-        if ($this->uri->rsegment(1, '').'/'.$method === 'pages/view')
-        {
+        if ($this->uri->rsegment(1, '').'/'.$method === 'pages/view') {
             $url_segments = $this->uri->total_rsegments() > 0 ? array_slice($this->uri->rsegment_array(), 2) : null;
         }
 
         // not routed, so use the actual URI segments
-        else
-        {
-            if (($url_segments = $this->uri->uri_string()) === 'favicon.ico')
-            {
+        else {
+            if (($url_segments = $this->uri->uri_string()) === 'favicon.ico') {
                 $favicon = Asset::get_filepath_img('theme::favicon.ico');
 
-                if (file_exists(FCPATH.$favicon) && is_file(FCPATH.$favicon))
-                {
+                if (file_exists(FCPATH.$favicon) && is_file(FCPATH.$favicon)) {
                     header('Content-type: image/x-icon');
                     readfile(FCPATH.$favicon);
-                }
-                else
-                {
+                } else {
                     set_status_header(404);
                 }
 
@@ -90,7 +83,7 @@ class Pages extends Public_Controller
         if ( ! $page or ($page->status == 'draft' and ! $this->permission_m->has_role(array('put_live', 'edit_live')))) {
             // Load the '404' page. If the actual 404 page is missing (oh the irony) bitch and quit to prevent an infinite loop.
             if ( ! ($page = $this->page->getByUri(404))) {
-                show_error('The page you are trying to view does not exist and it also appears as if the 404 page has been deleted.');
+                throw new Exception('The page you are trying to view does not exist and it also appears as if the 404 page has been deleted.');
             }
         }
 
@@ -98,14 +91,12 @@ class Pages extends Public_Controller
         isset($page->base_uri) OR $page->base_uri = $url_segments;
 
         // If this is a homepage, do not show the slug in the URL
-        if ($page->is_home and $url_segments)
-        {
+        if ($page->is_home and $url_segments) {
             redirect('', 'location', 301);
         }
 
         // If the page is missing, set the 404 status header
-        if ($page->slug == '404')
-        {
+        if ($page->slug == '404') {
             $this->output->set_status_header(404);
         }
 

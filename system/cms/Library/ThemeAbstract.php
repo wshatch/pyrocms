@@ -53,13 +53,6 @@ abstract class ThemeAbstract
 	 * @var Designer defined options.
 	 */
 	public $options;
-	
-	/**
-	 * Run() is triggered when the theme is loaded for use
-	 *
-	 * This should contain the main logic for the theme.
-	 */
-	public abstract function run();
 }
 
 /* End of file ThemeInterface.php */

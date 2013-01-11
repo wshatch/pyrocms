@@ -164,21 +164,19 @@ class Module extends \Library\ModuleAbstract
                 'is_gui' => 0,
                 'module' => '',
                 'order' => 0,
-            ),
-            array(
+            ), array(
                 'slug' => 'default_theme',
                 'title' => 'Default Theme',
                 'description' => 'Select the theme you want users to see by default.',
                 'type' => '',
-                'default' => 'default',
-                'value' => 'default',
+                'default' => 'simple',
+                'value' => null,
                 'options' => 'func:get_themes',
                 'is_required' => 1,
                 'is_gui' => 0,
                 'module' => '',
                 'order' => 0,
-            ),
-            array(
+            ), array(
                 'slug' => 'admin_theme',
                 'title' => 'Control Panel Theme',
                 'description' => 'Select the theme for the control panel.',

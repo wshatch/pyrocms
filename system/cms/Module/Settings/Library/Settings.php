@@ -92,7 +92,7 @@ class Settings {
 
 		// Setting doesn't exist, maybe it's a config option
 		$value = $setting 
-			? is_null($setting->value) ? $setting->default : $setting->value
+			? (empty($setting->value) and ! $setting->value != 0) ? $setting->default : $setting->value
 			: config_item($key);
 
 		// Store it for later
@@ -158,8 +158,10 @@ class Settings {
 
 		$settings = static::$settingModel->getAll();
 
-		foreach ($settings as $setting) {
-			static::$cache[$setting->slug] = is_null($setting->value) ? $setting->default : $setting->value;
+		foreach ($settings as $setting) {			
+			static::$cache[$setting->slug] = (empty($setting->value) and ! $setting->value != 0) 
+				? $setting->default 
+				: $setting->value;
 		}
 
 		return static::$cache;

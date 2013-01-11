@@ -46,18 +46,11 @@ class Theme_m extends CI_Model
      *
      * @return bool|object
      */
-    public function get($slug = '')
+    public function get($slug)
     {
-        $slug OR $slug = $this->_theme;
-
-        foreach ($this->template->theme_locations() as $location)
-        {
-            if (is_dir($location.$slug))
-            {
-                $theme = $this->getDetails($location, $slug);
-
-                if ($theme !== false)
-                {
+        foreach ($this->template->theme_locations() as $location) {
+            if (is_dir($location.$slug)) {
+                if (($theme = $this->getDetails($location, $slug))) {
                     return $theme;
                 }
             }
