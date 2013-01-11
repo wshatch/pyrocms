@@ -199,7 +199,7 @@ class Settings {
 	 *
 	 * Returns the form control for the setting.
 	 *
-	 * @todo: Code duplication, see modules/themes/controllers/admin.php @ form_control().
+	 * @todo: Code duplication, see Module/Themes/Controller/Admin.php @ form_control().
 	 *
 	 * @param	object	$setting
 	 * @return	string

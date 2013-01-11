@@ -26,23 +26,23 @@ class Widgets {
 		if (defined('ADMIN_THEME'))
 		{
 			$locations += array(
-			   SHARED_ADDONPATH.'themes/'.ADMIN_THEME.'/',
-			   APPPATH.'themes/'.ADMIN_THEME.'/',
-			   ADDONPATH.'themes/'.ADMIN_THEME.'/',
+			   SHARED_ADDONPATH.'Theme/'.ADMIN_THEME.'/',
+			   APPPATH.'Theme/'.ADMIN_THEME.'/',
+			   ADDONPATH.'Theme/'.ADMIN_THEME.'/',
 			);
 		}
 
 		// Map where all widgets are
 		foreach ($locations as $path)
 		{
-			$widgets = glob($path . 'widgets/*', GLOB_ONLYDIR);
+			$widgets = glob($path . 'Widgets/*', GLOB_ONLYDIR);
 
 			if ( ! is_array($widgets))
 			{
 				$widgets = array();
 			}
 
-			$module_widgets = glob($path . 'modules/*/widgets/*', GLOB_ONLYDIR);
+			$module_widgets = glob($path . 'Module/*/Widget/*', GLOB_ONLYDIR);
 
 			if ( ! is_array($module_widgets))
 			{
@@ -76,8 +76,7 @@ class Widgets {
 		// Firstly, install any uninstalled widgets
 		$uninstalled_widgets = $this->list_uninstalled_widgets();
 
-		foreach ($uninstalled_widgets as $widget)
-		{
+		foreach ($uninstalled_widgets as $widget) {
 			$this->add_widget((array) $widget);
 		}
 
@@ -86,10 +85,8 @@ class Widgets {
 
 		$avaliable = array();
 
-		foreach ($installed_widgets as $widget)
-		{
-			if ( ! isset($this->_widget_locations[$widget->slug]))
-			{
+		foreach ($installed_widgets as $widget) {
+			if ( ! isset($this->_widget_locations[$widget->slug])) {
 				$this->delete_widget($widget->slug);
 
 				continue;
@@ -98,9 +95,10 @@ class Widgets {
 			// Finally, check if is need and update the widget info
 			$widget_file = FCPATH . $this->_widget_locations[$widget->slug] . $widget->slug.'.php';
 
-			if (file_exists($widget_file) &&
-				filemtime($widget_file) > $widget->updated_on)
-			{
+			if (
+				file_exists($widget_file) &&
+				filemtime($widget_file) > $widget->updated_on
+			) {
 
 				$this->reload_widget($widget->slug);
 
@@ -118,19 +116,16 @@ class Widgets {
 		$available = $this->widget_m->order_by('slug')->get_all();
 		$available_slugs = array();
 
-		foreach ($available as $widget)
-		{
+		foreach ($available as $widget) {
 			$available_slugs[] = $widget->slug;
 		}
 		unset($widget);
 
 		$uninstalled = array();
-		foreach ($this->_widget_locations as $widget_path)
-		{
+		foreach ($this->_widget_locations as $widget_path) {
 			$slug = basename($widget_path);
 
-			if ( ! in_array($slug, $available_slugs) and $widget = $this->read_widget($slug))
-			{
+			if ( ! in_array($slug, $available_slugs) and $widget = $this->read_widget($slug)) {
 				$uninstalled[] = $widget;
 			}
 		}
@@ -142,10 +137,8 @@ class Widgets {
 	{
 		$widget = $this->widget_m->get_instance($instance_id);
 
-		if ($widget)
-		{
+		if ($widget) {
 			$widget->options = $this->_unserialize_options($widget->options);
-
 			return $widget;
 		}
 
@@ -166,14 +159,13 @@ class Widgets {
 	{
 		$this->_spawn_widget($slug);
 
-		if ($this->_widget === false or ! is_subclass_of($this->_widget, 'Widgets'))
-		{
+		if ($this->_widget === false or ! is_subclass_of($this->_widget, 'Widgets')) {
 			return false;
 		}
 
 		$widget = (object) get_object_vars($this->_widget);
 		$widget->slug = $slug;
-		$widget->module = strpos($this->_widget->path, 'modules/') ? basename(dirname($this->_widget->path)) : null;
+		$widget->module = strpos($this->_widget->path, 'Module/') ? basename(dirname($this->_widget->path)) : null;
 		$widget->is_addon = strpos($this->_widget->path, 'addons/') !== false;
 
 		return $widget;
@@ -200,7 +192,7 @@ class Widgets {
 		$data['options'] = $options;
 
 		// Is there an overload view in the theme?
-		$overload = file_exists($this->template->get_views_path().'widgets/'.$name.'/display.php') ? $name : false;
+		$overload = file_exists($this->template->get_views_path().'Widget/'.$name.'/display.php') ? $name : false;
 
 		return $this->load_view('display', $data, $overload);
 	}
@@ -261,20 +253,12 @@ class Widgets {
 
 		$output = '';
 
-		if ($area == 'dashboard')
-		{
-			$view = 'admin/widget_wrapper';
-		}
-		else
-		{
-			$view = 'widget_wrapper';
-		}
+		$view = ($area == 'dashboard') ? 'admin/widget_wrapper' : 'widget_wrapper';
 
-		$path = $this->template->get_views_path() . 'modules/widgets/';
+		$path = $this->template->get_views_path() . 'Modules/Widgets/';
 
-		if ( ! file_exists("{$path}{$view}.php"))
-		{
-			list($path, $view) = Modules::find($view, 'widgets', 'views/');
+		if ( ! file_exists("{$path}{$view}.php")) {
+			list($path, $view) = Modules::find($view, 'Widgets', 'views/');
 		}
 
 		// save the existing view array so we can restore it
@@ -290,7 +274,13 @@ class Widgets {
 				// add this view location to the array
 				$this->load->set_view_path($path);
 
-				$output .= $this->load->_ci_load(array('_ci_view' => $view, '_ci_vars' => array('widget' => $widget), '_ci_return' => true)) . "\n";
+				$output .= $this->load->_ci_load(array(
+					'_ci_view' => $view, 
+					'_ci_vars' => array(
+						'widget' => $widget
+					),
+					'_ci_return' => true
+				)) . "\n";
 
 				// Put the old array back
 				$this->load->set_view_path($save_path);
@@ -304,12 +294,9 @@ class Widgets {
 
 	public function reload_widget($slug)
 	{
-		if (is_array($slug))
-		{
-			foreach ($slug as $_slug)
-			{
-				if ( ! $this->reload_widget($_slug))
-				{
+		if (is_array($slug)) {
+			foreach ($slug as $_slug) {
+				if ( ! $this->reload_widget($_slug)) {
 					return false;
 				}
 			}
@@ -482,7 +469,7 @@ class Widgets {
 		if ($overload !== false)
 		{
 			return $this->parser->parse_string($this->load->_ci_load(array(
-				'_ci_path' => $this->template->get_views_path().'widgets/'.$overload.'/display.php',
+				'_ci_path' => $this->template->get_views_path().'Widgets/'.$overload.'/display.php',
 				'_ci_vars' => $data,
 				'_ci_return' => true
 			)), array(), true);

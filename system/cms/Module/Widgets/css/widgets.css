@@ -259,7 +259,7 @@ li.empty-drop-item {
 	height: 36px;
 }
 li.empty-drop-item.loading {
-	background-image: url(../../../themes/pyrocms/img/admin/loading.gif);
+	background-image: url(../../../Theme/Pyrocms/img/admin/loading.gif);
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	border: none;
@@ -285,4 +285,4 @@ li.empty-drop-item.loading {
 }
 
 #widgets-list > tbody > tr { cursor: auto; }
-td span.move-handle { float: right; margin-right: 6px; width: 18px; height: 18px; cursor: move; background: url(../../../themes/pyrocms/img/icons/cursor_drag_arrow.png) no-repeat; }
+td span.move-handle { float: right; margin-right: 6px; width: 18px; height: 18px; cursor: move; background: url(../../../Theme/Pyrocms/img/icons/cursor_drag_arrow.png) no-repeat; }

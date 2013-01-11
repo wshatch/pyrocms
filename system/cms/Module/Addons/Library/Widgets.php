@@ -48,23 +48,23 @@ class Widgets
 		if (defined('ADMIN_THEME'))
 		{
 			$locations += array(
-			   SHARED_ADDONPATH.'themes/'.ADMIN_THEME.'/',
-			   APPPATH.'themes/'.ADMIN_THEME.'/',
-			   ADDONPATH.'themes/'.ADMIN_THEME.'/',
+			   SHARED_ADDONPATH.'Theme/'.ADMIN_THEME.'/',
+			   APPPATH.'Theme/'.ADMIN_THEME.'/',
+			   ADDONPATH.'Theme/'.ADMIN_THEME.'/',
 			);
 		}
 
 		// Map where all widgets are
 		foreach ($locations as $path)
 		{
-			$widgets = glob($path.'widgets/*', GLOB_ONLYDIR);
+			$widgets = glob($path.'Widget/*', GLOB_ONLYDIR);
 
 			if ( ! is_array($widgets))
 			{
 				$widgets = array();
 			}
 
-			$module_widgets = glob($path.'modules/*/widgets/*', GLOB_ONLYDIR);
+			$module_widgets = glob($path.'Module/*/Widget/*', GLOB_ONLYDIR);
 
 			if ( ! is_array($module_widgets))
 			{
@@ -266,7 +266,7 @@ class Widgets
 
 		$widget = (object) get_object_vars($this->_widget);
 		$widget->slug = $slug;
-		$widget->module = strpos($this->_widget->path, 'modules/') ? basename(dirname($this->_widget->path)) : null;
+		$widget->module = strpos($this->_widget->path, 'Module/') ? basename(dirname($this->_widget->path)) : null;
 		$widget->is_addon = strpos($this->_widget->path, 'system/') === false;
 
 		return $widget;
@@ -394,36 +394,28 @@ class Widgets
 
 		$output = '';
 
-		if ($area == 'dashboard')
-		{
-			$view = 'admin/widget_wrapper';
-		}
-		else
-		{
-			$view = 'widget_wrapper';
-		}
+		$view = ($area == 'dashboard') ? 'admin/widget_wrapper': 'widget_wrapper';
 
-		$path = $this->template->get_views_path().'modules/widgets/';
+		$path = $this->template->get_views_path().'Module/Widgets/';
 
-		if ( ! file_exists($path.$view.EXT))
-		{
-			list($path, $view) = Modules::find($view, 'widgets', 'views/');
+		if ( ! file_exists($path.$view.'.php')) {
+			list($path, $view) = Modules::find($view, 'Widgets', 'views/');
 		}
 
 		// save the existing view array so we can restore it
 		$save_path = $this->load->get_view_paths();
 
-		foreach ($widgets as $widget)
-		{
+		foreach ($widgets as $widget) {
 			$widget->options = $this->_unserialize_options($widget->options);
 			$widget->body = $this->render($widget->slug, $widget->options);
 
-			if ($widget->body !== false)
-			{
+			if ($widget->body !== false) {
 				// add this view location to the array
 				$this->load->set_view_path($path);
 
-				$output .= $this->load->_ci_load(array('_ci_view' => $view, '_ci_vars' => array('widget' => $widget), '_ci_return' => true))."\n";
+				$output .= $this->load->_ci_load(array('_ci_view' => $view, '_ci_vars' => array(
+					'widget' => $widget
+				), '_ci_return' => true))."\n";
 
 				// Put the old array back
 				$this->load->set_view_path($save_path);
@@ -437,12 +429,9 @@ class Widgets
 
 	public function reload_widget($slug)
 	{
-		if (is_array($slug))
-		{
-			foreach ($slug as $_slug)
-			{
-				if ( ! $this->reload_widget($_slug))
-				{
+		if (is_array($slug)) {
+			foreach ($slug as $_slug) {
+				if ( ! $this->reload_widget($_slug)) {
 					return false;
 				}
 			}
@@ -500,8 +489,7 @@ class Widgets
 	{
 		$slug = $this->get_widget($widget_id)->slug;
 
-		if ($error = $this->validation_errors($slug, $data))
-		{
+		if ($error = $this->validation_errors($slug, $data)) {
 			return array('status' => 'error', 'error' => $error);
 		}
 
@@ -523,8 +511,7 @@ class Widgets
 	{
 		$slug = $this->widget_m->get_instance($instance_id)->slug;
 
-		if ($error = $this->validation_errors($slug, $options))
-		{
+		if ($error = $this->validation_errors($slug, $options)) {
 			return array('status' => 'error', 'error' => $error);
 		}
 
@@ -558,13 +545,11 @@ class Widgets
 
 		$this->_widget OR $this->_spawn_widget($name);
 
-		if (property_exists($this->_widget, 'fields'))
-		{
+		if (property_exists($this->_widget, 'fields')) {
 			$this->form_validation->set_rules($this->_widget->fields);
 		}
 
-		if ( ! $this->form_validation->run('', false))
-		{
+		if ( ! $this->form_validation->run('', false)) {
 			return validation_errors();
 		}
 	}
@@ -573,8 +558,7 @@ class Widgets
 	{
 		$this->_widget or $this->_spawn_widget($name);
 
-		if (method_exists($this->_widget, 'save'))
-		{
+		if (method_exists($this->_widget, 'save')) {
 			return (array) call_user_func(array(&$this->_widget, 'save'), $options);
 		}
 
@@ -586,8 +570,7 @@ class Widgets
 		$widget_path = $this->_widget_locations[$name];
 		$widget_file = FCPATH.$widget_path.$name.EXT;
 
-		if (file_exists($widget_file))
-		{
+		if (file_exists($widget_file)) {
 			require_once $widget_file;
 			$class_name = 'Widget_'.ucfirst($name);
 
@@ -602,8 +585,7 @@ class Widgets
 
 	public function __get($var)
 	{
-		if (isset(get_instance()->$var))
-		{
+		if (isset(get_instance()->$var)) {
 			return get_instance()->$var;
 		}
 	}

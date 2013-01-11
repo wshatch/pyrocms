@@ -34,7 +34,7 @@ class Plugins
 			if (file_exists($path = $directory.'Plugin/'.$class.'.php')) {
 				return $this->process($path, $class, $method, $attributes, $content);
 			
-			} elseif (defined('ADMIN_THEME') and file_exists($path = APPPATH.'themes/'.ADMIN_THEME.'/Plugin/'.$class.'.php')) {
+			} elseif (defined('ADMIN_THEME') and file_exists($path = APPPATH.'Theme/'.ADMIN_THEME.'/Plugin/'.$class.'.php')) {
 				return $this->process($path, $class, $method, $attributes, $content);
 			}
 

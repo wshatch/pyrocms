@@ -36,7 +36,7 @@ class Admin_themes extends Admin_Controller
 		$this->lang->load('addons');
 		$this->load->library('form_validation');
 
-		$this->template->append_css('module::themes.css');
+		$this->template->append_css('module::themes:css');
 	}
 
 	/**
@@ -80,7 +80,7 @@ class Admin_themes extends Admin_Controller
 			if ($this->theme_m->get_all())
 			{
 				// Success...
-				$this->session->set_flashdata('success', lang('themes.re-index_success'));
+				$this->session->set_flashdata('success', lang('themes:re-index_success'));
 
 				$this->cache->clear('theme_m');
 
@@ -133,7 +133,7 @@ class Admin_themes extends Admin_Controller
 				Events::trigger('theme_options_updated', $options_array);
 
 				// Success...
-				$this->session->set_flashdata('success', lang('themes.save_success'));
+				$this->session->set_flashdata('success', lang('themes:save_success'));
 
 				$this->cache->clear('theme_m');
 
@@ -166,12 +166,12 @@ class Admin_themes extends Admin_Controller
 			// Fire an event. A default theme has been set.
 			Events::trigger('theme_set_default', $theme);
 
-			$this->session->set_flashdata('success', sprintf(lang('themes.set_default_success'), $theme));
+			$this->session->set_flashdata('success', sprintf(lang('themes:set_default_success'), $theme));
 		}
 
 		else
 		{
-			$this->session->set_flashdata('error', sprintf(lang('themes.set_default_error'), $theme));
+			$this->session->set_flashdata('error', sprintf(lang('themes:set_default_error'), $theme));
 		}
 
 		if ($this->input->post('method') == 'admin_themes')
@@ -204,7 +204,7 @@ class Admin_themes extends Admin_Controller
 
 				// Check if we already have a dir with same name
 				if ($this->template->theme_exists($upload_data['raw_name'])) {
-					$this->session->set_flashdata('error', lang('themes.already_exists_error'));
+					$this->session->set_flashdata('error', lang('themes:already_exists_error'));
 				}
 
 				else {
@@ -215,15 +215,14 @@ class Admin_themes extends Admin_Controller
 					$this->unzip->allow(array('php', 'xml', 'html', 'css', 'js', 'png', 'gif', 'jpeg', 'jpg', 'swf', 'ico', 'txt', 'eot', 'svg', 'ttf', 'woff'));
 
 					// Try and extract
-					$this->unzip->extract($upload_data['full_path'], ADDONPATH.'themes/')
-						? $this->session->set_flashdata('success', lang('themes.upload_success'))
+					$this->unzip->extract($upload_data['full_path'], ADDONPATH.'Theme/')
+						? $this->session->set_flashdata('success', lang('themes:upload_success'))
 						: $this->session->set_flashdata('error', $this->unzip->error_string());
 				}
 
 				// Delete uploaded file
 				unlink($upload_data['full_path']);
-			}
-			else {
+			} else {
 				$this->session->set_flashdata('error', $this->upload->display_errors());
 			}
 
@@ -232,7 +231,7 @@ class Admin_themes extends Admin_Controller
 
 		$this->template
 			->set_layout('modal')
-			->title($this->module_details['name'], lang('themes.upload_title'))
+			->title($this->module_details['name'], lang('themes:upload_title'))
 			->build('admin/themes/upload');
 	}
 
@@ -258,11 +257,10 @@ class Admin_themes extends Admin_Controller
 				$to_delete++;
 
 				if (Settings::get('default_theme') == $theme_name) {
-					$this->session->set_flashdata('error', lang('themes.default_delete_error'));
-				}
-
-				else {
-					$theme_dir = ADDONPATH.'themes/'.$theme_name;
+					$this->session->set_flashdata('error', lang('themes:default_delete_error'));
+					
+				} else {
+					$theme_dir = ADDONPATH.'Theme/'.$theme_name;
 
 					if (is_really_writable($theme_dir)) {
 						delete_files($theme_dir, true);
@@ -273,7 +271,7 @@ class Admin_themes extends Admin_Controller
 						}
 					}
 					else {
-						$this->session->set_flashdata('error', sprintf(lang('themes.delete_error'), $theme_dir));
+						$this->session->set_flashdata('error', sprintf(lang('themes:delete_error'), $theme_dir));
 					}
 				}
 			}
@@ -282,11 +280,11 @@ class Admin_themes extends Admin_Controller
 				// Fire an event. One or more themes have been deleted.
 				Events::trigger('theme_deleted', $deleted_names);
 
-				$this->session->set_flashdata('success', sprintf(lang('themes.mass_delete_success'), $deleted, $to_delete));
+				$this->session->set_flashdata('success', sprintf(lang('themes:mass_delete_success'), $deleted, $to_delete));
 			}
 		}
 		else {
-			$this->session->set_flashdata('error', lang('themes.delete_select_error'));
+			$this->session->set_flashdata('error', lang('themes:delete_select_error'));
 		}
 
 		redirect('admin/addons/themes');

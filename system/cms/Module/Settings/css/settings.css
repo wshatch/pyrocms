@@ -11,7 +11,7 @@ span.move-handle {
 	width:18px;
 	height:18px;
 	cursor:move;
-	background:url('../../../themes/pyrocms/img/icons/drag_handle.gif') no-repeat;
+	background:url('../../../Theme/pyrocms/img/icons/drag_handle.gif') no-repeat;
 }
 
 div.tabs fieldset ol li {

@@ -99,7 +99,7 @@ section.title .form-title {
 	padding:5px 1px 5px 10px;
 	margin:0;
 	cursor:move;
-	background:url(../../../themes/pyrocms/img/icons/drag_handle_dark.gif) #eee no-repeat 99% 5px;
+	background:url(../../../Theme/pyrocms/img/icons/drag_handle_dark.gif) #eee no-repeat 99% 5px;
 	-webkit-border-radius:4px;
 	-moz-border-radius:4px;
 	-o-border-radius:4px;
