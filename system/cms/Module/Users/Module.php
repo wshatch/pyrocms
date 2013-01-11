@@ -67,7 +67,7 @@ class Module extends \Library\ModuleAbstract
             ),
             'frontend'  => false,
             'backend'   => true,
-            'menu'      => false,
+            'menu'      => 'users',
             'roles'     => array('admin_profile_fields')
         );
 
