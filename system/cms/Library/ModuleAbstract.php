@@ -96,22 +96,4 @@ abstract class ModuleAbstract {
 	{
 		return lang('modules.no_help');
 	}
-
-	/**
-	 * Allows this class and classes that extend this to use $this-> just like
-	 * you were in a controller.
-	 *
-	 * @return mixed
-	 */
-	public function __get($var)
-	{
-		static $ci;
-		isset($ci) OR $ci =& get_instance();
-
-		if ( ! isset($ci->{$var})) {
-			throw new \OutOfBoundsException("CodeIgniter does not have a \"{$var}\" library or model loaded.");
-		}
-
-		return $ci->{$var};
-	}
 }

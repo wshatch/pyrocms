@@ -32,25 +32,23 @@ class Admin_Controller extends MY_Controller {
 		$this->lang->load('buttons');
 		
 		// Show error and exit if the user does not have sufficient permissions
-		if ( ! self::_check_access())
-		{
+		if ( ! self::_check_access()) {
 			$this->session->set_flashdata('error', lang('cp:access_denied'));
 			redirect();
 		}
 
 		// If the setting is enabled redirect request to HTTPS
-		if (Settings::get('admin_force_https') and strtolower(substr(current_url(), 4, 1)) != 's')
-		{
-			redirect(str_replace('http:', 'https:', current_url()).'?session='.session_id());
+		if (Settings::get('admin_force_https') and strtolower(substr(current_url(), 4, 1)) != 's') {
+			redirect(str_replace('http:/', 'https:/', current_url()).'?session='.session_id());
 		}
 
 		$this->load->helper('admin_theme');
 		
-		ci()->admin_theme = $this->theme_m->get_admin();
-		
+		// Load up whatever theme the control panel should use
+		ci()->admin_theme = $this->theme_m->get(Settings::get('admin_theme'));
+
 		// Using a bad slug? Weak
-		if (empty($this->admin_theme->slug))
-		{
+		if (empty($this->admin_theme->slug)) {
 			show_error('This site has been set to use an admin theme that does not exist.');
 		}
 
@@ -165,7 +163,7 @@ class Admin_Controller extends MY_Controller {
 			->set_layout('default', 'admin');
 
 		// trigger the run() method in the selected admin theme
-		$class = 'Theme_'.ucfirst($this->admin_theme->slug);
+		$class = 'Theme\\'.ucfirst($this->admin_theme->slug).'\\Theme';
 		call_user_func(array(new $class, 'run'));
 	}
 

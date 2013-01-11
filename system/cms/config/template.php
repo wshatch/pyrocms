@@ -70,8 +70,8 @@ $config['theme'] = null;
 */
 
 $config['theme_locations'] = array(
-	APPPATH.'themes/',
-	SHARED_ADDONPATH . 'themes/'
+	APPPATH.'Theme/',
+	SHARED_ADDONPATH . 'Theme/'
 );
 
 /*

@@ -11,7 +11,7 @@
         <ignore>*/language/*</ignore>
         <ignore>*/codeigniter/*</ignore>
         <ignore>*/installer/*</ignore>
-        <ignore>*/themes/*</ignore>
+        <ignore>*/Theme/*</ignore>
         <ignore>*/views/*</ignore>
         <ignore>*/migrations/*</ignore>
         <ignore>*/sparks/*</ignore>

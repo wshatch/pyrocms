@@ -88,54 +88,59 @@ class Module extends \Library\ModuleAbstract
             ),
         );
 
+    return $info; // TODO KILL ME
+
         // Shortcuts for New page
 
-        // Do we have more than one page type? If we don't, no need to have a modal
-        // ask them to choose a page type.
-        if ($this->pdb->table('page_types')->count() > 1) {
-            $info['sections']['pages']['shortcuts'] = array(
-                array(
-                    'name' => 'pages:create_title',
-                    'uri' => 'admin/pages/choose_type',
-                    'class' => 'add modal'
-                )
-            );
-        }
-        else {
-            // Get the one page type. 
-            $page_type = $this->pdb->table('page_types')->take(1)->select('id')->first();
-
-            if ($page_type) {
+        if (class_exists('Admin_Controller', false))
+        {
+            // Do we have more than one page type? If we don't, no need to have a modal
+            // ask them to choose a page type.
+            if ($this->pdb->table('page_types')->count() > 1) {
                 $info['sections']['pages']['shortcuts'] = array(
                     array(
                         'name' => 'pages:create_title',
-                        'uri' => 'admin/pages/create?page_type='.$page_type->id,
+                        'uri' => 'admin/pages/choose_type',
+                        'class' => 'add modal'
+                    )
+                );
+            }
+            else {
+                // Get the one page type. 
+                $page_type = $this->pdb->table('page_types')->take(1)->select('id')->first();
+
+                if ($page_type) {
+                    $info['sections']['pages']['shortcuts'] = array(
+                        array(
+                            'name' => 'pages:create_title',
+                            'uri' => 'admin/pages/create?page_type='.$page_type->id,
+                            'class' => 'add'
+                        )
+                    );          
+                }
+            }
+
+            // Show the correct +Add button based on the page
+            if ($this->uri->segment(4) == 'fields' and $this->uri->segment(5))
+            {
+                $info['sections']['types']['shortcuts'] = array(
+                    array(
+                        'name' => 'streams:new_field',
+                        'uri' => 'admin/pages/types/fields/'.$this->uri->segment(5).'/new_field',
                         'class' => 'add'
                     )
-                );          
+                );
             }
-        }
-
-        // Show the correct +Add button based on the page
-        if ($this->uri->segment(4) == 'fields' and $this->uri->segment(5))
-        {
-            $info['sections']['types']['shortcuts'] = array(
-                array(
-                    'name' => 'streams:new_field',
-                    'uri' => 'admin/pages/types/fields/'.$this->uri->segment(5).'/new_field',
-                    'class' => 'add'
-                )
-            );
-        }
-        else
-        {
-            $info['sections']['types']['shortcuts'] = array(
-                array(
-                    'name' => 'pages:types_create_title',
-                    'uri' => 'admin/pages/types/create',
-                    'class' => 'add'
-                )
-            );          
+            else
+            {
+                $info['sections']['types']['shortcuts'] = array(
+                    array(
+                        'name' => 'pages:types_create_title',
+                        'uri' => 'admin/pages/types/create',
+                        'class' => 'add'
+                    )
+                );
+            }
         }
 
         return $info;

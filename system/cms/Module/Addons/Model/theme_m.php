@@ -5,38 +5,14 @@
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Themes\Model
  */
-class Theme_m extends MY_Model
+class Theme_m extends CI_Model
 {
-    /**
-     * Default Theme
-     *
-     * @var string
-     */
-    public $_theme = null;
-
-    /**
-     * Default Admin Theme
-     *
-     * @var string
-     */
-    public $_admin_theme = null;
-
     /**
      * Available Themes
      *
      * @var array
      */
     public $_themes = null;
-
-    /**
-     * Sets the current default theme
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->_theme = Settings::get('default_theme');
-        $this->_admin_theme = Settings::get('admin_theme');
-    }
 
     /**
      * Get all available themes
@@ -54,7 +30,7 @@ class Theme_m extends MY_Model
 
             foreach ($themes as $theme_path)
             {
-                $this->_get_details(dirname($theme_path).'/', basename($theme_path));
+                $this->getDetails(dirname($theme_path).'/', basename($theme_path));
             }
         }
 
@@ -78,7 +54,7 @@ class Theme_m extends MY_Model
         {
             if (is_dir($location.$slug))
             {
-                $theme = $this->_get_details($location, $slug);
+                $theme = $this->getDetails($location, $slug);
 
                 if ($theme !== false)
                 {
@@ -90,32 +66,6 @@ class Theme_m extends MY_Model
         return false;
     }
 
-    /**
-     * Get the admin theme
-     *
-     * @param string $slug
-     *
-     * @return bool|object
-     */
-    public function get_admin($slug = '')
-    {
-        $slug OR $slug = $this->_admin_theme;
-
-        foreach ($this->template->theme_locations() as $location)
-        {
-            if (is_dir($location.$slug))
-            {
-                $theme = $this->_get_details($location, $slug);
-
-                if ($theme !== false)
-                {
-                    return $theme;
-                }
-            }
-        }
-
-        return false;
-    }
 
     /**
      * Get details about a theme
@@ -125,64 +75,50 @@ class Theme_m extends MY_Model
      *
      * @return bool|object
      */
-    private function _get_details($location, $slug)
+    private function getDetails($location, $slug)
     {
         // If it exists already, use it
-        if ( ! empty($this->_themes[$slug]))
-        {
+        if ( ! empty($this->_themes[$slug])) {
             return $this->_themes[$slug];
         }
 
-        if (is_dir($path = $location.$slug) and is_file($path.'/theme.php'))
-        {
-            // Core theme or third party?
-            $is_core = trim($location, '/') === APPPATH.'themes';
-
-            //path to theme
-            $web_path = $location.$slug;
-
-            $theme                 = new stdClass();
-            $theme->slug           = $slug;
-            $theme->is_core        = $is_core;
-            $theme->path           = $path;
-            $theme->web_path       = $web_path; // TODO Same thing as path?
-            $theme->screenshot     = $web_path.'/screenshot.png';
-
-            //lets make some assumptions first just in case there is a typo in details class
-            $theme->name           = $slug;
-            $theme->author         = '????';
-            $theme->author_website = null;
-            $theme->website        = null;
-            $theme->description    = '';
-            $theme->version        = '??';
-
-            //load the theme Module.php file
-            $details = $this->_spawn_class($slug, $is_core);
-
-            //assign values
-            if ($details)
-            {
-                foreach (get_object_vars($details) as $key => $val)
-                {
-                    if ($key == 'options' and is_array($val))
-                    {
-                        // only save to the database if there are no options saved already
-                        if ( ! $this->db->where('theme', $slug)->get('theme_options')->result())
-                        {
-                            $this->_save_options($slug, $val);
-                        }
-                    }
-                    $theme->{$key} = $val;
-                }
-            }
-
-            // Save for later
-            $this->_themes[$slug] = $theme;
-
-            return $theme;
+        if ( ! is_dir($path = $location.$slug) and is_file($path.'/Theme.php')) {
+            return false;
         }
 
-        return false;
+        // Core theme or third party?
+        $is_core = trim($location, '/') === APPPATH.'Theme';
+
+        //path to theme
+        $web_path = $location.$slug;
+
+        $theme                 = new stdClass;
+        $theme->slug           = $slug;
+        $theme->is_core        = $is_core;
+        $theme->path           = $path;
+        $theme->web_path       = $web_path; // TODO Same thing as path?
+        $theme->screenshot     = $web_path.'/screenshot.png';
+
+        //load the theme Module.php file
+        $details = $this->spawnClass($slug, $is_core);
+
+        //assign values
+        if ($details) {
+            foreach (get_object_vars($details) as $key => $val) {
+                if ($key === 'options' and is_array($val)) {
+                    // only save to the database if there are no options saved already
+                    if ( ! $this->pdb->table('theme_options')->where('theme', $slug)->get()) {
+                        $this->saveOptions($slug, $val);
+                    }
+                }
+                $theme->{$key} = $val;
+            }
+        }
+
+        // Save for later
+        $this->_themes[$slug] = $theme;
+
+        return $theme;
     }
 
     /**
@@ -193,12 +129,11 @@ class Theme_m extends MY_Model
      *
      * @return boolean
      */
-    public function _save_options($theme, $options)
+    public function saveOptions($theme, $options)
     {
-        foreach ($options AS $slug => $values)
-        {
+        foreach ($options as $slug => $values) {
             // build the db insert array
-            $insert = array(
+            $this->pdb->table('theme_options')->insert(array(
                 'slug' => $slug,
                 'title' => $values['title'],
                 'description' => $values['description'],
@@ -208,9 +143,7 @@ class Theme_m extends MY_Model
                 'options' => $values['options'],
                 'is_required' => $values['is_required'],
                 'theme' => $theme,
-            );
-
-            $this->db->insert('theme_options', $insert);
+            ));
         }
 
         $this->cache->clear('theme_m');
@@ -265,27 +198,27 @@ class Theme_m extends MY_Model
      *
      * @return array
      */
-    private function _spawn_class($slug, $is_core = false)
+    private function spawnClass($slug, $is_core = false)
     {
         $path = $is_core ? APPPATH : ADDONPATH;
 
         // Before we can install anything we need to know some details about the module
-        $details_file = "{$path}themes/{$slug}/theme.php";
+        $file = "{$path}Theme/{$slug}/Theme.php";
 
         // Check the details file exists
-        if ( ! is_file($details_file)) {
-            $details_file = SHARED_ADDONPATH.'themes/'.$slug.'/theme.php';
+        if ( ! is_file($file)) {
+            $file = SHARED_ADDONPATH.'Theme/'.$slug.'/Theme.php';
 
-            if ( ! is_file($details_file)) {
+            if ( ! is_file($file)) {
                 return false;
             }
         }
 
         // Sweet, include the file
-        include_once $details_file;
+        include_once $file;
 
         // Now call the details class
-        $class = 'Theme_'.ucfirst(strtolower($slug));
+        $class = 'Theme\\'.ucfirst(strtolower($slug)).'\\Theme';
 
         // Now we need to talk to it
         return class_exists($class) ? new $class : false;

@@ -1,6 +1,9 @@
-<?php  defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+namespace Library;
+
 /**
- * PyroCMS Theme Definition
+ * Theme Interface
  *
  * This class should be extended to allow for theme management.
  *
@@ -9,17 +12,17 @@
  * @package		PyroCMS\Core\Libraries
  * @abstract
  */
-abstract class Theme {
-	
+abstract class ThemeAbstract
+{	
 	/**
 	 * @var theme name
 	 */
-	public $name;
+	public $name = '????';
 
 	/**
 	 * @var author name
 	 */
-	public $author;
+	public $author = 'John Doe';
 
 	/**
 	 * @var authors website
@@ -39,7 +42,7 @@ abstract class Theme {
 	/**
 	 * @var The version of the theme.
 	 */
-	public $version;
+	public $version = '0.0.1';
 	
 	/**
 	 * @var Front-end or back-end.
@@ -52,17 +55,11 @@ abstract class Theme {
 	public $options;
 	
 	/**
-	 * __get
+	 * Run() is triggered when the theme is loaded for use
 	 *
-	 * Allows this class and classes that extend this to use $this-> just like
-	 * you were in a controller.
-	 *
-	 * @return	mixed
+	 * This should contain the main logic for the theme.
 	 */
-	public function __get($var)
-	{
-		return ci()->{$var};
-	}
+	public abstract function run();
 }
 
-/* End of file Theme.php */
+/* End of file ThemeInterface.php */

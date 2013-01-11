@@ -53,7 +53,7 @@ class MY_Controller extends MX_Controller
         $this->load->config('cache');
 
         // Add the site specific theme folder
-        $this->template->add_theme_location(ADDONPATH.'themes/');
+        $this->template->add_theme_location(ADDONPATH.'Theme/');
 
         // Migration logic helps to make sure PyroCMS is running the latest changes
         $this->load->library('migration');
@@ -225,6 +225,10 @@ class MY_Controller extends MX_Controller
         // Is this a PDO connection?
         if ($pdo instanceof PDO) {
 
+            preg_match('/dbname=(\w+)/', $config['dsn'], $matches);
+            $database = $matches[1];
+            unset($matches);
+
             $drivers = array(
                 'mysql' => '\Illuminate\Database\MySqlConnection',
                 'pgsql' => '\Illuminate\Database\PostgresConnection',
@@ -232,9 +236,7 @@ class MY_Controller extends MX_Controller
             );
 
             // Make a connection instance with the existing PDO connection
-            $conn = new $drivers[$subdriver]($pdo, $prefix);
-
-            \Capsule\Database\Connection::setupResolverAndFactory();
+            $conn = new $drivers[$subdriver]($pdo, $database, $prefix);
 
             $resolver = \Capsule\Database\Connection::getResolver();
             $resolver->addConnection('default', $conn);

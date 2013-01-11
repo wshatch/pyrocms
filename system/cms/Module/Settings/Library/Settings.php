@@ -152,15 +152,13 @@ class Settings {
 	 */
 	public static function getAll()
 	{
-		if (static::$cache)
-		{
+		if (static::$cache) {
 			return static::$cache;
 		}
 
 		$settings = static::$settingModel->getAll();
 
-		foreach ($settings as $setting)
-		{
+		foreach ($settings as $setting) {
 			static::$cache[$setting->slug] = is_null($setting->value) ? $setting->default : $setting->value;
 		}
 
@@ -177,8 +175,7 @@ class Settings {
 	 */
 	public static function add($setting)
 	{
-		if ( ! self::_check_format($setting))
-		{
+		if ( ! self::checkFormat($setting)) {
 			return false;
 		}
 		return ci()->setting_m->insert($setting);
@@ -209,46 +206,37 @@ class Settings {
 	 */
 	public static function form_control(&$setting)
 	{
-		if ($setting->options)
-		{
+		if ($setting->options) {
 			// @usage func:function_name | func:helper/function_name | func:module/helper/function_name
 			// @todo: document the usage of prefix "func:" to get dynamic options
 			// @todo: document how construct functions to get here the expected data
-			if (substr($setting->options, 0, 5) == 'func:')
-			{
+			if (substr($setting->options, 0, 5) == 'func:') {
 				$func = substr($setting->options, 5);
 
-				if (($pos = strrpos($func, '/')) !== false)
-				{
+				if (($pos = strrpos($func, '/')) !== false) {
 					$helper	= substr($func, 0, $pos);
 					$func	= substr($func, $pos + 1);
 
-					if ($helper)
-					{
+					if ($helper) {
 						ci()->load->helper($helper);
 					}
 				}
 
-				if (is_callable($func))
-				{
+				if (is_callable($func)) {
 					// @todo: add support to use values scalar, bool and null correctly typed as params
 					$setting->options = call_user_func($func);
-				}
-				else
-				{
+				} else {
 					$setting->options = array('=' . lang('global:select-none'));
 				}
 			}
 
 			// If its an array un-CSV it
-			if (is_string($setting->options))
-			{
+			if (is_string($setting->options)) {
 				$setting->options = explode('|', $setting->options);
 			}
 		}
 
-		switch ($setting->type)
-		{
+		switch ($setting->type) {
 			default:
 			case 'text':
 				$form_control = form_input(array(
@@ -293,14 +281,10 @@ class Settings {
 				$form_control = '';
 				$stored_values = is_string($setting->value) ? explode(',', $setting->value) : $setting->value;
 
-				foreach (self::_format_options($setting->options) as $value => $label)
-				{
-					if (is_array($stored_values))
-					{
+				foreach (self::_format_options($setting->options) as $value => $label) {
+					if (is_array($stored_values)) {
 						$checked = in_array($value, $stored_values);
-					}
-					else
-					{
+					} else {
 						$checked = false;
 					}
 
@@ -318,8 +302,7 @@ class Settings {
 			case 'radio':
 
 				$form_control = '';
-				foreach (static::_format_options($setting->options) as $value => $label)
-				{
+				foreach (static::_format_options($setting->options) as $value => $label) {
 					$form_control .= '<label class="inline">' . form_radio(array(
 						'id'		=> $setting->slug,
 						'name'		=> $setting->slug,
@@ -345,12 +328,10 @@ class Settings {
 	{
 		$select_array = array();
 
-		foreach ($options as $option)
-		{
+		foreach ($options as $option) {
 			list($value, $key) = explode('=', $option);
 
-			if (lang('settings:form_option_' . $key) !== false)
-			{
+			if (lang('settings:form_option_' . $key) !== false) {
 				$key = lang('settings:form_option_' . $key);
 			}
 
@@ -369,16 +350,14 @@ class Settings {
 	 * @param	string	$setting
 	 * @return	bool	If the setting is the correct format
 	 */
-	private static function _check_format($setting)
+	private static function checkFormat($setting)
 	{
-		if ( ! isset($setting))
-		{
+		if ( ! isset($setting)) {
 			return false;
 		}
-		foreach ($setting as $key => $value)
-		{
-			if ( ! in_array($key, self::$columns))
-			{
+		
+		foreach ($setting as $key => $value) {
+			if ( ! in_array($key, self::$columns)) {
 				return false;
 			}
 		}

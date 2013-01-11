@@ -1,6 +1,11 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php 
 
-class Theme_Pyrocms extends Theme {
+namespace Theme\Pyrocms;
+
+use \Settings;
+use \SimplePie;
+
+class Theme extends \Library\ThemeAbstract {
 
     public $name			= 'PyroCMS - Admin Theme';
     public $author			= 'PyroCMS Dev Team';
@@ -51,65 +56,23 @@ class Theme_Pyrocms extends Theme {
 	 * Run() is triggered when the theme is loaded for use
 	 *
 	 * This should contain the main logic for the theme.
-	 *
-	 * @return	void
 	 */
 	public function run()
 	{
 		// only load these items on the dashboard
-		if ($this->module == '' && $this->method !== 'login' && $this->method !== 'help')
+		if (ci()->module == '' && ci()->method !== 'login' && ci()->method !== 'help')
 		{
 			// don't bother fetching the data if it's turned off in the theme
-			if ($this->theme_options->pyrocms_analytics_graph == 'yes')	self::get_analytics();
-			if ($this->theme_options->pyrocms_news_feed == 'yes')		self::get_rss_feed();
-			if ($this->theme_options->pyrocms_recent_comments == 'yes')	self::get_recent_comments();
-		}
-	}
-
-	/**
-	 * Generate Menu
-	 *
-	 * Get a list of all modules available to this user/group
-	 *
-	 * @return	void
-	 */
-	private function generate_menu()
-	{
-		if ( ! $this->current_user)
-		{
-			return;
-		}
-
-		$modules = $this->module_m->getAll(array(
-			'is_backend' => true,
-			'group' => $this->current_user->group,
-			'lang' => CURRENT_LANGUAGE
-		));
-
-		$grouped_modules = array();
-
-		$grouped_menu[] = 'content';
-
-		foreach ($modules as $module)
-		{
-			if ($module['menu'] != 'content' && $module['menu'] != 'design' && $module['menu'] != 'users' && $module['menu'] != 'utilities' && $module['menu'] != '0')
-			{
-				$grouped_menu[] = $module['menu'];
+			if (ci()->theme_options->pyrocms_analytics_graph == 'yes')	{
+				self::populateAnalytics();
+			}
+			if (ci()->theme_options->pyrocms_news_feed == 'yes') {
+				self::populateRssFeed();
+			}
+			if (ci()->theme_options->pyrocms_recent_comments == 'yes')	{
+				self::populateRecentComments();
 			}
 		}
-
-		array_push($grouped_menu, 'design', 'users', 'utilities');
-
-		$grouped_menu = array_unique($grouped_menu);
-
-		foreach ($modules as $module)
-		{
-			$grouped_modules[$module['menu']][$module['name']] = $module;
-		}
-
-		// pass them on as template variables
-		$this->template->menu_items = $grouped_menu;
-		$this->template->modules = $grouped_modules;
 	}
 
 	/**
@@ -119,10 +82,9 @@ class Theme_Pyrocms extends Theme {
 	 *
 	 * @return	void
 	 */
-	public function get_analytics()
+	public function populateAnalytics()
 	{
-		if ( ! (Settings::get('ga_email') and Settings::get('ga_password') and Settings::get('ga_profile')))
-		{
+		if ( ! (Settings::get('ga_email') and Settings::get('ga_password') and Settings::get('ga_profile'))) {
 			return;
 		}
 		
@@ -134,21 +96,21 @@ class Theme_Pyrocms extends Theme {
 
 		else {
 			try {
-				$this->load->library('analytics', array(
+				ci()->load->library('analytics', array(
 					'username' => Settings::get('ga_email'),
 					'password' => Settings::get('ga_password'),
 				));
 
 				// Set by GA Profile ID if provided, else try and use the current domain
-				$this->analytics->setProfileById('ga:'.Settings::get('ga_profile'));
+				ci()->analytics->setProfileById('ga:'.Settings::get('ga_profile'));
 
 				$end_date = date('Y-m-d');
 				$start_date = date('Y-m-d', strtotime('-1 month'));
 
-				$this->analytics->setDateRange($start_date, $end_date);
+				ci()->analytics->setDateRange($start_date, $end_date);
 
-				$visits = $this->analytics->getVisitors();
-				$views = $this->analytics->getPageviews();
+				$visits = ci()->analytics->getVisitors();
+				$views = ci()->analytics->getPageviews();
 
 				/* build tables */
 				if (count($visits)) {
@@ -171,7 +133,7 @@ class Theme_Pyrocms extends Theme {
 				$data['analytic_views'] = $flot_data_views;
 
 				// Call the model or library with the method provided and the same arguments
-				$this->cache->set('analytics', array('analytic_visits' => $flot_data_visits, 'analytic_views' => $flot_data_views), 60 * 60 * 6); // 6 hours
+				ci()->cache->set('analytics', array('analytic_visits' => $flot_data_visits, 'analytic_views' => $flot_data_views), 60 * 60 * 6); // 6 hours
 			}
 			catch (Exception $e) {
 				$data['messages']['notice'] = sprintf(lang('cp_google_analytics_no_connect'), anchor('admin/settings', lang('cp_nav_settings')));
@@ -179,7 +141,7 @@ class Theme_Pyrocms extends Theme {
 		}
 
 		// make it available in the theme
-		$this->template->set($data);
+		ci()->template->set($data);
 	}
 
 	/**
@@ -187,16 +149,16 @@ class Theme_Pyrocms extends Theme {
 	 *
 	 * Fetch articles for whatever RSS feed is in settings
 	 */
-	public function get_rss_feed()
+	public function populateRssFeed()
 	{
 		// Dashboard RSS feed (using SimplePie)
-		$pie = new \SimplePie;
-		$pie->set_cache_location($this->config->item('simplepie_cache_dir'));
+		$pie = new SimplePie;
+		$pie->set_cache_location(ci()->config->item('simplepie_cache_dir'));
 		$pie->set_feed_url(Settings::get('dashboard_rss'));
 		$pie->init();
 		$pie->handle_content_type();
 		
-		$this->template->rss_items = $pie->get_items(0, Settings::get('dashboard_rss_count'));
+		ci()->template->rss_items = $pie->get_items(0, Settings::get('dashboard_rss_count'));
 	}
 
 	/**
@@ -204,17 +166,17 @@ class Theme_Pyrocms extends Theme {
 	 *
 	 * Fetch recent comments and work out what they attach to.
 	 */
-	public function get_recent_comments()
+	public function populateRecentComments()
 	{
-		$this->load->library('comments/comments');
-		$this->load->model('comments/comment_m');
+		ci()->load->library('comments/comments');
+		ci()->load->model('comments/comment_m');
 
-		$this->lang->load('comments/comments');
+		ci()->lang->load('comments/comments');
 
-		$recent_comments = $this->comment_m->get_recent(5);
+		$recent_comments = ci()->comment_m->get_recent(5);
 		
-		$this->template->recent_comments = $this->comments->process($recent_comments);
+		ci()->template->recent_comments = ci()->comments->process($recent_comments);
 	}
 }
 
-/* End of file theme.php */
+/* End of file Theme.php */
