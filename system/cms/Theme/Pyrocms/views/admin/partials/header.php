@@ -56,7 +56,6 @@
 					});
 				</script>
 	
-	
 				<form class="topbar-search">
 					<input type="text" class="search-query" id="nav-search" placeholder="Search" ontouchstart="">
 				</form>

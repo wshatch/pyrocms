@@ -40,42 +40,35 @@ class Admin extends Admin_Controller {
 	{
 		$setting_language = array();
 		$setting_sections = array();
-		$settings = $this->setting_m->getGui();
+		$settings = \Settings::getModel()->getGui();
 
 		// Loop through each setting
-		foreach ($settings as $key => $setting)
-		{
+		foreach ($settings as $key => $setting) {
 			$setting->form_control = Settings::form_control($setting);
 
-			if (empty($setting->module))
-			{
+			if (empty($setting->module)) {
 				$setting->module = 'general';
 			}
 
 			$setting_language[$setting->module] = array();
 
 			// Get Section name from native translation, third party translation or only use module name
-			if ( ! isset($setting_sections[$setting->module]))
-			{
+			if ( ! isset($setting_sections[$setting->module])) {
 				$section_name = lang('settings:section_'.$setting->module);
 
-				if ($this->module_m->exists($setting->module))
-				{
+				if ($this->module_m->exists($setting->module)) {
 					list($path, $_langfile) = Modules::find('settings_lang', $setting->module, 'language/'.config_item('language').'/');
 
-					if ($path !== false)
-					{
+					if ($path !== false) {
 						$setting_language[$setting->module] = $this->lang->load($setting->module.'/settings', '', true);
 
-						if (empty($section_name) && isset($setting_language[$setting->module]['settings:section_'.$setting->module]))
-						{
+						if (empty($section_name) && isset($setting_language[$setting->module]['settings:section_'.$setting->module])) {
 							$section_name = $setting_language[$setting->module]['settings:section_'.$setting->module];
 						}
 					}
 				}
 
-				if (empty($section_name))
-				{
+				if (empty($section_name)) {
 					$section_name = ucfirst(strtr($setting->module, '_', ' '));
 				}
 
@@ -86,18 +79,13 @@ class Admin extends Admin_Controller {
 			foreach (array(
 				'title' => 'settings:'.$setting->slug,
 				'description' => 'settings:'.$setting->slug.'_desc'
-			) as $key => $name)
-			{
+			) as $key => $name) {
 				${$key} = lang($name);
 
-				if (empty(${$key}))
-				{
-					if (isset($setting_language[$setting->module][$name]))
-					{
+				if (empty(${$key})) {
+					if (isset($setting_language[$setting->module][$name])) {
 						${$key} = $setting_language[$setting->module][$name];
-					}
-					else
-					{
+					} else {
 						${$key} = $setting->{$key};
 					}
 				}
@@ -123,17 +111,15 @@ class Admin extends Admin_Controller {
 	 */
 	public function edit()
 	{
-		if (PYRO_DEMO)
-		{
+		if (PYRO_DEMO) {
 			$this->session->set_flashdata('notice', lang('global:demo_restrictions'));
 			redirect('admin/settings');
 		}
 		
-		$settings = $this->setting_m->getGui();
+		$settings = Settings::getModel()->getGui();
 
 		// Create dynamic validation rules
-		foreach ($settings as $setting)
-		{
+		foreach ($settings as $setting) {
 			$this->validation_rules[] = array(
 				'field' => $setting->slug.(in_array($setting->type, array('select-multiple', 'checkbox')) ? '[]' : ''),
 				'label' => 'lang:settings_'.$setting->slug,
@@ -145,30 +131,25 @@ class Admin extends Admin_Controller {
 		$this->form_validation->set_rules($this->validation_rules);
 
 		// Got valid data?
-		if ($this->form_validation->run())
-		{
+		if ($this->form_validation->run()) {
 			$settings_stored = array();
 			
 			// Loop through again now we know it worked
-			foreach ($settings as $setting)
-			{
+			foreach ($settings as $setting) {
 				$new_value = $this->input->post($setting->slug, false);
 
 				// Store arrays as CSV
-				if (is_array($new_value))
-				{
+				if (is_array($new_value)) {
 					$new_value = implode(',', $new_value);
 				}
 
 				// Only update passwords if not placeholder value
-				if ($setting->type === 'password' and $new_value === 'XXXXXXXXXXXX')
-				{
+				if ($setting->type === 'password' and $new_value === 'XXXXXXXXXXXX') {
 					continue;
 				}
 
 				// Dont update if its the same value
-				if ($new_value != $setting->value)
-				{
+				if ($new_value != $setting->value) {
 					Settings::set($setting->slug, $new_value);
 
 					$settings_stored[$setting->slug] = $new_value;
@@ -181,8 +162,7 @@ class Admin extends Admin_Controller {
 			// Success...
 			$this->session->set_flashdata('success', lang('settings:save_success'));
 		}
-		elseif (validation_errors())
-		{
+		elseif (validation_errors()) {
 			$this->session->set_flashdata('error', validation_errors());
 		}
 
@@ -199,8 +179,7 @@ class Admin extends Admin_Controller {
 		$keys = explode(',', $this->input->post('order'));
 
 		$i = 1000;
-		foreach ($keys as $keys)
-		{
+		foreach ($keys as $keys) {
 			$this->setting_m->update($keys, array(
 				'order' => $i--,
 			));

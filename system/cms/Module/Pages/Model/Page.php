@@ -129,8 +129,6 @@ class Page extends \Illuminate\Database\Eloquent\Model
 
 			$page = static::with('Type')->where('is_home', '=', true)->first();
 
-
-
 		} else {
 
 			// If the URI has been passed as an array, implode to create a string of uri segments
