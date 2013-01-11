@@ -122,7 +122,7 @@ class Admin extends Admin_Controller {
 		foreach ($settings as $setting) {
 			$this->validation_rules[] = array(
 				'field' => $setting->slug.(in_array($setting->type, array('select-multiple', 'checkbox')) ? '[]' : ''),
-				'label' => 'lang:settings_'.$setting->slug,
+				'label' => 'lang:settings:'.$setting->slug,
 				'rules' => 'trim'.($setting->is_required ? '|required' : '').($setting->type !== 'textarea' ? '|max_length[255]' : '')
 			);
 		}
