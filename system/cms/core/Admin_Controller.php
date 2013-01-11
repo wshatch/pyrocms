@@ -32,7 +32,7 @@ class Admin_Controller extends MY_Controller {
 		$this->lang->load('buttons');
 		
 		// Show error and exit if the user does not have sufficient permissions
-		if ( ! self::_check_access()) {
+		if ( ! self::checkAccess()) {
 			$this->session->set_flashdata('error', lang('cp:access_denied'));
 			redirect();
 		}
@@ -74,8 +74,7 @@ class Admin_Controller extends MY_Controller {
 		// from the DB and run their module items.
 		// -------------------------------------
 
-		if (is_logged_in())
-		{
+		if (is_logged_in()) {
 			// Here's our menu array.
 			$menu_items = array();
 
@@ -88,13 +87,10 @@ class Admin_Controller extends MY_Controller {
 				'lang' => CURRENT_LANGUAGE
 			));
 
-			foreach ($modules as $module)
-			{				
-
+			foreach ($modules as $module) {
 				// If we do not have an admin_menu function, we use the
 				// regular way of checking out the Module.php data.
-				if ($module['menu'] and (isset($this->permissions[$module['slug']]) or $this->current_user->group == 'admin'))
-				{
+				if ($module['menu'] and (isset($this->permissions[$module['slug']]) or $this->current_user->group == 'admin')) {
 					// Legacy module routing. This is just a rough
 					// re-route and modules should change using their 
 					// upgrade() Module.php functions.
@@ -126,26 +122,22 @@ class Admin_Controller extends MY_Controller {
 
 			// If we get an array, we assume they have altered the menu items
 			// and are returning them to us to use.
-			if (is_array($event_output))
-			{
+			if (is_array($event_output)) {
 				$menu_items = $event_output;
 			}
 
 			// Order the menu items. We go by our menu_order array.
 			$ordered_menu = array();
 
-			foreach ($this->template->menu_order as $order)
-			{
-				if (isset($menu_items[$order]))
-				{
+			foreach ($this->template->menu_order as $order) {
+				if (isset($menu_items[$order])) {
 					$ordered_menu[$order] = $menu_items[$order];
 					unset($menu_items[$order]);
 				}
 			}
 
 			// Any stragglers?
-			if ($menu_items)
-			{
+			if ($menu_items) {
 				$ordered_menu = array_merge($ordered_menu, $menu_items);
 			}
 
@@ -172,7 +164,7 @@ class Admin_Controller extends MY_Controller {
 	 *
 	 * @return boolean 
 	 */
-	private function _check_access()
+	private function checkAccess()
 	{
 		// These pages get past permission checks
 		$ignored_pages = array('admin/login', 'admin/logout', 'admin/help');
@@ -181,30 +173,25 @@ class Admin_Controller extends MY_Controller {
 		$current_page = $this->uri->segment(1, '') . '/' . $this->uri->segment(2, 'index');
 
 		// Dont need to log in, this is an open page
-		if (in_array($current_page, $ignored_pages))
-		{
+		if (in_array($current_page, $ignored_pages)) {
 			return true;
 		}
 
-		if ( ! $this->current_user)
-		{
+		if ( ! $this->current_user) {
 			// save the location they were trying to get to
 			$this->session->set_userdata('admin_redirect', $this->uri->uri_string());
 			redirect('admin/login');
 		}
 
 		// Admins can go straight in
-		if ($this->current_user->group === 'admin')
-		{
+		if ($this->current_user->group === 'admin') {
 			return true;
 		}
 
 		// Well they at least better have permissions!
-		if ($this->current_user)
-		{
+		if ($this->current_user) {
 			// We are looking at the index page. Show it if they have ANY admin access at all
-			if ($current_page === 'admin/index' && $this->permissions)
-			{
+			if ($current_page === 'admin/index' && $this->permissions) {
 				return true;
 			}
 

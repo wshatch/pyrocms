@@ -90,7 +90,7 @@ class Template
 		if ($this->_theme_locations === array())
 		{
 			// Let's use this obvious default
-			$this->_theme_locations = array(APPPATH . 'themes/');
+			$this->_theme_locations = array(APPPATH . 'Theme/');
 		}
 
 		// If the parse is going to be used, best make sure it's loaded
@@ -788,15 +788,15 @@ class Template
 		{
 			$location		= $this->get_theme_path();
 			$theme_views	= array(
-				$this->get_views_path(true) . 'modules/' . $this->_module . '/' . $view,
+				$this->get_views_path(true) . 'Module/' . $this->_module . '/' . $view,
 				// This allows build('pages/page') to still overload same as build('page')
-				$this->get_views_path(true) . 'modules/' . $view,
+				$this->get_views_path(true) . 'Module/' . $view,
 				$this->get_views_path(true) . $view
 			);
 
 			foreach ($theme_views as $theme_view)
 			{
-				if (file_exists($location . $theme_view . self::_ext($theme_view)))
+				if (file_exists($location.$theme_view . self::_ext($theme_view)))
 				{
 					return self::_load_view($theme_view, $this->_data + $data, $parse_view, $location);
 				}
@@ -821,7 +821,6 @@ class Template
 					'_ci_return' => true
 				)), $data, true);
 			}
-
 			else
 			{
 				// Load it directly, bypassing $this->load->view() as ME resets _ci_view

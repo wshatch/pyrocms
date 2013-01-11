@@ -201,7 +201,7 @@ class Module extends \Library\ModuleAbstract
             $table->index('parent_id');
         });
 
-        $this->load->driver('Streams');
+        ci()->load->driver('Streams');
 
 /* @TODO Adam - Convert all stream logic within over to eloquent 
 

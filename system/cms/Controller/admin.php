@@ -24,7 +24,7 @@ class Admin extends Admin_Controller
 		}
 
 		$this->template
-			->build('admin/dashboard');
+			->build('dashboard');
 	}
 
 	/**
@@ -115,8 +115,7 @@ class Admin extends Admin_Controller
 
 	public function remove_installer_directory()
 	{
-		if ( ! $this->input->is_ajax_request())
-		{
+		if ( ! $this->input->is_ajax_request()) {
 			die('Nope, sorry');
 		}
 

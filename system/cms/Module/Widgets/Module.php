@@ -116,8 +116,8 @@ class Module extends \Library\ModuleAbstract
 			// $table->foreign('widget_area_id'); // TODO: Need more documentation to make this work.
 		});
 
-		$schema->dropIfExists('widget_instances');
-		$schema->create('widget_instances', function ($table)
+		$schema->dropIfExists('widgets');
+		$schema->create('widgets', function ($table)
 		{
 			$table->increments('id');
 			$table->string('slug')->default('');
