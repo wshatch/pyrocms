@@ -100,6 +100,9 @@ class Type
 	public function update_types()
 	{
 		Events::trigger('streams_core_add_addon_path', $this);
+
+		// Go ahead and regather our types
+		$this->gather_types();	
 	}
 
 	// --------------------------------------------------------------------------

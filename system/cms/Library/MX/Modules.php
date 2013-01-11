@@ -230,11 +230,14 @@ class Modules
 		
 		/* load the route file */
 		if ( ! isset(self::$routes[$module])) {
-			if (list($path) = self::find('routes', $module, 'config/') and $path)
+			if (list($path) = self::find('routes', $module, 'config/') and $path) {
 				self::$routes[$module] = self::load_file('routes', $path, 'route');
+			}
 		}
 
-		if ( ! isset(self::$routes[$module])) return;
+		if ( ! isset(self::$routes[$module])) {
+			return;
+		}
 			
 		/* parse module routes */
 		foreach (self::$routes[$module] as $key => $val) {						

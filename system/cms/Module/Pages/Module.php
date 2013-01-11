@@ -268,6 +268,18 @@ class Module extends \Library\ModuleAbstract
                 'is_home' => 0,
                 'order' => now()
             ),
+            'search-results' => array(
+                'slug' => 'results',
+                'title' => 'Results',
+                'uri' => 'search/results',
+                'parent_id' => 3,
+                'type_id' => $def_page_type_id,
+                'status' => 'live',
+                'restricted_to' => '',
+                'created_on' => now(),
+                'is_home' => false,
+                'order' => now()
+            ),
             'fourohfour' => array(
                 'slug' => '404',
                 'title' => 'Page missing',

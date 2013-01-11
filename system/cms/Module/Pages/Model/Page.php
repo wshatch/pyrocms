@@ -181,21 +181,24 @@ class Page extends \Illuminate\Database\Eloquent\Model
 			return false;
 		}
 
+		// Wrap the page with a page layout, otherwise use the default 'Home' layout
+		if ( ! $page->layout = $this->page_type_m->get($page->type_id)) {
+			// Some pillock deleted the page layout, use the default and pray to god they didnt delete that too
+			$page->layout = $this->page_type_m->get(1);
+		}
+
 		// ---------------------------------
 		// Get Stream Entry
 		// ---------------------------------
 
-		if ($page->entry_id and $page->type->stream_id)
-		{
+		if ($page->entry_id and $page->type->stream_id) {
 			ci()->load->driver('Streams');
 
 			// Get Streams
 			$stream = ci()->streams_m->get_stream($page->type->stream_id);
 
-			if ($stream)
-			{
-				if ($entry = ci()->streams->entries->get_entry($page->entry_id, $stream->stream_slug, $stream->stream_namespace))
-				{
+			if ($stream) {
+				if ($entry = ci()->streams->entries->get_entry($page->entry_id, $stream->stream_slug, $stream->stream_namespace)) {
 					$page = (object) array_merge((array)$entry, (array)$page);
 				}
 			}
@@ -219,7 +222,8 @@ class Page extends \Illuminate\Database\Eloquent\Model
 	public function get($id, $get_data = true)
 	{
 		$page = $this->db
-			->select('pages.*, page_types.id as page_type_id, page_types.stream_id, page_types.js as js, page_types.css, page_types.body, page_types.save_as_files, page_types.slug as page_type_slug')
+			->select('pages.*, page_types.id as page_type_id, page_types.stream_id, page_types.body')
+			->select('page_types.save_as_files, page_types.slug as page_type_slug, page_types.title as page_type_title, page_types.js as page_type_js, page_types.css as page_type_css')
 			->join('page_types', 'page_types.id = pages.type_id', 'left')
 			->where('pages.id', $id)
 			->get($this->_table)
@@ -227,8 +231,7 @@ class Page extends \Illuminate\Database\Eloquent\Model
 
 		$page->stream_entry_found = false;
 
-		if ($page and $page->type_id and $get_data)
-		{
+		if ($page and $page->type_id and $get_data) {
 			// Get our page type files in case we are grabbing
 			// the body/html/css from the filesystem. 
 			$this->page_type_m->get_page_type_files_for_page($page);
@@ -236,27 +239,28 @@ class Page extends \Illuminate\Database\Eloquent\Model
 			$this->load->driver('Streams');
 			$stream = $this->streams_m->get_stream($page->stream_id);
 
-			$params = array(
-				'stream' 	=> $stream->stream_slug,
-				'namespace' => $stream->stream_namespace,
-				'where' 	=> "`id`='".$page->entry_id."'",
-				'limit' 	=> 1
-			);
+			if ($stream) {
+				$params = array(
+					'stream' 	=> $stream->stream_slug,
+					'namespace' => $stream->stream_namespace,
+					'where' 	=> "`id`='".$page->entry_id."'",
+					'limit' 	=> 1
+				);
 
-			$ret = $this->streams->entries->get_entries($params);
+				$ret = $this->streams->entries->get_entries($params);
 
-			if (isset($ret['entries'][0]))
-			{
-				// For no collisions
-				$ret['entries'][0]['entry_id'] = $ret['entries'][0]['id'];
-				unset($ret['entries'][0]['id']);
+				if (isset($ret['entries'][0])) {
+					// For no collisions
+					$ret['entries'][0]['entry_id'] = $ret['entries'][0]['id'];
+					unset($ret['entries'][0]['id']);
 
-				$page->stream_entry_found = true;
+					$page->stream_entry_found = true;
 
-				return (object) array_merge((array) $page, (array) $ret['entries'][0]);
+					return (object) array_merge((array) $page, (array) $ret['entries'][0]);
+				}
+
+				$this->page_type_m->get_page_type_files_for_page($page);
 			}
-
-			$this->page_type_m->get_page_type_files_for_page($page);
 		}
 
 		return $page;

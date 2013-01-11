@@ -355,9 +355,9 @@ class Module extends \Library\ModuleAbstract
                 'order' => 972,
             ),
             array(
-                'title' => 'Cache time',
+                'title' => 'Twitter Cache time',
                 'slug' => 'twitter_cache',
-                'description' => 'How many minutes should your Tweets be stored?',
+                'description' => 'How many seconds should your Tweets be stored?',
                 'type' => 'text',
                 'default' => '300',
                 'is_required' => false,
