@@ -219,6 +219,6 @@ require_once '../vendor/autoload.php';
  * And away we go...
  *
  */
-require_once BASEPATH.'core/CodeIgniter.php';
+require_once BASEPATH.'Core/CodeIgniter.php';
 
 /* End of file index.php */

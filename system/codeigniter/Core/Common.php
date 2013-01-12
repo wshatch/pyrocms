@@ -145,7 +145,17 @@ if ( ! function_exists('load_class'))
 		// then in the native system/libraries folder
 		foreach (array(APPPATH, BASEPATH) as $path)
 		{
-			if (file_exists($path.$directory.'/'.$class.'.php'))
+			if (file_exists($path.ucfirst($directory).'/'.$class.'.php'))
+			{
+				$directory = ucfirst($directory);
+				$uc_exists = TRUE;
+			}
+			else
+			{
+				$uc_exists = FALSE;
+			}
+
+			if ($uc_exists OR file_exists($path.$directory.'/'.$class.'.php'))
 			{
 				$name = $prefix.$class;
 
