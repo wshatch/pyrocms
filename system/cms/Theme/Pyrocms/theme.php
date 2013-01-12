@@ -89,28 +89,28 @@ class Theme extends \Library\ThemeAbstract {
 		}
 		
 		// Not false? Return it
-		if (($cached_response = $this->cache->get('analytics'))) {
+		if (($cached_response = ci()->cache->get('analytics'))) {
 			$data['analytic_visits'] = $cached_response['analytic_visits'];
 			$data['analytic_views'] = $cached_response['analytic_views'];
 		}
 
 		else {
 			try {
-				ci()->load->library('analytics', array(
+				$analytics = new \Library\Analytics(array(
 					'username' => Settings::get('ga_email'),
 					'password' => Settings::get('ga_password'),
 				));
 
 				// Set by GA Profile ID if provided, else try and use the current domain
-				ci()->analytics->setProfileById('ga:'.Settings::get('ga_profile'));
+				$analytics->setProfileById('ga:'.Settings::get('ga_profile'));
 
 				$end_date = date('Y-m-d');
 				$start_date = date('Y-m-d', strtotime('-1 month'));
 
-				ci()->analytics->setDateRange($start_date, $end_date);
+				$analytics->setDateRange($start_date, $end_date);
 
-				$visits = ci()->analytics->getVisitors();
-				$views = ci()->analytics->getPageviews();
+				$visits = $analytics->analytics->getVisitors();
+				$views = $analytics->analytics->getPageviews();
 
 				/* build tables */
 				if (count($visits)) {
