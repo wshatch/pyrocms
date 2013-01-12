@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Settings;
+<?php namespace Module\Settings;
 
 /**
  * Settings module

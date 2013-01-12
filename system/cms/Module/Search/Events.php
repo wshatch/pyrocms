@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Search;
+<?php namespace Module\Search;
 
 /**
  * Search Events

@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Permissions;
+<?php namespace Module\Permissions;
 
 /**
  * Permissions Module

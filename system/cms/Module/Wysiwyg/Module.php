@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Wysiwyg;
+<?php namespace Module\Wysiwyg;
 
 /**
  * Widgets Module

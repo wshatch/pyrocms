@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Users;
+<?php namespace Module\Users;
 
 /**
  * Users Module

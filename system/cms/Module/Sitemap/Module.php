@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Sitemap;
+<?php namespace Module\Sitemap;
 
 /**
  * Sitemap Module

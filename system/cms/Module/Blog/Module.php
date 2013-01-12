@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Blog;
+<?php namespace Module\Blog;
 
 /**
  * Blog module

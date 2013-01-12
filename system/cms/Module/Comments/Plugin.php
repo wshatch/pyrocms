@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Comments;
+<?php namespace Module\Comments;
 
 /**
  * Comments Plugin

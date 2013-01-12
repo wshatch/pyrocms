@@ -1,6 +1,4 @@
-<?php
-
-namespace Theme\Simple;
+<?php namespace Theme\Simple;
 
 use \Settings;
 

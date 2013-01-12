@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Contact;
+<?php namespace Module\Contact;
 
 use \Library\Events;
 

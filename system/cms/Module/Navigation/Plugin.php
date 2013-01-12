@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Navigation;
+<?php namespace Module\Navigation;
 
 /**
  * Navigation Plugin

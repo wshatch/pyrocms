@@ -1,6 +1,4 @@
-<?php 
-
-namespace Theme\Pyrocms;
+<?php namespace Theme\Pyrocms;
 
 use \Settings;
 use \SimplePie;

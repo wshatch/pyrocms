@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Files;
+<?php namespace Module\Files;
 
 /**
  * Files module

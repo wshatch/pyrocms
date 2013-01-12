@@ -1,6 +1,4 @@
-<?php
-
-namespace Library;
+<?php namespace Library;
 
 /**
  * Google Analytics PHP API

@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Settings\Library;
+<?php namespace Module\Settings\Library;
 
 /**
  * PyroCMS Settings Library

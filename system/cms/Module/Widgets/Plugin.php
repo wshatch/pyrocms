@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Widgets;
+<?php namespace Module\Widgets;
 
 /**
  * Widgets Plugin

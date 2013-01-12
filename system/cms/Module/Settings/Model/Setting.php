@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Settings\Model;
+<?php namespace Module\Settings\Model;
 
 use \CI_Model;
 

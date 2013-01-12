@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Maintenance;
+<?php namespace Module\Maintenance;
 
 /**
  * Maintenance Module

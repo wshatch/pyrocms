@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Variables;
+<?php namespace Module\Variables;
 
 /**
  * Variable Plugin

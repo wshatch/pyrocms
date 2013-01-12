@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Domains;
+<?php namespace Module\Domains;
 
 /**
  * Domains module

@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Redirects;
+<?php namespace Module\Redirects;
 
 /**
  * Redirects module

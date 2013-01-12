@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Streams_core;
+<?php namespace Module\Streams_core;
 
 /**
  * PyroStreams Core Module

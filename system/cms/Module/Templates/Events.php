@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Templates;
+<?php namespace Module\Templates;
 
 /**
  * Email Template Events Class

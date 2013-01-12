@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Keywords;
+<?php namespace Module\Keywords;
 
 /**
  * Keywords module

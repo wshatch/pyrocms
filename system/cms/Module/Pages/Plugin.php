@@ -1,6 +1,4 @@
-<?php
-
-namespace Module\Pages;
+<?php namespace Module\Pages;
 
 /**
  * Pages Plugin

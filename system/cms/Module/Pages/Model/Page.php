@@ -1,6 +1,4 @@
-<?php 
-
-namespace Module\Pages\Model;
+<?php namespace Module\Pages\Model;
 
 /**
  * Regular pages model

@@ -1,6 +1,4 @@
-<?php 
-
-namespace Module\Addons;
+<?php namespace Module\Addons;
 
 use Module\Settings\Library\Settings;
 
