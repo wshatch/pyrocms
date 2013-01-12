@@ -44,7 +44,7 @@ class Installer extends CI_Controller
 	);
 
 	/** @var string The translations directory */
-	private $languages_directory = '../language/';
+	private $languages_directory = '../Language/';
 
 	/** @var array The view variables for creating the language menu */
 	private $language_nav = array();
@@ -531,7 +531,7 @@ class Installer extends CI_Controller
 	private function _discover_languages()
 	{
 		// Convert the translation directory path to absolute
-		if ($this->languages_directory === '../language/')
+		if ($this->languages_directory === '../Language/')
 		{
 			$this->languages_directory = realpath(dirname(__FILE__).'/'.$this->languages_directory);
 		}
