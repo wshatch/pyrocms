@@ -27,11 +27,10 @@ class WYSIWYG_Controller extends MY_Controller
 			show_error(lang('files:no_permissions'));
 		}
 
-		ci()->admin_theme = $this->theme_m->get_admin();
+		ci()->admin_theme = $this->theme_m->get(Settings::get('admin_theme'));
 
 		// Using a bad slug? Weak
-		if (empty($this->admin_theme->slug))
-		{
+		if (empty($this->admin_theme->slug)) {
 			show_error('This site has been set to use an admin theme that does not exist.');
 		}
 

@@ -48,29 +48,14 @@ class Settings {
 	}
 
 	/**
-	 * Getter
+	 * Get Model
 	 *
-	 * Gets the setting value requested
+	 * Return the settings model
 	 *
-	 * @param	string	$key
+	 * @param	\Module\Settings\Model\Setting
 	 */
-	public function __get($key)
-	{
-		return static::get($key);
-	}
-
-	/**
-	 * Setter
-	 *
-	 * Sets the setting value requested
-	 *
-	 * @param	string	$key
-	 * @param	string	$value
-	 * @return	bool
-	 */
-	public function __set($key, $value)
-	{
-		return static::set($key, $value);
+	public static function getModel() {
+		return static::$settingModel;
 	}
 
 	/**
@@ -92,7 +77,7 @@ class Settings {
 
 		// Setting doesn't exist, maybe it's a config option
 		$value = $setting 
-			? (empty($setting->value) and ! $setting->value != 0) ? $setting->default : $setting->value
+			? (empty($setting->value) and ! (int) $setting->value !== 0) ? $setting->default : $setting->value
 			: config_item($key);
 
 		// Store it for later
@@ -159,7 +144,7 @@ class Settings {
 		$settings = static::$settingModel->getAll();
 
 		foreach ($settings as $setting) {			
-			static::$cache[$setting->slug] = (empty($setting->value) and ! $setting->value != 0) 
+			static::$cache[$setting->slug] = (empty($setting->value) and (int) $setting->value !== 0)
 				? $setting->default 
 				: $setting->value;
 		}
@@ -208,6 +193,10 @@ class Settings {
 	 */
 	public static function form_control(&$setting)
 	{
+		if (empty($setting->value) and ! (int) $setting->value !== 0) {
+			$setting->value = $setting->default;
+		}
+
 		if ($setting->options) {
 			// @usage func:function_name | func:helper/function_name | func:module/helper/function_name
 			// @todo: document the usage of prefix "func:" to get dynamic options

@@ -4,7 +4,7 @@ global $CFG;
 
 /* get module locations from config settings or use the default module location and offset */
 is_array(Modules::$locations = $CFG->item('modules_locations')) OR Modules::$locations = array(
-	APPPATH.'modules/' => '../modules/',
+	APPPATH.'Module/' => '../Module/',
 );
 
 /* PHP5 spl_autoload */

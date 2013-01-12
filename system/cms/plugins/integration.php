@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
 
 /**
  * Integration Plugin
@@ -10,11 +10,12 @@
  */
 class Plugin_Integration extends Plugin
 {
-
 	public $version = '1.0.0';
+
 	public $name = array(
 		'en' => 'Integration',
 	);
+
 	public $description = array(
 		'en' => 'Google analytics tracking code and data.',
 		'el' => 'Συνεργασία με Google Analytics;',
@@ -101,46 +102,37 @@ class Plugin_Integration extends Plugin
 		$end     = $this->attribute('end', date('Y-m-d'));
 		$refresh = $this->attribute('refresh', 24); // refresh the cache every n hours
 
-		if (Settings::get('ga_email') and Settings::get('ga_password') and Settings::get('ga_profile'))
-		{
+		if (Settings::get('ga_email') and Settings::get('ga_password') and Settings::get('ga_profile')) {
 			// do we have it? Return it
-			if ($cached_response = $this->cache->get('analytics_plugin'))
-			{
+			if ($cached_response = $this->cache->get('analytics_plugin')) {
 				return $cached_response;
 			}
 
-			try
-			{
-				$this->load->library('analytics', array(
+			try {
+				$analytics = new \Library\Analytics(array(
 					'username' => Settings::get('ga_email'),
 					'password' => Settings::get('ga_password')
 				));
 
 				// Set by GA Profile ID if provided, else try and use the current domain
-				$this->analytics->setProfileById('ga:' . Settings::get('ga_profile'));
+				$analytics->setProfileById('ga:' . Settings::get('ga_profile'));
 
-				$this->analytics->setDateRange($start, $end);
+				$analytics->setDateRange($start, $end);
 
-				$visits = $this->analytics->getVisitors();
-				$views = $this->analytics->getPageviews();
+				$visits = $analytics->getVisitors();
+				$views = $analytics->getPageviews();
 
-				if ($visits)
-				{
-					foreach ($visits as $visit)
-					{
-						if ($visit > 0)
-						{
+				if ($visits) {
+					foreach ($visits as $visit) {
+						if ($visit > 0) {
 							$data['visits'] += $visit;
 						}
 					}
 				}
 
-				if ($views)
-				{
-					foreach ($views as $view)
-					{
-						if ($view > 0)
-						{
+				if ($views) {
+					foreach ($views as $view) {
+						if ($view > 0) {
 							$data['views'] += $view;
 						}
 					}
@@ -149,8 +141,7 @@ class Plugin_Integration extends Plugin
 					$this->cache->set('analytics_plugin', $data, 60 * 60 * (int) $refresh); // 24 hours
 				}
 			}
-			catch (Exception $e)
-			{
+			catch (Exception $e) {
 				log_message('error', 'Could not connect to Google Analytics. Called from the analytics plugin');
 			}
 		}

@@ -12,8 +12,8 @@ use \CI_Model;
  * @author		PyroCMS Dev Team
  * @package		PyroCMS\Core\Modules\Settings\Models
  */
-class Setting extends CI_Model {
-
+class Setting extends CI_Model
+{
 	/**
 	 * Gets a single setting using the key.
 	 *
@@ -48,11 +48,11 @@ class Setting extends CI_Model {
 	 * @param	mixed  $where
 	 * @return	array  Settings with is_gui set to true
 	 */
-	public function getGui($key)
+	public function getGui()
 	{
 		return $this->pdb
 			->table('settings')
-			->where($where)
+			->where('is_gui', '=', true)
 			->orderBy('order', 'DESC')
 			->get();
 	}
