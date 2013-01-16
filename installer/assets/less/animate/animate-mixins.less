@@ -1,0 +1,64 @@
+.transform-origin (@x, @y) {
+	-webkit-transform-origin:	@x @y;
+		 -moz-transform-origin:	@x @y;
+		  -ms-transform-origin:	@x @y;
+		   -o-transform-origin:	@x @y;
+		   		transform-origin:	@x @y;
+}
+
+// !Animations
+.animation(@name, @duration, @delay, @function) {
+	-webkit-animation: @name @duration @delay @function;
+		 -moz-animation: @name @duration @delay @function;
+		  -ms-animation: @name @duration @delay @function;
+		   -o-animation: @name @duration @delay @function;
+		  	  animation: @name @duration @delay @function;
+}
+
+.animation-name(@animation-name) {
+  -webkit-animation-name: @animation-name;
+     -moz-animation-name: @animation-name;
+      -ms-animation-name: @animation-name;
+       -o-animation-name: @animation-name;
+          animation-name: @animation-name;
+}
+
+.animation-timing-function(@animation-timing-function) {
+  -webkit-animation-timing-function: @animation-timing-function;
+     -moz-animation-timing-function: @animation-timing-function;
+      -ms-animation-timing-function: @animation-timing-function;
+       -o-animation-timing-function: @animation-timing-function;
+          animation-timing-function: @animation-timing-function;
+}
+
+.animation-duration(@animation-duration) {
+  -webkit-animation-duration: @animation-duration;
+     -moz-animation-duration: @animation-duration;
+      -ms-animation-duration: @animation-duration;
+       -o-animation-duration: @animation-duration;
+          animation-duration: @animation-duration;
+}
+
+.animation-delay(@animation-delay) {
+  -webkit-animation-delay: @animation-delay;
+     -moz-animation-delay: @animation-delay;
+      -ms-animation-delay: @animation-delay;
+       -o-animation-delay: @animation-delay;
+          animation-delay: @animation-delay;
+}
+
+.animation-iteration-count(@animation-iteration-count) {
+  -webkit-animation-iteration-count: @animation-iteration-count;
+     -moz-animation-iteration-count: @animation-iteration-count;
+      -ms-animation-iteration-count: @animation-iteration-count;
+       -o-animation-iteration-count: @animation-iteration-count;
+          animation-iteration-count: @animation-iteration-count;
+}
+
+.animation-fill-mode(@animation-fill-mode){
+	-webkit-animation-fill-mode: @animation-fill-mode;
+	   -moz-animation-fill-mode: @animation-fill-mode;
+	    -ms-animation-fill-mode: @animation-fill-mode;
+	     -o-animation-fill-mode: @animation-fill-mode;
+	        animation-fill-mode: @animation-fill-mode;
+}
