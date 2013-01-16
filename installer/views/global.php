@@ -29,12 +29,12 @@
 	<script src="<?php echo base_url(); ?>assets/js/installer.js"></script>
 </head>
 
-<body>
+<body id="installer">
 	<!-- Part 1: Wrap all page content here -->
   <div id="wrap">
   
 		<!-- Fixed navbar -->
-		<div class="navbar navbar-fixed-top">
+		<header class="navbar navbar-static-top">
 			<div class="navbar-inner">
 				<div class="container">
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -56,7 +56,7 @@
 					</div><!-- end !nav-collapse -->
 				</div><!-- end !container -->
 			</div><!-- end !nav-inner -->
-		</div><!-- end !navbar -->
+		</header><!-- end !navbar -->
 
 		<div class="container">
 			<div class="row-fluid">
@@ -73,7 +73,7 @@
 						</ul>
 					</nav>
 					
-					<div class="progress">
+					<div class="progress progress-striped active">
 						<div class="bar" style="width: 60%;"></div>
 					</div>
 					
@@ -110,13 +110,13 @@
 		<div id="push"></div>
 	</div><!-- end !wrap -->
 	
-	<div id="footer">
+	<footer id="footer">
 		<div class="container">
 			<span>Copyright &copy; 2009 - <?php echo date('Y'); ?> PyroCMS LLC</span>
 			<br>
 			<span id="version"><?php echo CMS_VERSION.' '.'Community'; ?></span>
 		</div>
-	</div>
+	</footer>
 
 	<script src="<?php echo base_url(); ?>assets/js/bootstrap/bootstrap.min.js"></script>
 </body>

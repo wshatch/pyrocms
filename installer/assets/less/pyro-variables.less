@@ -20,15 +20,28 @@
 @grayLightisher:				#888;
 @grayLight:             #999;
 @grayLighter:           #eee;
+
+// Whites
+// -------------------------
 @white:									#fff;
 
+// Colors
+// -------------------------
+@selectionHighlight:		#34ade8;
 
 // Scaffolding
 // -------------------------
 
 @body-background:         @grayDark;
 @text-color:              @white;
-@footer-background:				@grayDark;
+@footer-background:				transparent;
+
+// Graphics
+// -------------------------
+@pyro-logo:								'../images/pyro-logo.png';
+@pyro-logo2x:							'../images/pyro-logo2x.png';
+@background-grain:				'../images/grain.png';
+@background-grain2x:			'../images/grain@2x.png';
 
 // Links
 // -------------------------
@@ -161,16 +174,16 @@
 @navbar-collapse-width-desktop:    @navbar-collapse-width + 1;
 
 @navbar-height:                    44px;
-@navbar-background-highlight:      #ffffff;
+@navbar-background-highlight:      @grayDark;
 @navbar-background:                @grayDark;
-@navbar-border:                    darken(@navbar-background, 12%);
+@navbar-border:                    @grayDark;
 
 @navbar-text:                      #777;
 @navbar-link-color:                #777;
 @navbar-link-color-hover:          @grayDark;
 @navbar-link-color-active:         @gray;
-@navbar-link-background-hover:     transparent;
-@navbar-link-background-active:    darken(@navbar-background, 5%);
+@navbar-link-background-hover:     @grayDark;
+@navbar-link-background-active:    @grayDark;
 
 @navbar-brand-color:               @navbar-link-color;
 

@@ -99,6 +99,21 @@ only screen and ( min-resolution: 2dppx)
 and (max-device-width: 1024px) {
 /* Styles */
 
+	body {
+  	background: @body-background url(@background-grain2x) repeat;
+  	background-size: 113px 113px;
+  }
+  
+	.navbar {
+  	background: @navbar-background url(@background-grain2x) repeat;
+  	background-size: 113px 113px;
+  }
+  
+  .navbar .brand {
+	  background: url(@pyro-logo2x) no-repeat;
+	  background-size: 125px 39px;
+  }
+
 }
 
 /* !iPhone Retina Displays (Tip: Best used only for image replacement)

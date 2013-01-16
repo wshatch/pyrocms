@@ -165,42 +165,10 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-html,
-body {
-  height: 100%;
-  /* The html and body elements cannot have any padding or margin. */
-
-}
-/* Wrapper for page content to push down footer */
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  /* Negative indent footer by it's height */
-
-  margin: 0 auto -60px;
-}
-/* Set the fixed height of the footer here */
-#push,
-#footer {
-  height: 60px;
-}
-#footer {
-  background-color: transparent;
-}
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-  #footer {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
 body {
   margin: 0;
-  color: #ffffff;
-  background: #333333 url('../images/grain.png') repeat;
+  color: #333333;
+  background: #ffffff url("@background-grain") repeat;
 }
 body,
 input,
@@ -1070,7 +1038,7 @@ select:focus:invalid:focus {
 }
 .help-block,
 .help-inline {
-  color: #ffffff;
+  color: #737373;
 }
 .help-block {
   display: block;
@@ -1234,7 +1202,7 @@ table {
   border-top: 2px solid #dddddd;
 }
 .table .table {
-  background-color: #333333;
+  background-color: #ffffff;
 }
 .table-condensed th,
 .table-condensed td {
@@ -2439,7 +2407,7 @@ fieldset[disabled] .btn-link:hover {
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover {
   color: #555555;
-  background-color: #333333;
+  background-color: #ffffff;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -2579,7 +2547,7 @@ fieldset[disabled] .btn-link:hover {
   overflow: visible;
   padding: 0 20px;
   margin-bottom: 20px;
-  background: #333333 url('../images/grain.png') repeat;
+  background-color: #f2f2f2;
   border-radius: 4px;
 }
 .navbar:before,
@@ -2604,14 +2572,12 @@ fieldset[disabled] .btn-link:hover {
 .navbar .brand {
   float: left;
   display: block;
-  height: 39px;
-  width: 125px;
-  margin-top: 10px;
+  padding: 12px 20px 12px;
+  margin-left: -20px;
   font-size: 20px;
   font-weight: 200;
   color: #777777;
-  text-shadow: 0 1px 0 #333333;
-  background: url('../images/pyro-logo.png') no-repeat;
+  text-shadow: 0 1px 0 #ffffff;
 }
 .navbar .brand:hover {
   text-decoration: none;
@@ -2630,8 +2596,8 @@ fieldset[disabled] .btn-link:hover {
 .navbar .divider-vertical {
   height: 44px;
   margin: 0 9px;
-  border-left: 1px solid #333333;
-  border-right: 1px solid #333333;
+  border-left: 1px solid #f2f2f2;
+  border-right: 1px solid #ffffff;
 }
 .navbar .btn,
 .navbar .btn-group {
@@ -2742,14 +2708,14 @@ fieldset[disabled] .btn-link:hover {
   padding: 12px 15px 12px;
   color: #777777;
   text-decoration: none;
-  text-shadow: 0 1px 0 #333333;
+  text-shadow: 0 1px 0 #ffffff;
 }
 .navbar .nav .dropdown-toggle .caret {
   margin-top: 8px;
 }
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
-  background-color: #333333;
+  background-color: transparent;
   color: #333333;
   text-decoration: none;
 }
@@ -2758,7 +2724,7 @@ fieldset[disabled] .btn-link:hover {
 .navbar .nav > .active > a:focus {
   color: #555555;
   text-decoration: none;
-  background-color: #333333;
+  background-color: #e5e5e5;
 }
 .navbar .btn-navbar {
   display: none;
@@ -2768,15 +2734,15 @@ fieldset[disabled] .btn-link:hover {
   margin-right: 5px;
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #262626;
-  background-image: -moz-linear-gradient(top, #262626, #262626);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#262626), to(#262626));
-  background-image: -webkit-linear-gradient(top, #262626, #262626);
-  background-image: -o-linear-gradient(top, #262626, #262626);
-  background-image: linear-gradient(to bottom, #262626, #262626);
+  background-color: #e5e5e5;
+  background-image: -moz-linear-gradient(top, #f2f2f2, #e5e5e5);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f2f2f2), to(#e5e5e5));
+  background-image: -webkit-linear-gradient(top, #f2f2f2, #e5e5e5);
+  background-image: -o-linear-gradient(top, #f2f2f2, #e5e5e5);
+  background-image: linear-gradient(to bottom, #f2f2f2, #e5e5e5);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff262626', endColorstr='#ff262626', GradientType=0);
-  border-color: #131313;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff2f2f2', endColorstr='#ffe5e5e5', GradientType=0);
+  border-color: #d2d2d2;
   -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.075);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.075);
 }
@@ -2784,7 +2750,7 @@ fieldset[disabled] .btn-link:hover {
 .navbar .btn-navbar:active,
 .navbar .btn-navbar.active {
   color: #ffffff;
-  background-color: #262626;
+  background-color: #e5e5e5;
   background-position: 0 -15px;
 }
 .navbar .btn-navbar:active,
@@ -2847,7 +2813,7 @@ fieldset[disabled] .navbar .btn-navbar {
 .navbar .nav li.dropdown.open > .dropdown-toggle,
 .navbar .nav li.dropdown.active > .dropdown-toggle,
 .navbar .nav li.dropdown.open.active > .dropdown-toggle {
-  background-color: #333333;
+  background-color: #e5e5e5;
   color: #555555;
 }
 .navbar .nav li.dropdown > .dropdown-toggle .caret {
@@ -3919,264 +3885,6 @@ a.badge:hover {
 .jumbotron li {
   line-height: 30px;
 }
-::selection {
-  background: #34ade8;
-  /* Safari */
-
-  color: #ffffff;
-}
-::-moz-selection {
-  background: #34ade8;
-  /* Firefox */
-
-  color: #ffffff;
-}
-ul#lang {
-  margin: 15px 0 0;
-  text-align: right;
-  color: #333;
-}
-ul#lang li {
-  display: inline-block;
-  list-style: none;
-  margin-left: 5px;
-}
-nav#menu {
-  height: 35px;
-  margin: 75px 0 0;
-  padding: 0 15px;
-  background: #f7f7f7;
-  background-repeat: repeat-x;
-  background-image: -moz-linear-gradient(#f7f7f7, #f3f3f3);
-  background-image: -ms-linear-gradient(#f7f7f7, #f3f3f3);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #f3f3f3));
-  background-image: -webkit-linear-gradient(#f7f7f7, #f3f3f3);
-  background-image: -o-linear-gradient(#f7f7f7, #f3f3f3);
-  background-image: linear-gradient(#f7f7f7, #f3f3f3);
-  border: 1px solid #fff;
-  border-bottom: 1px solid #eee;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  box-shadow: 0 0 1px #aaa;
-  -moz-box-shadow: 0 0 1px #aaa;
-  -webkit-box-shadow: 0 0 1px #aaa;
-}
-nav#menu ul li {
-  list-style: none;
-  float: left;
-  color: #555;
-  text-shadow: 0 1px 0 #fff;
-  font-weight: 700;
-  margin: 10px 0 0;
-}
-nav#menu ul li a {
-  color: #555;
-  margin-left: 15px;
-  position: relative;
-  z-index: 999;
-}
-nav#menu ul li span {
-  margin-left: 15px;
-  position: relative;
-  z-index: 999;
-}
-nav#menu .sep {
-  background: url(../images/sep.png) no-repeat;
-  width: 84px;
-  height: 37px;
-  float: left;
-  margin-left: -25px;
-  margin-top: -11px;
-  position: relative;
-  z-index: 99;
-}
-#installer .progress {
-  overflow: hidden;
-  height: 4px;
-  margin-top: 20px;
-  background-color: #222;
-  background-image: -moz-linear-gradient(top, #222222, #222222);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(#222222));
-  background-image: -webkit-linear-gradient(top, #222222, #222222);
-  background-image: -o-linear-gradient(top, #222222, #222222);
-  background-image: linear-gradient(to bottom, #222222, #222222);
-  background-repeat: repeat-x;
-  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-}
-#installer .progress .bar {
-  height: 100%;
-}
-section.title {
-  background: #f7f7f7;
-  background-repeat: repeat-x;
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#f7f7f7), to(#f3f3f3));
-  background-image: -moz-linear-gradient(#f7f7f7, #f3f3f3);
-  background-image: -ms-linear-gradient(#f7f7f7, #f3f3f3);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #f3f3f3));
-  background-image: -webkit-linear-gradient(#f7f7f7, #f3f3f3);
-  background-image: -o-linear-gradient(#f7f7f7, #f3f3f3);
-  background-image: linear-gradient(#f7f7f7, #f3f3f3);
-  border: 1px solid #fff;
-  border-bottom: 1px solid #eee;
-  padding: 0 15px;
-  margin-top: 25px;
-  border-top-right-radius: 5px;
-  -moz-border-radius-topright: 5px;
-  -webkit-border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-  -moz-border-radius-topleft: 5px;
-  -webkit-border-top-left-radius: 5px;
-  box-shadow: 0 0 1px #aaa;
-  -moz-box-shadow: 0 0 1px #aaa;
-  -webkit-box-shadow: 0 0 1px #aaa;
-}
-section.title h3,
-section.title h3 a {
-  color: #555;
-  font-size: 16px;
-  text-shadow: 1px 1px 0 #fff;
-}
-section.item {
-  background: #ffffff;
-  min-height: 50px;
-  margin: 0;
-  padding: 16px;
-  float: left;
-  border-bottom-right-radius: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  box-shadow: 0 0 1px #aaa;
-  -moz-box-shadow: 0 0 1px #aaa;
-  -webkit-box-shadow: 0 0 1px #aaa;
-}
-#logo {
-  font-size: 16px;
-  color: #ffffff;
-  margin: -18px 12px 0 3px;
-  padding: 0;
-  float: left;
-}
-#logo a {
-  font-size: 16px;
-  color: #ffffff;
-}
-#content-body {
-  top: 135px;
-  position: relative;
-}
-.password-reveal {
-  display: none;
-}
-a.show-pass {
-  float: none;
-}
-.block-message.pyro input[type="text"] {
-  background: #ffffff;
-  border: none;
-}
-#confirm_db {
-  margin-top: 15px;
-}
-footer {
-  color: #777777;
-  font-size: 12px;
-}
-footer span#version {
-  display: inline-block;
-  color: #222222;
-  text-shadow: 0 1px 0 #444444;
-}
-.help {
-  max-width: 450px;
-  background: rgba(255, 105, 0, 0.2);
-  border: 1px solid rgba(255, 105, 0, 0.4);
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  padding: 8px;
-  margin: 22px 0 25px;
-  float: left;
-}
-/* !PRIMARY Landscape phone to portrait tablet 
-----------------------------------------*/
-@media (max-width: 767px) {
-  /* Styles */
-  /* !Basic Page Styles
-  ------------------------------------ */
-}
-/* !Mobile Devices Landscape Specific
-----------------------------------------*/
-@media (min-width: 480px) and (max-width: 767px) {
-  /* Styles */
-}
-/* !PRIMARY Landscape phones and down 
----------------------------------------------------------------------*/
-@media (max-width: 480px) {
-  /* Styles */
-}
-/* !PRIMARY Portrait tablet to landscape and desktop 
-------------------------------------------------------*/
-@media (min-width: 768px) and (max-width: 979px) {
-  /* Styles */
-}
-/* !iPads (portrait and landscape) 
----------------------------------------------------------------------------------------*/
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  /* Styles */
-}
-/* !iPads (landscape) 
------------------------- */
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-  /* Styles */
-}
-/* !iPads (portrait)
------------------------ */
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
-  /* Styles */
-}
-/* !Slightly Wide Desktop Display
-------------------------------------*/
-@media (min-width: 980px) {
-  /* Styles */
-}
-/* !Large Desktop Displays 
-----------------------------------------*/
-@media (min-width: 1200px) {
-  /* Styles */
-}
-/* !Retina Displays (Tip: Best used only for image replacement)
------------------------------------------------------------------- */
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 21), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* Styles */
-}
-/* !iPad Retina Displays (Tip: Best used only for image replacement)
------------------------------------------------------------------- */
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 21), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) and (max-device-width: 1024px) {
-  /* Styles */
-  body {
-    background: #333333 url('../images/grain@2x.png') repeat;
-    background-size: 113px 113px;
-  }
-  .navbar {
-    background: #333333 url('../images/grain@2x.png') repeat;
-    background-size: 113px 113px;
-  }
-  .navbar .brand {
-    background: url('../images/pyro-logo2x.png') no-repeat;
-    background-size: 125px 39px;
-  }
-}
-/* !iPhone Retina Displays (Tip: Best used only for image replacement)
------------------------------------------------------------------- */
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 21), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) and (max-device-width: 480px) {
-  /* Styles */
-}
 .clearfix:before,
 .clearfix:after {
   content: " ";
@@ -4635,7 +4343,7 @@ footer span#version {
   }
   .nav-collapse .nav > li > a:hover,
   .nav-collapse .dropdown-menu a:hover {
-    background-color: #333333;
+    background-color: #f2f2f2;
   }
   .navbar-inverse .nav-collapse .nav > li > a,
   .navbar-inverse .nav-collapse .dropdown-menu a {
@@ -4683,8 +4391,8 @@ footer span#version {
     float: none;
     padding: 10px 15px;
     margin: 10px 0;
-    border-top: 1px solid #333333;
-    border-bottom: 1px solid #333333;
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 1px solid #f2f2f2;
     -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.1);
     box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.1);
   }
