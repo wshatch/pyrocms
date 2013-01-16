@@ -2604,21 +2604,19 @@ fieldset[disabled] .btn-link:hover {
 .navbar .brand {
   float: left;
   display: block;
-  height: 39px;
-  width: 125px;
-  margin-top: 10px;
+  padding: 30px 20px 30px;
+  margin-left: -20px;
   font-size: 20px;
   font-weight: 200;
   color: #777777;
   text-shadow: 0 1px 0 #333333;
-  background: url('../images/pyro-logo.png') no-repeat;
 }
 .navbar .brand:hover {
   text-decoration: none;
 }
 .navbar-text {
   margin-bottom: 0;
-  line-height: 44px;
+  line-height: 80px;
   color: #777777;
 }
 .navbar-link {
@@ -2628,14 +2626,14 @@ fieldset[disabled] .btn-link:hover {
   color: #333333;
 }
 .navbar .divider-vertical {
-  height: 44px;
+  height: 80px;
   margin: 0 9px;
   border-left: 1px solid #333333;
   border-right: 1px solid #333333;
 }
 .navbar .btn,
 .navbar .btn-group {
-  margin-top: 7px;
+  margin-top: 25px;
 }
 .navbar .btn-group .btn,
 .navbar .input-prepend .btn,
@@ -2661,7 +2659,7 @@ fieldset[disabled] .btn-link:hover {
 .navbar-form select,
 .navbar-form .radio,
 .navbar-form .checkbox {
-  margin-top: 7px;
+  margin-top: 25px;
 }
 .navbar-form input,
 .navbar-form select,
@@ -2686,7 +2684,7 @@ fieldset[disabled] .btn-link:hover {
 .navbar-search {
   position: relative;
   float: left;
-  margin-top: 7px;
+  margin-top: 25px;
   margin-bottom: 0;
 }
 .navbar-search .search-query {
@@ -2739,7 +2737,7 @@ fieldset[disabled] .btn-link:hover {
 }
 .navbar .nav > li > a {
   float: none;
-  padding: 12px 15px 12px;
+  padding: 30px 15px 30px;
   color: #777777;
   text-decoration: none;
   text-shadow: 0 1px 0 #333333;
@@ -3924,15 +3922,30 @@ a.badge:hover {
   /* Safari */
 
   color: #ffffff;
+  text-shadow: none;
 }
 ::-moz-selection {
   background: #34ade8;
   /* Firefox */
 
   color: #ffffff;
+  text-shadow: none;
+}
+.navbar .brand {
+  display: inline-block;
+  position: relative;
+  margin-left: -5px;
+  padding-top: 20px;
+}
+.navbar .brand span#logo {
+  display: inline-block;
+  width: 125px;
+  height: 39px;
+  color: transparent;
+  background: url('../images/pyro-logo.png') no-repeat;
 }
 ul#lang {
-  margin: 15px 0 0;
+  padding: 30px 20px 30px;
   text-align: right;
   color: #333;
 }
@@ -4055,17 +4068,6 @@ section.item {
   -moz-box-shadow: 0 0 1px #aaa;
   -webkit-box-shadow: 0 0 1px #aaa;
 }
-#logo {
-  font-size: 16px;
-  color: #ffffff;
-  margin: -18px 12px 0 3px;
-  padding: 0;
-  float: left;
-}
-#logo a {
-  font-size: 16px;
-  color: #ffffff;
-}
 #content-body {
   top: 135px;
   position: relative;
@@ -4107,8 +4109,9 @@ footer span#version {
 ----------------------------------------*/
 @media (max-width: 767px) {
   /* Styles */
-  /* !Basic Page Styles
-  ------------------------------------ */
+  #footer {
+    text-align: center;
+  }
 }
 /* !Mobile Devices Landscape Specific
 ----------------------------------------*/
@@ -4167,7 +4170,7 @@ footer span#version {
     background: #333333 url('../images/grain@2x.png') repeat;
     background-size: 113px 113px;
   }
-  .navbar .brand {
+  .navbar .brand span#logo {
     background: url('../images/pyro-logo2x.png') no-repeat;
     background-size: 125px 39px;
   }

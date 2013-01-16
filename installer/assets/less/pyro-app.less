@@ -7,15 +7,35 @@
 ::selection {
 	background:@selectionHighlight;/* Safari */
 	color:@white;
+	text-shadow: none;
 }
 
 ::-moz-selection {
 	background:@selectionHighlight;/* Firefox */
 	color:@white;
+	text-shadow: none;
+}
+
+// Navigation
+.navbar .brand {
+	display: inline-block;
+	position: relative;
+	margin-left: -5px;
+	padding-top: 20px;
+	//float: none;
+}
+
+.navbar .brand span#logo {
+	display: inline-block;
+	width: 125px;
+	height: 39px;
+  color: transparent;
+  background: url(@pyro-logo) no-repeat;
+  //background-position: 0 0;
 }
 
 ul#lang {
-	margin:15px 0 0;
+  padding: ((@navbar-height - @line-height-base) / 2) 20px ((@navbar-height - @line-height-base) / 2);
 	text-align:right;
 	color:#333;
 }
@@ -147,19 +167,6 @@ section.item {
 	box-shadow:0 0 1px #aaa;
 	-moz-box-shadow:0 0 1px #aaa;
 	-webkit-box-shadow:0 0 1px #aaa;
-}
-
-#logo {
-	font-size:16px;
-	color:@white;
-	margin:-18px 12px 0 3px;
-	padding:0;
-	float:left;
-}
-
-#logo a {
-	font-size:16px;
-	color:@white;
 }
 
 #content-body {

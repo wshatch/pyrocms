@@ -41,8 +41,9 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-					</a>			
-					<div class="brand"></div>
+					</a>
+					<div class="brand"><span id="logo"></span></div>		
+					<!-- <div class="brand"></div> -->
 					<div class="nav-collapse collapse">
 						<ul id="lang">
 							<?php foreach($language_nav as $lang => $info):?>
