@@ -33,7 +33,8 @@ a {
 }
 a:hover {
   color: @link-color-hover;
-  text-decoration: underline;
+  text-decoration: none;
+  .transition(color 200ms linear);
 }
 a:focus {
   .tab-focus();

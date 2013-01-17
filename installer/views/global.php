@@ -49,7 +49,7 @@
 						<ul id="lang">
 							<?php foreach($language_nav as $lang => $info):?>
 							<li>
-								<a href="<?php echo $info['action_url']; ?>" title="<?php echo $info['name']; ?>">
+								<a href="<?php echo $info['action_url']; ?>" data-toggle="tool-tip" title="<?php echo $info['name']; ?>" data-html="<?php echo $info['name']; ?>">
 									<div data-picture data-alt="<?php echo $info['name']; ?>">
 										<div data-src="<?php echo $info['image_url']; ?>" data-media="(-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2)"></div>
 										<div data-src="<?php echo $info['image_url']; ?>" data-media="(-webkit-min-device-pixel-ratio: 1),(min-device-pixel-ratio: 1)"></div>
@@ -65,26 +65,35 @@
 		</header><!-- end !navbar -->
 
 		<div class="container">
-			<div class="row-fluid">
-				<div class="span12">
-					
-					<nav id="menu">
-						<ul>
-							<li><?php echo anchor('', lang('intro'), $this->uri->segment(2, '') == '' ? 'id="current"' : ''); ?></li>
-							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_1' ? 'current' : '' ?>"><?php echo lang('step1'); ?></span></li>
-							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_2' ? 'current' : '' ?>"><?php echo lang('step2'); ?></span></li>
-							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_3' ? 'current' : '' ?>"><?php echo lang('step3'); ?></span></li>
-							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_4' ? 'current' : '' ?>"><?php echo lang('step4'); ?></span></li>
-							<li><span id="<?php echo $this->uri->segment(2, '') == 'complete' ? 'current' : '' ?>"><?php echo lang('final'); ?></span></li>
-						</ul>
-					</nav>
-					
-					<div class="progress progress-striped active">
-						<div class="bar" style="width: 60%;"></div>
+			<section id="steps">
+				<div class="row-fluid">
+					<div class="span2">
+						<span><?php echo anchor('', lang('intro'), $this->uri->segment(2, '') == '' ? 'id="current"' : ''); ?></span>
 					</div>
-					
+					<div class="span2">
+						<span id="<?php echo $this->uri->segment(2, '') == 'step_1' ? 'current' : '' ?>"><?php echo lang('step1'); ?></span>
+					</div>
+					<div class="span2">
+						<span id="<?php echo $this->uri->segment(2, '') == 'step_2' ? 'current' : '' ?>"><?php echo lang('step2'); ?></span>
+					</div>
+					<div class="span2">
+						<span id="<?php echo $this->uri->segment(2, '') == 'step_3' ? 'current' : '' ?>"><?php echo lang('step3'); ?></span>
+					</div>
+					<div class="span2">
+						<span id="<?php echo $this->uri->segment(2, '') == 'step_4' ? 'current' : '' ?>"><?php echo lang('step4'); ?></span>
+					</div>
+					<div class="span2">
+						<span id="<?php echo $this->uri->segment(2, '') == 'complete' ? 'current' : '' ?>"><?php echo lang('final'); ?></span>
+					</div>
 				</div>
-			</div>
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="progress progress-striped active">
+								<div class="bar" style="width: 60%;"></div>
+						</div>
+					</div>
+				</div>
+			</section>
 		</div><!-- end !container -->
 		
 		<div class="container">

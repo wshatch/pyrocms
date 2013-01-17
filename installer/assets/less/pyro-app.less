@@ -57,13 +57,13 @@ ul#lang li a img {
 
 // Installer Steps
 
-nav#menu {
-	height:35px;
-	margin:75px 0 0;
-	padding:0 15px;
+section#steps {
+	//height:35px;
+	//margin:75px 0 0;
+	//padding:0 15px;
 }
 
-nav#menu ul li {
+section#steps ul li {
 	list-style:none;
 	float:left;
 	color:@gray;
@@ -72,28 +72,26 @@ nav#menu ul li {
 	margin:10px 0 0;
 }
 
+/*
 nav#menu ul li a {
 	color:@gray;
 	margin-left:15px;
 	position:relative;
 	z-index:999;
 }
+*/
 
-nav#menu ul li span {
-	margin-left:15px;
-	position:relative;
-	z-index:999;
-}
-
-nav#menu .sep {
-	background:url(../images/sep.png) no-repeat;
-	width:84px;
-	height:37px;
-	float:left;
-	margin-left:-25px;
-	margin-top:-11px;
-	position:relative;
-	z-index:99;
+section#steps span {
+	display: block;
+	width: 100px;
+	height: 100px;
+	margin: 10px 0;
+	text-align: center;
+	line-height: 100px;
+	background: #2b2b2b;
+	border: 4px solid #3b3b3b;
+	.border-radius(@border-radius-circle);
+	.transition(all 1s ease-in-out);
 }
 
 #installer .progress {
@@ -143,6 +141,46 @@ section.item {
 	min-height:50px;
 	margin:0;
 	padding:16px;
+}
+
+.btn-install {
+	display: inline-block;
+	height: 30px;
+	width: 100px;
+	padding: 5px 10px;
+	text-align: center;
+	cursor: pointer;
+	color: white;
+	font-size: 13px;
+	line-height: 30px;
+	text-shadow: 0 1px 0px #424242;
+	border: 1px solid #222;
+	background-color: #222;
+	background-repeat: repeat-x;
+	background-image: url(@background-grain), -webkit-gradient(linear,left top,left bottom,color-stop(0%,#5f6569),color-stop(100%,#45494c));
+	background-image: url(@background-grain), -webkit-linear-gradient(top,#5f6569,#45494c);
+	background-image: url(@background-grain), -moz-linear-gradient(top,#5f6569,#45494c);
+	background-image: url(@background-grain), -ms-linear-gradient(top,#5f6569,#45494c);
+	background-image: url(@background-grain), -o-linear-gradient(top,#5f6569,#45494c);
+	background-image: url(@background-grain), linear-gradient(top,#5f6569,#45494c);
+	.border-radius(6px);
+	.background-clip(padding-box);
+	.box-shadow(~"inset 0 1px 0 0 rgba(255,255,255,0.2), 0 1px 0px 0 rgba(255,255,255,0.1)");
+	.transition(0ms linear all);
+	-webkit-tap-highlight-color: transparent;
+	&:hover {
+		color: white;
+		text-shadow: 0 -2px 0px #111;
+		text-decoration: none;
+		background-image:url(@background-grain), -webkit-gradient(linear,left top,left bottom,color-stop(0%,#35383b),color-stop(100%,#474B4E));
+		background-image:url(@background-grain), -webkit-linear-gradient(top,#35383b,#474B4E);
+		background-image:url(@background-grain), -moz-linear-gradient(top,#35383b,#474B4E);
+		background-image:url(@background-grain), -ms-linear-gradient(top,#35383b,#474B4E);
+		background-image:url(@background-grain), -o-linear-gradient(top,#35383b,#474B4E);
+		background-image:url(@background-grain), linear-gradient(top,#35383b,#474B4E);
+		background-position: 0 0;
+		.box-shadow(~"inset 0 2px 4px 0 rgba(0,0,0,0.8), 0 1px 0px 0 rgba(255,255,255,0.1)");
+	}
 }
 
 #content-body {
