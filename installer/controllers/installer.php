@@ -91,10 +91,12 @@ class Installer extends CI_Controller
 		define('DEFAULT_LANG', $config['default_language']);
 
 		$action_url = site_url('installer/change/__NAME__');
-		$image_url = base_url('assets/images/flags/__CODE__.gif');
+		$image_url = base_url('assets/images/flags/__CODE__.png');
+		$imagehd_url = base_url('assets/images/flags/__CODE__@2x.png');
 		// Work out some misrepresented language codes to specific language flags
 		$flag_exchange = array(
-			'english' => 'gb',
+			'arabic' => 'sa',
+			'english' => 'us',
 			'chinese_simplified' => 'cn',
 			'chinese_traditional' => 'cn',
 			'danish' => 'dk',
@@ -110,6 +112,7 @@ class Installer extends CI_Controller
 					'name' => $info['name'],
 					'action_url' => str_replace('__NAME__', $info['folder'], $action_url),
 					'image_url' => str_replace('__CODE__', (in_array($info['folder'], array_keys($flag_exchange))) ? $flag_exchange[$info['folder']] : $code, $image_url),
+					'imagehd_url' => str_replace('__CODE__', (in_array($info['folder'], array_keys($flag_exchange))) ? $flag_exchange[$info['folder']] : $code, $imagehd_url),
 				);
 			}
 		}

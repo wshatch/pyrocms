@@ -21,7 +21,8 @@
 		var base_url = '<?php echo base_url(); ?>',
 				pass_match = ['<?php echo lang('installer.passwords_match'); ?>','<?php echo lang('installer.passwords_dont_match'); ?>'];
 	</script>
-
+	<script src="<?php echo base_url(); ?>assets/js/matchmedia.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/picturefill.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
 
 	<script src="<?php echo base_url(); ?>assets/js/jquery.complexify.js"></script>
@@ -37,7 +38,7 @@
 		<header class="navbar navbar-static-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<a class="btn btn-navbar" ontouchstart="" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -49,7 +50,11 @@
 							<?php foreach($language_nav as $lang => $info):?>
 							<li>
 								<a href="<?php echo $info['action_url']; ?>" title="<?php echo $info['name']; ?>">
-									<img src="<?php echo $info['image_url']; ?>" alt="<?php echo $info['name']; ?>"/>
+									<div data-picture data-alt="<?php echo $info['name']; ?>">
+										<div data-src="<?php echo $info['image_url']; ?>" data-media="(-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2)"></div>
+										<div data-src="<?php echo $info['image_url']; ?>" data-media="(-webkit-min-device-pixel-ratio: 1),(min-device-pixel-ratio: 1)"></div>
+										<noscript><img src="<?php echo $info['image_url']; ?>" alt="<?php echo $info['name']; ?>"/></noscript>
+									</div>
 								</a>
 							</li>
 							<?php endforeach; ?>
@@ -66,11 +71,11 @@
 					<nav id="menu">
 						<ul>
 							<li><?php echo anchor('', lang('intro'), $this->uri->segment(2, '') == '' ? 'id="current"' : ''); ?></li>
-							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_1' ? 'current' : '' ?>"><?php echo lang('step1'); ?></span><span class="sep"></span></li>
-							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_2' ? 'current' : '' ?>"><?php echo lang('step2'); ?></span><span class="sep"></span></li>
-							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_3' ? 'current' : '' ?>"><?php echo lang('step3'); ?></span><span class="sep"></span></li>
-							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_4' ? 'current' : '' ?>"><?php echo lang('step4'); ?></span><span class="sep"></span></li>
-							<li><span id="<?php echo $this->uri->segment(2, '') == 'complete' ? 'current' : '' ?>"><?php echo lang('final'); ?></span><span class="sep"></span></li>
+							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_1' ? 'current' : '' ?>"><?php echo lang('step1'); ?></span></li>
+							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_2' ? 'current' : '' ?>"><?php echo lang('step2'); ?></span></li>
+							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_3' ? 'current' : '' ?>"><?php echo lang('step3'); ?></span></li>
+							<li><span id="<?php echo $this->uri->segment(2, '') == 'step_4' ? 'current' : '' ?>"><?php echo lang('step4'); ?></span></li>
+							<li><span id="<?php echo $this->uri->segment(2, '') == 'complete' ? 'current' : '' ?>"><?php echo lang('final'); ?></span></li>
 						</ul>
 					</nav>
 					
