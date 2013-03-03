@@ -4,7 +4,7 @@ class Config_test extends CI_TestCase {
 
 	public function set_up()
 	{
-		$cls =& $this->ci_/codeigniter/core_class('cfg');
+		$cls =& $this->ci_core_class('cfg');
 
 		// set predictable config values
 		$this->ci_set_config(array(

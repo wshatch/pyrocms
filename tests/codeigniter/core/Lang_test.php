@@ -6,10 +6,10 @@ class Lang_test extends CI_TestCase {
 
 	public function set_up()
 	{
-		$loader_cls = $this->ci_/codeigniter/core_class('load');
+		$loader_cls = $this->ci_core_class('load');
 		$this->ci_instance_var('load', new $loader_cls);
 
-		$cls = $this->ci_/codeigniter/core_class('lang');
+		$cls = $this->ci_core_class('lang');
 		$this->lang = new $cls;
 	}
 
