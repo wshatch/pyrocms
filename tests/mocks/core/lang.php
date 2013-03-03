@@ -2,7 +2,7 @@
 
 class Mock_Core_Lang extends CI_Lang {
 
-	function line($line = '')
+	function line($line = '', $log_errors=FALSE)
 	{
 		return FALSE;
 	}

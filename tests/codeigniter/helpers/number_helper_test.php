@@ -6,8 +6,8 @@ class Number_helper_test extends CI_TestCase {
 	{
 		$this->helper('number');
 
-		// Grab the core lang class
-		$lang_cls = $this->ci_core_class('lang');
+		// Grab the /codeigniter/core lang class
+		$lang_cls = $this->ci_/codeigniter/core_class('lang');
 
 		// Mock away load, too much going on in there,
 		// we'll just check for the expected parameter

@@ -72,7 +72,7 @@ class Inflector_helper_test extends CI_TestCase {
 
 		foreach ($strs as $str => $expect)
 		{
-			$this->assertEquals($expect, underscore($str));
+			$this->assertEquals($expect, unders/codeigniter/core($str));
 		}
 	}
 

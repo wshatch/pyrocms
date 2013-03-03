@@ -36,7 +36,7 @@ class Session_test extends CI_TestCase {
 			'input' => 'in'
 		);
 		foreach ($classes as $name => $abbr) {
-			$class = $this->ci_core_class($abbr);
+			$class = $this->ci_/codeigniter/core_class($abbr);
 			$obj->$name = new $class;
 		}
 		$this->ci_instance($obj);

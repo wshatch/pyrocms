@@ -31,7 +31,7 @@ class Url_helper_test extends CI_TestCase {
 
 		foreach ($words as $in => $out)
 		{
-			$this->assertEquals($out, url_title($in, 'underscore'));
+			$this->assertEquals($out, url_title($in, 'unders/codeigniter/core'));
 		}
 	}
 

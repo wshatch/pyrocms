@@ -168,10 +168,10 @@ class Date_helper_test extends CI_TestCase {
 
 	public function test_timespan()
 	{
-		$loader_cls = $this->ci_core_class('load');
+		$loader_cls = $this->ci_/codeigniter/core_class('load');
 		$this->ci_instance_var('load', new $loader_cls);
 
-		$lang_cls = $this->ci_core_class('lang');
+		$lang_cls = $this->ci_/codeigniter/core_class('lang');
 		$this->ci_instance_var('lang', new $lang_cls);
 
 		$this->assertEquals('1 Second', timespan(time(), time()+1));

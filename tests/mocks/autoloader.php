@@ -12,7 +12,6 @@
 function autoload($class)
 {
 	$dir = realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR;
-
 	$ci_core = array(
 		'Benchmark', 'Config', 'Controller',
 		'Exceptions', 'Hooks', 'Input',
@@ -45,35 +44,35 @@ function autoload($class)
 	{
 		$fragments = explode('_', $class, 2);
 		$subclass = next($fragments);
-
+        $ci_path = BASEPATH.'codeigniter'.DIRECTORY_SEPARATOR;
 		if (in_array($subclass, $ci_core))
 		{
-			$dir = BASEPATH.'core'.DIRECTORY_SEPARATOR;
+			$dir = $ci_path.'core'.DIRECTORY_SEPARATOR;
 			$class = $subclass;
 		}
 		elseif (in_array($subclass, $ci_libraries))
 		{
-			$dir = BASEPATH.'libraries'.DIRECTORY_SEPARATOR;
+			$dir = $ci_path.'libraries'.DIRECTORY_SEPARATOR;
 			$class = ($subclass === 'Driver_Library') ? 'Driver' : $subclass;
 		}
 		elseif (in_array($subclass, $ci_drivers))
 		{
-			$dir = BASEPATH.'libraries'.DIRECTORY_SEPARATOR.$subclass.DIRECTORY_SEPARATOR;
+			$dir = $ci_path.'libraries'.DIRECTORY_SEPARATOR.$subclass.DIRECTORY_SEPARATOR;
 			$class = $subclass;
 		}
 		elseif (in_array(($parent = strtok($subclass, '_')), $ci_drivers)) {
-			$dir = BASEPATH.'libraries'.DIRECTORY_SEPARATOR.$parent.DIRECTORY_SEPARATOR.'drivers'.DIRECTORY_SEPARATOR;
+			$dir = $ci_path.'libraries'.DIRECTORY_SEPARATOR.$parent.DIRECTORY_SEPARATOR.'drivers'.DIRECTORY_SEPARATOR;
 			$class = $subclass;
 		}
 		elseif (preg_match('/^CI_DB_(.+)_(driver|forge|result|utility)$/', $class, $m) && count($m) === 3)
 		{
-			$driver_path = BASEPATH.'database'.DIRECTORY_SEPARATOR.'drivers'.DIRECTORY_SEPARATOR;
+			$driver_path = $ci_path.'database'.DIRECTORY_SEPARATOR.'drivers'.DIRECTORY_SEPARATOR;
 			$dir = $driver_path.$m[1].DIRECTORY_SEPARATOR;
 			$file = $dir.$m[1].'_'.$m[2].'.php';
 		}
 		elseif (strpos($class, 'CI_DB') === 0)
 		{
-			$dir = BASEPATH.'database'.DIRECTORY_SEPARATOR;
+			$dir = $ci_path.'database'.DIRECTORY_SEPARATOR;
 			$file = $dir.str_replace(array('CI_DB','active_record'), array('DB', 'active_rec'), $subclass).'.php';
 		}
 		else
@@ -99,9 +98,7 @@ function autoload($class)
 			// If there was other custom autoloader, passed away
 			return FALSE;
 		}
-
 		throw new InvalidArgumentException("Unable to load {$class}.");
 	}
-
 	include_once($file);
 }

@@ -1,7 +1,7 @@
 <?php
 
-require BASEPATH . 'core/Common.php';
-require BASEPATH . 'helpers/form_helper.php';
+require BASEPATH . '/codeigniter/core/Common.php';
+require BASEPATH . '/codeigniter/helpers/form_helper.php';
 
 class Form_helper_test extends CI_TestCase
 {

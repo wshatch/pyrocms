@@ -83,7 +83,7 @@ class Loader_test extends CI_TestCase {
 	 */
 	public function test_models()
 	{
-		$this->ci_set_core_class('model', 'CI_Model');
+		$this->ci_set_/codeigniter/core_class('model', 'CI_Model');
 
 		$content = '<?php class Unit_test_model extends CI_Model {} ';
 
@@ -113,7 +113,7 @@ class Loader_test extends CI_TestCase {
 	 */
 	public function test_load_view()
 	{
-		$this->ci_set_core_class('output', 'CI_Output');
+		$this->ci_set_/codeigniter/core_class('output', 'CI_Output');
 
 		$content = 'This is my test page.  <?php echo $hello; ?>';
 		$view = vfsStream::newFile('unit_test_view.php')->withContent($content)->at($this->load->views_dir);

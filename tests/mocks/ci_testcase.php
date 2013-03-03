@@ -171,7 +171,7 @@ class CI_TestCase extends PHPUnit_Framework_TestCase {
 
 	public function helper($name)
 	{
-		require_once(BASEPATH.'helpers/'.$name.'_helper.php');
+		require_once(BASEPATH.'codeigniter/helpers/'.$name.'_helper.php');
 	}
 
 	// --------------------------------------------------------------------
