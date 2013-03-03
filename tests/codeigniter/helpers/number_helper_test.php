@@ -7,7 +7,7 @@ class Number_helper_test extends CI_TestCase {
 		$this->helper('number');
 
 		// Grab the /codeigniter/core lang class
-		$lang_cls = $this->ci_/codeigniter/core_class('lang');
+		$lang_cls = $this->ci_core_class('lang');
 
 		// Mock away load, too much going on in there,
 		// we'll just check for the expected parameter
@@ -34,7 +34,7 @@ class Number_helper_test extends CI_TestCase {
 	// file. Consider moving this to ci_testcase?
 	public function _get_lang($name)
 	{
-		require BASEPATH.'language/english/'.$name.'_lang.php';
+		require BASEPATH.'codeigniter/language/english/'.$name.'_lang.php';
 		return $lang;
 	}
 
