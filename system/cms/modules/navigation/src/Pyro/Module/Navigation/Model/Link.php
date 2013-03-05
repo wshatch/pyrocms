@@ -50,7 +50,7 @@ class Link extends \Illuminate\Database\Eloquent\Model
 	 * @param array $input The data to insert
 	 * @return object
 	 */
-	public static function create($input = array())
+	public static function create(array $input)
 	{
 		$input = self::formatArray($input);
 		
