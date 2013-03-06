@@ -225,12 +225,13 @@ class MY_Controller extends MX_Controller
         include APPPATH.'config/database.php';
 
         $config = $db[ENVIRONMENT];
-        $subdriver = current(explode(':', $config['dsn']));
-
+        $dsn = $this->buildDsn($config);
+        $prefix = $this->generatePrefix($config);
+        $subdriver = current(explode(':', $dsn));
         // Is this a PDO connection?
         if ($pdo instanceof PDO) {
 
-            preg_match('/dbname=(\w+)/', $config['dsn'], $matches);
+            preg_match('/dbname=(\w+)/', $dsn, $matches);
             $database = $matches[1];
             unset($matches);
 
@@ -254,7 +255,9 @@ class MY_Controller extends MX_Controller
 
             $conn = Capsule\Database\Connection::make('default', array(
                 'driver' => $subdriver,
-                'dsn' => $config["dsn"],
+                'host' => $config['hostname'],
+                'database' => $config["database"],
+                'prefix' => $config["dbprefix"]."_",
                 'username' => $config["username"],
                 'password' => $config["password"],
                 'charset' => $config["char_set"],
@@ -265,6 +268,20 @@ class MY_Controller extends MX_Controller
         $conn->setFetchMode(PDO::FETCH_OBJ);
 
         return $conn;
+    }
+
+    private function buildDsn($config)
+    {
+        $ret_string = "host={$config['hostname']};db={$config['database']}";
+        return $ret_string;
+    }
+
+    private function generatePrefix($prefix)
+    {
+        if($prefix === ''){
+            return 'default_';
+        }
+        return $prefix . '_';
     }
 
     /**
