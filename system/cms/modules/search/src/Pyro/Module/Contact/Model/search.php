@@ -4,22 +4,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class SearchIndex extends Model
 {
-    public static $table = 'search_index';
+    protected $table = 'search_index';
 
     /**
     * Creates a new Search index
     * @param array $input The data to insert
     * @return object 
     */
+    /*
     public static function create($input)
     {
         $input = self::formatArray($input);
         self::delete($input);
-        return parent::create($input)
+        return parent::create($input);
     }
     /**
     * Removes the index
-    */
     public function delete($input)
     {
     }
@@ -62,7 +62,5 @@ class SearchIndex extends Model
 		if ( ! empty($options['cp_delete_uri'])) {
 			$insert_data['cp_delete_uri'] = $options['cp_delete_uri'];
 		}
-
-
     }
 }
