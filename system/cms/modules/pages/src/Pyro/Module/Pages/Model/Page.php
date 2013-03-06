@@ -251,11 +251,11 @@ class Page extends \Illuminate\Database\Eloquent\Model
 		if ( ! $page) {
 			return false;
 		}
-
 		// ---------------------------------
 		// Get Stream Entry
 		// ---------------------------------
-
+        /*
+        TODO: fix this so it returns a Page object and not a stdObject
 		if ($page->entry_id and $page->type->stream_id) {
 			ci()->load->driver('Streams');
 
@@ -268,6 +268,7 @@ class Page extends \Illuminate\Database\Eloquent\Model
 				}
 			}
 		}
+        */
 
 		return $page;
 	}
