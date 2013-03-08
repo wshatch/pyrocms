@@ -270,12 +270,32 @@ class MY_Controller extends MX_Controller
         return $conn;
     }
 
+    /**
+    * Build the DSN from the config options.
+    * TODO: decide if this is ok or build the DSN somewhere else
+    * in the code base.
+    */
     private function buildDsn($config)
     {
-        $ret_string = "host={$config['hostname']};db={$config['database']}";
+        //Assume the database config is being upgraded from a previous version 
+        //of pyro and use the mysql driver.
+        if(!isset($config['driver']))
+        {
+            $ret_string = "mysql:";
+        }
+        else{
+            $ret_string = $config['driver'] . ':';
+        }
+        $ret_string .= "host={$config['hostname']};db={$config['database']}";
+        if(isset($config['port'])){
+            $ret_string .= ";{$config['port']}";
+        }
         return $ret_string;
     }
 
+    /*
+    * Ensures that we're using the proper database prefix.
+    */
     private function generatePrefix($prefix)
     {
         if($prefix === ''){
