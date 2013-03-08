@@ -141,7 +141,7 @@ class Streams_fields extends CI_Driver {
 			if(!$this->add_field($field)){
 	            $ret_value = false;
 	        }
-	    }
+        }
 	    return $ret_value;
 	}
 
