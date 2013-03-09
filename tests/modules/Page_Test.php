@@ -1,6 +1,6 @@
 <?php
 
-public class PageTest extends PHPUnit_Framowork_TestCase
+class PageTest extends PHPUnit_Framowork_TestCase
 {
     public function testSomethingInPage()
     {

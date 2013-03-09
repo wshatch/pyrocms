@@ -10,14 +10,8 @@
 	stopOnIncomplete="false"
 	stopOnSkipped="false">
 	<testsuites>
-        <testsuite name="Pyrocms Module Test Suite">
-            <files>*.php </files>
+        <testsuite name="Module_Tests">
+          <directory suffix="pTest.php">.</directory>
         </testsuite>
 	</testsuites>
-	<filters>
-		<blacklist>
-			<directory suffix=".php">PEAR_INSTALL_DIR</directory>
-			<directory suffix=".php">PHP_LIBDIR</directory>
-		</blacklist>
-	</filters>
 </phpunit>
