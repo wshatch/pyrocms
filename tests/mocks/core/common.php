@@ -6,8 +6,10 @@ if ( ! function_exists('get_instance'))
 {
 	function &get_instance()
 	{
-		$test = CI_TestCase::instance();
-		$test = $test->ci_instance();
+        $test = new Mock_CI_Singleton();
+        //$test = new StdClass();
+		/*$test = CI_TestCase::instance();
+		$test = $test->ci_instance();*/
 		return $test;
 	}
 }
@@ -18,7 +20,8 @@ if ( ! function_exists('get_config'))
 {
 	function &get_config()
 	{
-		$test = CI_TestCase::instance();
+
+		$test = new CI_TestCase();
 		$config = $test->ci_get_config();
 		return $config;
 	}

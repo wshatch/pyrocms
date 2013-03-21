@@ -1,4 +1,5 @@
 <?php
+include_once('Model_Test.php');
 defined('PROJECT_BASE') OR define('PROJECT_BASE', realpath($dir.'/../../').'/');
 include_once PROJECT_BASE.'vendor/autoload.php';
 
@@ -7,26 +8,14 @@ use Pyro\Module\Navigation\Model\Link as Link;
 Use Iluminate\Database\SQLiteConnection;
 use Capsule\Database\Connection;
 
-
 /**
  * @backupGlobals disabled
  */
-class GroupTest extends PHPUnit_Framework_TestCase 
+class GroupTest extends ModelTest 
 {
     public function __construct()
     {
-        $conn = Capsule\Database\Connection::make(
-            'default',
-            array(
-                'driver' => 'sqlite',
-                'database' => ':memory:',
-                'prefix' => ''
-            )
-        ); 
-        $conn->setFetchMode(PDO::FETCH_OBJ);
-        $resolver = Capsule\Database\Connection::getResolver();
-        $resolver->addConnection('default', $conn);
-        $resolver->setDefaultConnection('default');
+        parent::__construct();
         $this->createMockData();
     }
     public function testRelationWithLinks()
@@ -38,9 +27,9 @@ class GroupTest extends PHPUnit_Framework_TestCase
     public function testGetGroupOptions()
     {
     }
+
     private function createMockData()
     {
-        /*
         Group::create(array(
             'title'  => 'Header',
             'abbrev' => 'header'
@@ -53,6 +42,5 @@ class GroupTest extends PHPUnit_Framework_TestCase
             'title'  => 'Footer',
             'abbrev' => 'footer'
         ))->save();
-        */
     }
 }

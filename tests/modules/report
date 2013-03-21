@@ -1,10 +1,4817 @@
-PHPUnit 3.7.13 by Sebastian Bergmann.
+array(1) {
+  ["default"]=>
+  object(Illuminate\Database\SQLiteConnection)#243 (12) {
+    ["pdo":protected]=>
+    object(PDO)#244 (0) {
+    }
+    ["queryGrammar":protected]=>
+    object(Illuminate\Database\Query\Grammars\SQLiteGrammar)#245 (3) {
+      ["wrapper":protected]=>
+      string(4) ""%s""
+      ["selectComponents":protected]=>
+      array(10) {
+        [0]=>
+        string(9) "aggregate"
+        [1]=>
+        string(7) "columns"
+        [2]=>
+        string(4) "from"
+        [3]=>
+        string(5) "joins"
+        [4]=>
+        string(6) "wheres"
+        [5]=>
+        string(6) "groups"
+        [6]=>
+        string(7) "havings"
+        [7]=>
+        string(6) "orders"
+        [8]=>
+        string(5) "limit"
+        [9]=>
+        string(6) "offset"
+      }
+      ["tablePrefix":protected]=>
+      string(0) ""
+    }
+    ["schemaGrammar":protected]=>
+    object(Illuminate\Database\Schema\Grammars\SQLiteGrammar)#249 (3) {
+      ["wrapper":protected]=>
+      string(4) ""%s""
+      ["modifiers":protected]=>
+      array(3) {
+        [0]=>
+        string(8) "Nullable"
+        [1]=>
+        string(7) "Default"
+        [2]=>
+        string(9) "Increment"
+      }
+      ["tablePrefix":protected]=>
+      string(0) ""
+    }
+    ["postProcessor":protected]=>
+    object(Illuminate\Database\Query\Processors\Processor)#246 (0) {
+    }
+    ["events":protected]=>
+    NULL
+    ["paginator":protected]=>
+    NULL
+    ["fetchMode":protected]=>
+    int(5)
+    ["queryLog":protected]=>
+    array(84) {
+      [0]=>
+      array(3) {
+        ["query"]=>
+        string(33) "drop table if exists "core_users""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.22"
+      }
+      [1]=>
+      array(3) {
+        ["query"]=>
+        string(36) "drop table if exists "core_settings""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.03"
+      }
+      [2]=>
+      array(3) {
+        ["query"]=>
+        string(33) "drop table if exists "core_sites""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.03"
+      }
+      [3]=>
+      array(3) {
+        ["query"]=>
+        string(38) "drop table if exists "sess_table_name""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [4]=>
+      array(3) {
+        ["query"]=>
+        string(30) "drop table if exists "modules""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [5]=>
+      array(3) {
+        ["query"]=>
+        string(33) "drop table if exists "migrations""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [6]=>
+      array(3) {
+        ["query"]=>
+        string(31) "drop table if exists "settings""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [7]=>
+      array(3) {
+        ["query"]=>
+        string(28) "drop table if exists "users""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [8]=>
+      array(3) {
+        ["query"]=>
+        string(31) "drop table if exists "profiles""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [9]=>
+      array(3) {
+        ["query"]=>
+        string(94) "create table "core_settings" ("slug" varchar not null, "default" text null, "value" text null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.22"
+      }
+      [10]=>
+      array(3) {
+        ["query"]=>
+        string(73) "create unique index core_settings_slug_unique on "core_settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.11"
+      }
+      [11]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create index core_settings_slug_index on "core_settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [12]=>
+      array(3) {
+        ["query"]=>
+        string(164) "insert into "core_settings" ("slug", "default") select ? as "slug", ? as "default" union select ? as "slug", ? as "default" union select ? as "slug", ? as "default""
+        ["bindings"]=>
+        array(6) {
+          [0]=>
+          string(11) "date_format"
+          [1]=>
+          string(13) "g:ia -- m/d/y"
+          [2]=>
+          string(14) "lang_direction"
+          [3]=>
+          string(3) "ltr"
+          [4]=>
+          string(14) "status_message"
+          [5]=>
+          string(53) "This site has been disabled by a super-administrator."
+        }
+        ["time"]=>
+        string(4) "0.17"
+      }
+      [13]=>
+      array(3) {
+        ["query"]=>
+        string(248) "create table "core_sites" ("id" integer not null primary key autoincrement, "name" varchar not null, "ref" varchar not null, "domain" varchar not null, "active" tinyint not null default '1', "created_on" integer not null, "updated_on" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.21"
+      }
+      [14]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create unique index core_sites_ref_unique on "core_sites" ("ref")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [15]=>
+      array(3) {
+        ["query"]=>
+        string(71) "create unique index core_sites_domain_unique on "core_sites" ("domain")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [16]=>
+      array(3) {
+        ["query"]=>
+        string(57) "create index core_sites_ref_index on "core_sites" ("ref")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [17]=>
+      array(3) {
+        ["query"]=>
+        string(63) "create index core_sites_domain_index on "core_sites" ("domain")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.08"
+      }
+      [18]=>
+      array(3) {
+        ["query"]=>
+        string(466) "create table "core_users" ("id" integer not null primary key autoincrement, "username" varchar not null, "email" varchar not null, "password" varchar not null, "salt" varchar not null, "group_id" integer null, "ip_address" varchar not null, "active" tinyint not null default '1', "activation_code" varchar null, "forgotten_password_code" varchar null, "remember_code" varchar null, "created_on" integer not null, "updated_on" integer null, "last_login" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.18"
+      }
+      [19]=>
+      array(3) {
+        ["query"]=>
+        string(69) "create unique index core_users_email_unique on "core_users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [20]=>
+      array(3) {
+        ["query"]=>
+        string(75) "create unique index core_users_username_unique on "core_users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [21]=>
+      array(3) {
+        ["query"]=>
+        string(61) "create index core_users_email_index on "core_users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [22]=>
+      array(3) {
+        ["query"]=>
+        string(67) "create index core_users_username_index on "core_users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [23]=>
+      array(3) {
+        ["query"]=>
+        string(461) "create table "users" ("id" integer not null primary key autoincrement, "username" varchar not null, "email" varchar not null, "password" varchar not null, "salt" varchar not null, "group_id" integer null, "ip_address" varchar not null, "active" tinyint not null default '1', "activation_code" varchar null, "forgotten_password_code" varchar null, "remember_code" varchar null, "created_on" integer not null, "updated_on" integer null, "last_login" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.14"
+      }
+      [24]=>
+      array(3) {
+        ["query"]=>
+        string(59) "create unique index users_email_unique on "users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [25]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create unique index users_username_unique on "users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [26]=>
+      array(3) {
+        ["query"]=>
+        string(51) "create index users_email_index on "users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [27]=>
+      array(3) {
+        ["query"]=>
+        string(57) "create index users_username_index on "users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [28]=>
+      array(3) {
+        ["query"]=>
+        string(221) "create table "sess_table_name" ("session_id" varchar not null default '0', "ip_address" varchar not null default '0', "user_agent" varchar not null, "last_activity" integer not null default '0', "user_data" text not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.21"
+      }
+      [29]=>
+      array(3) {
+        ["query"]=>
+        string(69) "create index last_activity_idx on "sess_table_name" ("last_activity")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [30]=>
+      array(3) {
+        ["query"]=>
+        string(401) "create table "profiles" ("id" integer not null primary key autoincrement, "user_id" integer not null, "display_name" varchar not null, "first_name" varchar not null, "last_name" varchar null, "company" varchar null, "lang" varchar not null default 'en', "bio" text null, "dob" integer null, "gender" varchar not null default '', "phone" varchar null, "website" varchar null, "updated_on" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.17"
+      }
+      [31]=>
+      array(3) {
+        ["query"]=>
+        string(61) "create index profiles_user_id_index on "profiles" ("user_id")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [32]=>
+      array(3) {
+        ["query"]=>
+        string(54) "create table "migrations" ("version" integer not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [33]=>
+      array(3) {
+        ["query"]=>
+        string(47) "insert into "migrations" ("version") values (?)"
+        ["bindings"]=>
+        array(1) {
+          [0]=>
+          int(120)
+        }
+        ["time"]=>
+        string(4) "0.04"
+      }
+      [34]=>
+      array(3) {
+        ["query"]=>
+        string(406) "create table "modules" ("id" integer not null primary key autoincrement, "name" text not null, "slug" varchar not null, "version" varchar not null, "description" text not null, "skip_xss" tinyint not null, "is_frontend" tinyint not null, "is_backend" tinyint not null, "menu" varchar not null, "enabled" tinyint not null, "installed" tinyint not null, "is_core" tinyint not null, "updated_on" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.14"
+      }
+      [35]=>
+      array(3) {
+        ["query"]=>
+        string(61) "create unique index modules_slug_unique on "modules" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [36]=>
+      array(3) {
+        ["query"]=>
+        string(59) "create index modules_enabled_index on "modules" ("enabled")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [37]=>
+      array(3) {
+        ["query"]=>
+        string(67) "create index modules_is_frontend_index on "modules" ("is_frontend")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [38]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create index modules_is_backend_index on "modules" ("is_backend")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [39]=>
+      array(3) {
+        ["query"]=>
+        string(337) "create table "settings" ("slug" varchar not null, "title" varchar not null, "description" text not null, "type" varchar not null, "default" text null, "value" text null, "options" varchar null, "is_required" tinyint not null default '0', "is_gui" tinyint not null default '1', "module" varchar null, "order" integer not null default '0')"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.14"
+      }
+      [40]=>
+      array(3) {
+        ["query"]=>
+        string(63) "create unique index settings_slug_unique on "settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [41]=>
+      array(3) {
+        ["query"]=>
+        string(55) "create index settings_slug_index on "settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [42]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(9) "Site Name"
+          [1]=>
+          string(9) "site_name"
+          [2]=>
+          string(68) "The name of the website for page titles and for use around the site."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(16) "Un-named Website"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(1000)
+        }
+        ["time"]=>
+        string(4) "0.11"
+      }
+      [43]=>
+      array(3) {
+        ["query"]=>
+        string(138) "insert into "settings" ("title", "slug", "description", "type", "value", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(11) "Site Slogan"
+          [1]=>
+          string(11) "site_slogan"
+          [2]=>
+          string(69) "The slogan of the website for page titles and for use around the site"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(20) "Add your slogan here"
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(999)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [44]=>
+      array(3) {
+        ["query"]=>
+        string(152) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(10) "Meta Topic"
+          [1]=>
+          string(10) "meta_topic"
+          [2]=>
+          string(59) "Two or three words describing this type of company/website."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(18) "Content Management"
+          [5]=>
+          string(20) "Add your slogan here"
+          [6]=>
+          bool(false)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(998)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [45]=>
+      array(3) {
+        ["query"]=>
+        string(166) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(10) {
+          [0]=>
+          string(13) "Site Language"
+          [1]=>
+          string(9) "site_lang"
+          [2]=>
+          string(168) "The native language of the website, used to choose templates of e-mail notifications, contact form, and other features that should not depend on the language of a user."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(0) ""
+          [5]=>
+          string(0) ""
+          [6]=>
+          string(23) "func:get_supported_lang"
+          [7]=>
+          bool(true)
+          [8]=>
+          bool(true)
+          [9]=>
+          int(997)
+        }
+        ["time"]=>
+        string(4) "0.08"
+      }
+      [46]=>
+      array(3) {
+        ["query"]=>
+        string(166) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(10) {
+          [0]=>
+          string(16) "Public Languages"
+          [1]=>
+          string(16) "site_public_lang"
+          [2]=>
+          string(86) "Which are the languages really supported and offered on the front-end of your website?"
+          [3]=>
+          string(8) "checkbox"
+          [4]=>
+          string(0) ""
+          [5]=>
+          string(0) ""
+          [6]=>
+          string(23) "func:get_supported_lang"
+          [7]=>
+          bool(true)
+          [8]=>
+          bool(true)
+          [9]=>
+          int(996)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [47]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(11) "Date Format"
+          [1]=>
+          string(11) "date_format"
+          [2]=>
+          string(311) "How should dates be displayed across the website and control panel? Using the <a target="_blank" href="http://php.net/manual/en/function.date.php">date format</a> from PHP - OR - Using the format of <a target="_blank" href="http://php.net/manual/en/function.strftime.php">strings formatted as date</a> from PHP."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(5) "Y-m-d"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(995)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [48]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(8) "Currency"
+          [1]=>
+          string(8) "currency"
+          [2]=>
+          string(55) "The currency symbol for use on products, services, etc."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(7) "&pound;"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(994)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [49]=>
+      array(3) {
+        ["query"]=>
+        string(154) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(16) "Records Per Page"
+          [1]=>
+          string(16) "records_per_page"
+          [2]=>
+          string(62) "How many records should we show per page in the admin section?"
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(2) "25"
+          [5]=>
+          string(29) "5=5|10=10|25=25|50=50|100=100"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(992)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [50]=>
+      array(3) {
+        ["query"]=>
+        string(154) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(15) "Feed item count"
+          [1]=>
+          string(14) "rss_feed_items"
+          [2]=>
+          string(48) "How many items should we show in RSS/blog feeds?"
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(2) "25"
+          [5]=>
+          string(25) "10=10|25=25|50=50|100=100"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(991)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [51]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(18) "Dashboard RSS Feed"
+          [1]=>
+          string(13) "dashboard_rss"
+          [2]=>
+          string(60) "Link to an RSS feed that will be displayed on the dashboard."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(40) "https://www.pyrocms.com/blog/rss/all.rss"
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(990)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [52]=>
+      array(3) {
+        ["query"]=>
+        string(152) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(19) "Dashboard RSS Items"
+          [1]=>
+          string(19) "dashboard_rss_count"
+          [2]=>
+          string(62) "How many RSS items would you like to display on the dashboard?"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(1) "5"
+          [5]=>
+          string(1) "5"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(989)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [53]=>
+      array(3) {
+        ["query"]=>
+        string(154) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(11) "Site Status"
+          [1]=>
+          string(16) "frontend_enabled"
+          [2]=>
+          string(122) "Use this option to the user-facing part of the site on or off. Useful when you want to take the site down for maintenance."
+          [3]=>
+          string(5) "radio"
+          [4]=>
+          bool(true)
+          [5]=>
+          string(15) "1=Open|0=Closed"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(988)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [54]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(19) "Unavailable Message"
+          [1]=>
+          string(19) "unavailable_message"
+          [2]=>
+          string(89) "When the site is turned off or there is a major problem, this message will show to users."
+          [3]=>
+          string(8) "textarea"
+          [4]=>
+          string(45) "Sorry, this website is currently unavailable."
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(987)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [55]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(20) "Google Tracking Code"
+          [1]=>
+          string(11) "ga_tracking"
+          [2]=>
+          string(109) "Enter your Google Analytic Tracking Code to activate Google Analytics view data capturing. E.g: UA-19483569-6"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(985)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [56]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(26) "Google Analytic Profile ID"
+          [1]=>
+          string(10) "ga_profile"
+          [2]=>
+          string(47) "Profile ID for this website in Google Analytics"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(984)
+        }
+        ["time"]=>
+        string(4) "0.12"
+      }
+      [57]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(22) "Google Analytic E-mail"
+          [1]=>
+          string(8) "ga_email"
+          [2]=>
+          string(90) "E-mail address used for Google Analytics, we need this to show the graph on the dashboard."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(983)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [58]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(24) "Google Analytic Password"
+          [1]=>
+          string(11) "ga_password"
+          [2]=>
+          string(252) "This is also needed to show the graph on the dashboard. You will need to allow access to Google to get this to work. See <a href="https://accounts.google.com/b/0/IssuedAuthSubTokens?hl=en_US" target="_blank">Authorized Access to your Google Account</a>"
+          [3]=>
+          string(8) "password"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(982)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [59]=>
+      array(3) {
+        ["query"]=>
+        string(153) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(14) "Contact E-mail"
+          [1]=>
+          string(13) "contact_email"
+          [2]=>
+          string(75) "All e-mails from users, guests and the site will go to this e-mail address."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(0) ""
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(5) "email"
+          [8]=>
+          int(979)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [60]=>
+      array(3) {
+        ["query"]=>
+        string(153) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(13) "Server E-mail"
+          [1]=>
+          string(12) "server_email"
+          [2]=>
+          string(56) "All e-mails to users will come from this e-mail address."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(15) "admin@localhost"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(5) "email"
+          [8]=>
+          int(978)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [61]=>
+      array(3) {
+        ["query"]=>
+        string(179) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(13) "Mail Protocol"
+          [1]=>
+          string(13) "mail_protocol"
+          [2]=>
+          string(30) "Select desired email protocol."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(4) "mail"
+          [5]=>
+          string(4) "mail"
+          [6]=>
+          string(37) "mail=Mail|sendmail=Sendmail|smtp=SMTP"
+          [7]=>
+          bool(true)
+          [8]=>
+          bool(true)
+          [9]=>
+          string(5) "email"
+          [10]=>
+          int(977)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [62]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(14) "SMTP Host Name"
+          [1]=>
+          string(14) "mail_smtp_host"
+          [2]=>
+          string(34) "The host name of your smtp server."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(976)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [63]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(13) "SMTP password"
+          [1]=>
+          string(14) "mail_smtp_pass"
+          [2]=>
+          string(14) "SMTP password."
+          [3]=>
+          string(8) "password"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(975)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [64]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(9) "SMTP Port"
+          [1]=>
+          string(14) "mail_smtp_port"
+          [2]=>
+          string(17) "SMTP port number."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(974)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [65]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(14) "SMTP User Name"
+          [1]=>
+          string(14) "mail_smtp_user"
+          [2]=>
+          string(15) "SMTP user name."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(973)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [66]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(13) "Sendmail Path"
+          [1]=>
+          string(18) "mail_sendmail_path"
+          [2]=>
+          string(31) "Path to server sendmail binary."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(972)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [67]=>
+      array(3) {
+        ["query"]=>
+        string(153) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(10) "Cache time"
+          [1]=>
+          string(13) "twitter_cache"
+          [2]=>
+          string(46) "How many minutes should your Tweets be stored?"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(3) "300"
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(7) "twitter"
+          [8]=>
+          int(969)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [68]=>
+      array(3) {
+        ["query"]=>
+        string(167) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(10) {
+          [0]=>
+          string(30) "Force HTTPS for Control Panel?"
+          [1]=>
+          string(17) "admin_force_https"
+          [2]=>
+          string(59) "Allow only the HTTPS protocol when using the Control Panel?"
+          [3]=>
+          string(5) "radio"
+          [4]=>
+          int(0)
+          [5]=>
+          string(10) "1=Yes|0=No"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          string(0) ""
+          [9]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [69]=>
+      array(3) {
+        ["query"]=>
+        string(179) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(11) "API Enabled"
+          [1]=>
+          string(11) "api_enabled"
+          [2]=>
+          string(61) "Allow API access to all modules which have an API controller."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          int(0)
+          [5]=>
+          int(0)
+          [6]=>
+          string(20) "0=Disabled|1=Enabled"
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(false)
+          [9]=>
+          string(3) "api"
+          [10]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [70]=>
+      array(3) {
+        ["query"]=>
+        string(179) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(13) "API User Keys"
+          [1]=>
+          string(13) "api_user_keys"
+          [2]=>
+          string(60) "Allow users to sign up for API keys (if the API is Enabled)."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          int(0)
+          [5]=>
+          int(0)
+          [6]=>
+          string(20) "0=Disabled|1=Enabled"
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(false)
+          [9]=>
+          string(3) "api"
+          [10]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [71]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(10) "CDN Domain"
+          [1]=>
+          string(10) "cdn_domain"
+          [2]=>
+          string(106) "CDN domains allow you to offload static content to various edge servers, like Amazon CloudFront or MaxCDN."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(1000)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [72]=>
+      array(3) {
+        ["query"]=>
+        string(189) "insert into "modules" ("name", "slug", "version", "description", "skip_xss", "is_frontend", "is_backend", "menu", "enabled", "installed", "is_core") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(696) "a:23:{s:2:"en";s:8:"Settings";s:2:"ar";s:18:"الإعدادات";s:2:"br";s:15:"Configurações";s:2:"pt";s:15:"Configurações";s:2:"cs";s:10:"Nastavení";s:2:"da";s:13:"Indstillinger";s:2:"de";s:13:"Einstellungen";s:2:"el";s:18:"Ρυθμίσεις";s:2:"es";s:15:"Configuraciones";s:2:"fi";s:9:"Asetukset";s:2:"fr";s:11:"Paramètres";s:2:"he";s:12:"הגדרות";s:2:"id";s:10:"Pengaturan";s:2:"it";s:12:"Impostazioni";s:2:"lt";s:10:"Nustatymai";s:2:"nl";s:12:"Instellingen";s:2:"pl";s:10:"Ustawienia";s:2:"ru";s:18:"Настройки";s:2:"sl";s:10:"Nastavitve";s:2:"zh";s:12:"網站設定";s:2:"hu";s:14:"Beállítások";s:2:"th";s:21:"ตั้งค่า";s:2:"se";s:14:"Inställningar";}"
+          [1]=>
+          string(8) "settings"
+          [2]=>
+          string(5) "1.1.0"
+          [3]=>
+          string(3197) "a:23:{s:2:"en";s:89:"Allows administrators to update settings like Site Name, messages and email address, etc.";s:2:"ar";s:161:"تمكن المدراء من تحديث الإعدادات كإسم الموقع، والرسائل وعناوين البريد الإلكتروني، .. إلخ.";s:2:"br";s:120:"Permite com que administradores e a equipe consigam trocar as configurações do website incluindo o nome e descrição.";s:2:"pt";s:113:"Permite com que os administradores consigam alterar as configurações do website incluindo o nome e descrição.";s:2:"cs";s:102:"Umožňuje administrátorům měnit nastavení webu jako jeho jméno, zprávy a emailovou adresu apod.";s:2:"da";s:90:"Lader administratorer opdatere indstillinger som sidenavn, beskeder og email adresse, etc.";s:2:"de";s:92:"Erlaubt es Administratoren die Einstellungen der Seite wie Name und Beschreibung zu ändern.";s:2:"el";s:230:"Επιτρέπει στους διαχειριστές να τροποποιήσουν ρυθμίσεις όπως το Όνομα του Ιστοτόπου, τα μηνύματα και τις διευθύνσεις email, κ.α.";s:2:"es";s:131:"Permite a los administradores y al personal configurar los detalles del sitio como el nombre del sitio y la descripción del mismo.";s:2:"fi";s:105:"Mahdollistaa sivuston asetusten muokkaamisen, kuten sivuston nimen, viestit ja sähköpostiosoitteet yms.";s:2:"fr";s:118:"Permet aux admistrateurs de modifier les paramètres du site : nom du site, description, messages, adresse email, etc.";s:2:"he";s:116:"ניהול הגדרות שונות של האתר כגון: שם האתר, הודעות, כתובות דואר וכו";s:2:"id";s:112:"Memungkinkan administrator untuk dapat memperbaharui pengaturan seperti nama situs, pesan dan alamat email, dsb.";s:2:"it";s:109:"Permette agli amministratori di aggiornare impostazioni quali Nome del Sito, messaggi e indirizzo email, etc.";s:2:"lt";s:104:"Leidžia administratoriams keisti puslapio vavadinimą, žinutes, administratoriaus el. pašta ir kitą.";s:2:"nl";s:114:"Maakt het administratoren en medewerkers mogelijk om websiteinstellingen zoals naam en beschrijving te veranderen.";s:2:"pl";s:103:"Umożliwia administratorom zmianę ustawień strony jak nazwa strony, opis, e-mail administratora, itd.";s:2:"ru";s:135:"Управление настройками сайта - Имя сайта, сообщения, почтовые адреса и т.п.";s:2:"sl";s:98:"Dovoljuje administratorjem posodobitev nastavitev kot je Ime strani, sporočil, email naslova itd.";s:2:"zh";s:99:"網站管理者可更新的重要網站設定。例如：網站名稱、訊息、電子郵件等。";s:2:"hu";s:125:"Lehetővé teszi az adminok számára a beállítások frissítését, mint a weboldal neve, üzenetek, e-mail címek, stb...";s:2:"th";s:232:"ให้ผู้ดูแลระบบสามารถปรับปรุงการตั้งค่าเช่นชื่อเว็บไซต์ ข้อความและอีเมล์เป็นต้น";s:2:"se";s:84:"Administratören kan uppdatera webbplatsens titel, meddelanden och E-postadress etc.";}"
+          [4]=>
+          bool(true)
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(8) "settings"
+          [8]=>
+          bool(true)
+          [9]=>
+          bool(true)
+          [10]=>
+          bool(true)
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [73]=>
+      array(3) {
+        ["query"]=>
+        string(35) "drop table if exists "data_streams""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.05"
+      }
+      [74]=>
+      array(3) {
+        ["query"]=>
+        string(427) "create table "data_streams" ("id" integer not null primary key autoincrement, "stream_name" varchar not null, "stream_slug" varchar not null, "stream_namespace" varchar null, "stream_prefix" varchar null, "about" varchar null, "view_options" blob not null, "title_column" varchar null, "sorting" varchar not null default 'title', "permissions" text not null, "is_hidden" varchar not null default 'no', "menu_path" varchar null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.21"
+      }
+      [75]=>
+      array(3) {
+        ["query"]=>
+        string(34) "drop table if exists "data_fields""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.03"
+      }
+      [76]=>
+      array(3) {
+        ["query"]=>
+        string(294) "create table "data_fields" ("id" integer not null primary key autoincrement, "field_name" varchar not null, "field_slug" varchar not null, "field_namespace" varchar null, "field_type" varchar not null, "field_data" blob null, "view_options" blob null, "is_locked" varchar not null default 'no')"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.12"
+      }
+      [77]=>
+      array(3) {
+        ["query"]=>
+        string(45) "drop table if exists "data_field_assignments""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [78]=>
+      array(3) {
+        ["query"]=>
+        string(322) "create table "data_field_assignments" ("id" integer not null primary key autoincrement, "sort_order" integer not null, "stream_id" integer not null, "field_id" integer not null, "is_required" varchar not null default 'no', "is_unique" varchar not null default 'no', "instructions" text null, "field_name" varchar not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.13"
+      }
+      [79]=>
+      array(3) {
+        ["query"]=>
+        string(189) "insert into "modules" ("name", "slug", "version", "description", "skip_xss", "is_frontend", "is_backend", "menu", "enabled", "installed", "is_core") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(307) "a:9:{s:2:"en";s:12:"Streams Core";s:2:"pt";s:14:"Núcleo Fluxos";s:2:"fr";s:10:"Noyau Flux";s:2:"el";s:23:"Πυρήνας Ροών";s:2:"se";s:18:"Streams grundmodul";s:2:"tw";s:14:"Streams 核心";s:2:"cn";s:14:"Streams 核心";s:2:"ar";s:31:"الجداول الأساسية";s:2:"it";s:12:"Streams Core";}"
+          [1]=>
+          string(12) "streams_core"
+          [2]=>
+          string(5) "1.3.0"
+          [3]=>
+          string(553) "a:9:{s:2:"en";s:29:"Core data module for streams.";s:2:"pt";s:37:"Módulo central de dados para fluxos.";s:2:"fr";s:32:"Noyau de données pour les Flux.";s:2:"el";s:113:"Προγραμματιστικός πυρήνας για την λειτουργία ροών δεδομένων.";s:2:"se";s:50:"Streams grundmodul för enklare hantering av data.";s:2:"tw";s:29:"Streams 核心資料模組。";s:2:"cn";s:29:"Streams 核心资料模组。";s:2:"ar";s:57:"وحدة البيانات الأساسية للجداول";s:2:"it";s:17:"Core dello Stream";}"
+          [4]=>
+          bool(true)
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(false)
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(true)
+          [9]=>
+          bool(true)
+          [10]=>
+          bool(true)
+        }
+        ["time"]=>
+        string(4) "0.11"
+      }
+      [80]=>
+      array(3) {
+        ["query"]=>
+        string(36) "drop table if exists "theme_options""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.05"
+      }
+      [81]=>
+      array(3) {
+        ["query"]=>
+        string(320) "create table "theme_options" ("id" integer not null primary key autoincrement, "slug" varchar not null, "title" varchar not null, "description" text not null, "type" varchar not null, "default" varchar not null, "value" varchar not null, "options" text not null, "is_required" tinyint not null, "theme" varchar not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.19"
+      }
+      [82]=>
+      array(3) {
+        ["query"]=>
+        string(678) "insert into "settings" ("slug", "title", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") select ? as "slug", ? as "title", ? as "description", ? as "type", ? as "default", ? as "value", ? as "options", ? as "is_required", ? as "is_gui", ? as "module", ? as "order" union select ? as "slug", ? as "title", ? as "description", ? as "type", ? as "default", ? as "value", ? as "options", ? as "is_required", ? as "is_gui", ? as "module", ? as "order" union select ? as "slug", ? as "title", ? as "description", ? as "type", ? as "default", ? as "value", ? as "options", ? as "is_required", ? as "is_gui", ? as "module", ? as "order""
+        ["bindings"]=>
+        array(33) {
+          [0]=>
+          string(13) "addons_upload"
+          [1]=>
+          string(25) "Addons Upload Permissions"
+          [2]=>
+          string(50) "Keeps mere admins from uploading addons by default"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(1) "0"
+          [5]=>
+          string(1) "0"
+          [6]=>
+          string(0) ""
+          [7]=>
+          int(1)
+          [8]=>
+          int(0)
+          [9]=>
+          string(0) ""
+          [10]=>
+          int(0)
+          [11]=>
+          string(13) "default_theme"
+          [12]=>
+          string(13) "Default Theme"
+          [13]=>
+          string(50) "Select the theme you want users to see by default."
+          [14]=>
+          string(0) ""
+          [15]=>
+          string(7) "default"
+          [16]=>
+          string(7) "default"
+          [17]=>
+          string(15) "func:get_themes"
+          [18]=>
+          int(1)
+          [19]=>
+          int(0)
+          [20]=>
+          string(0) ""
+          [21]=>
+          int(0)
+          [22]=>
+          string(11) "admin_theme"
+          [23]=>
+          string(19) "Control Panel Theme"
+          [24]=>
+          string(39) "Select the theme for the control panel."
+          [25]=>
+          string(0) ""
+          [26]=>
+          string(0) ""
+          [27]=>
+          string(7) "pyrocms"
+          [28]=>
+          string(15) "func:get_themes"
+          [29]=>
+          int(1)
+          [30]=>
+          int(0)
+          [31]=>
+          string(0) ""
+          [32]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.20"
+      }
+      [83]=>
+      array(3) {
+        ["query"]=>
+        string(189) "insert into "modules" ("name", "slug", "version", "description", "skip_xss", "is_frontend", "is_backend", "menu", "enabled", "installed", "is_core") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(680) "a:24:{s:2:"en";s:7:"Add-ons";s:2:"ar";s:16:"الإضافات";s:2:"br";s:12:"Complementos";s:2:"pt";s:12:"Complementos";s:2:"cs";s:8:"Doplňky";s:2:"da";s:7:"Add-ons";s:2:"de";s:13:"Erweiterungen";s:2:"el";s:16:"Πρόσθετα";s:2:"es";s:9:"Agregados";s:2:"fi";s:9:"Lisäosat";s:2:"fr";s:10:"Extensions";s:2:"he";s:12:"תוספות";s:2:"id";s:7:"Pengaya";s:2:"it";s:7:"Add-ons";s:2:"lt";s:7:"Priedai";s:2:"nl";s:7:"Add-ons";s:2:"pl";s:12:"Rozszerzenia";s:2:"ru";s:20:"Дополнения";s:2:"sl";s:11:"Razširitve";s:2:"tw";s:12:"附加模組";s:2:"cn";s:12:"附加模组";s:2:"hu";s:14:"Bővítmények";s:2:"th";s:27:"ส่วนเสริม";s:2:"se";s:8:"Tillägg";}"
+          [1]=>
+          string(6) "addons"
+          [2]=>
+          string(5) "2.0.0"
+          [3]=>
+          string(2353) "a:24:{s:2:"en";s:59:"Allows admins to see a list of currently installed modules.";s:2:"ar";s:91:"تُمكّن المُدراء من معاينة جميع الوحدات المُثبّتة.";s:2:"br";s:75:"Permite aos administradores ver a lista dos módulos instalados atualmente.";s:2:"pt";s:75:"Permite aos administradores ver a lista dos módulos instalados atualmente.";s:2:"cs";s:68:"Umožňuje administrátorům vidět seznam nainstalovaných modulů.";s:2:"da";s:63:"Lader administratorer se en liste over de installerede moduler.";s:2:"de";s:56:"Zeigt Administratoren alle aktuell installierten Module.";s:2:"el";s:152:"Επιτρέπει στους διαχειριστές να προβάλουν μια λίστα των εγκατεστημένων πρόσθετων.";s:2:"es";s:71:"Permite a los administradores ver una lista de los módulos instalados.";s:2:"fi";s:60:"Listaa järjestelmänvalvojalle käytössä olevat moduulit.";s:2:"fr";s:66:"Permet aux administrateurs de voir la liste des modules installés";s:2:"he";s:160:"נותן אופציה למנהל לראות רשימה של המודולים אשר מותקנים כעת באתר או להתקין מודולים נוספים";s:2:"id";s:57:"Memperlihatkan kepada admin daftar modul yang terinstall.";s:2:"it";s:83:"Permette agli amministratori di vedere una lista dei moduli attualmente installati.";s:2:"lt";s:75:"Vartotojai ir svečiai gali komentuoti jūsų naujienas, puslapius ar foto.";s:2:"nl";s:79:"Stelt admins in staat om een overzicht van geinstalleerde modules te genereren.";s:2:"pl";s:81:"Umożliwiają administratorowi wgląd do listy obecnie zainstalowanych modułów.";s:2:"ru";s:83:"Список модулей, которые установлены на сайте.";s:2:"sl";s:65:"Dovoljuje administratorjem pregled trenutno nameščenih modulov.";s:2:"tw";s:54:"管理員可以檢視目前已經安裝模組的列表";s:2:"cn";s:54:"管理员可以检视目前已经安装模组的列表";s:2:"hu";s:79:"Lehetővé teszi az adminoknak, hogy lássák a telepített modulok listáját.";s:2:"th";s:162:"ช่วยให้ผู้ดูแลระบบดูรายการของโมดูลที่ติดตั้งในปัจจุบัน";s:2:"se";s:67:"Gör det möjligt för administratören att se installerade mouler.";}"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(true)
+          [9]=>
+          bool(true)
+          [10]=>
+          bool(true)
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+    }
+    ["pretending":protected]=>
+    bool(false)
+    ["database":protected]=>
+    string(8) ":memory:"
+    ["tablePrefix":protected]=>
+    string(0) ""
+    ["name":protected]=>
+    NULL
+  }
+}
+array(1) {
+  ["default"]=>
+  object(Illuminate\Database\SQLiteConnection)#243 (12) {
+    ["pdo":protected]=>
+    object(PDO)#244 (0) {
+    }
+    ["queryGrammar":protected]=>
+    object(Illuminate\Database\Query\Grammars\SQLiteGrammar)#245 (3) {
+      ["wrapper":protected]=>
+      string(4) ""%s""
+      ["selectComponents":protected]=>
+      array(10) {
+        [0]=>
+        string(9) "aggregate"
+        [1]=>
+        string(7) "columns"
+        [2]=>
+        string(4) "from"
+        [3]=>
+        string(5) "joins"
+        [4]=>
+        string(6) "wheres"
+        [5]=>
+        string(6) "groups"
+        [6]=>
+        string(7) "havings"
+        [7]=>
+        string(6) "orders"
+        [8]=>
+        string(5) "limit"
+        [9]=>
+        string(6) "offset"
+      }
+      ["tablePrefix":protected]=>
+      string(0) ""
+    }
+    ["schemaGrammar":protected]=>
+    object(Illuminate\Database\Schema\Grammars\SQLiteGrammar)#249 (3) {
+      ["wrapper":protected]=>
+      string(4) ""%s""
+      ["modifiers":protected]=>
+      array(3) {
+        [0]=>
+        string(8) "Nullable"
+        [1]=>
+        string(7) "Default"
+        [2]=>
+        string(9) "Increment"
+      }
+      ["tablePrefix":protected]=>
+      string(0) ""
+    }
+    ["postProcessor":protected]=>
+    object(Illuminate\Database\Query\Processors\Processor)#246 (0) {
+    }
+    ["events":protected]=>
+    NULL
+    ["paginator":protected]=>
+    NULL
+    ["fetchMode":protected]=>
+    int(5)
+    ["queryLog":protected]=>
+    array(85) {
+      [0]=>
+      array(3) {
+        ["query"]=>
+        string(33) "drop table if exists "core_users""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.22"
+      }
+      [1]=>
+      array(3) {
+        ["query"]=>
+        string(36) "drop table if exists "core_settings""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.03"
+      }
+      [2]=>
+      array(3) {
+        ["query"]=>
+        string(33) "drop table if exists "core_sites""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.03"
+      }
+      [3]=>
+      array(3) {
+        ["query"]=>
+        string(38) "drop table if exists "sess_table_name""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [4]=>
+      array(3) {
+        ["query"]=>
+        string(30) "drop table if exists "modules""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [5]=>
+      array(3) {
+        ["query"]=>
+        string(33) "drop table if exists "migrations""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [6]=>
+      array(3) {
+        ["query"]=>
+        string(31) "drop table if exists "settings""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [7]=>
+      array(3) {
+        ["query"]=>
+        string(28) "drop table if exists "users""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [8]=>
+      array(3) {
+        ["query"]=>
+        string(31) "drop table if exists "profiles""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [9]=>
+      array(3) {
+        ["query"]=>
+        string(94) "create table "core_settings" ("slug" varchar not null, "default" text null, "value" text null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.22"
+      }
+      [10]=>
+      array(3) {
+        ["query"]=>
+        string(73) "create unique index core_settings_slug_unique on "core_settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.11"
+      }
+      [11]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create index core_settings_slug_index on "core_settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [12]=>
+      array(3) {
+        ["query"]=>
+        string(164) "insert into "core_settings" ("slug", "default") select ? as "slug", ? as "default" union select ? as "slug", ? as "default" union select ? as "slug", ? as "default""
+        ["bindings"]=>
+        array(6) {
+          [0]=>
+          string(11) "date_format"
+          [1]=>
+          string(13) "g:ia -- m/d/y"
+          [2]=>
+          string(14) "lang_direction"
+          [3]=>
+          string(3) "ltr"
+          [4]=>
+          string(14) "status_message"
+          [5]=>
+          string(53) "This site has been disabled by a super-administrator."
+        }
+        ["time"]=>
+        string(4) "0.17"
+      }
+      [13]=>
+      array(3) {
+        ["query"]=>
+        string(248) "create table "core_sites" ("id" integer not null primary key autoincrement, "name" varchar not null, "ref" varchar not null, "domain" varchar not null, "active" tinyint not null default '1', "created_on" integer not null, "updated_on" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.21"
+      }
+      [14]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create unique index core_sites_ref_unique on "core_sites" ("ref")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [15]=>
+      array(3) {
+        ["query"]=>
+        string(71) "create unique index core_sites_domain_unique on "core_sites" ("domain")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [16]=>
+      array(3) {
+        ["query"]=>
+        string(57) "create index core_sites_ref_index on "core_sites" ("ref")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [17]=>
+      array(3) {
+        ["query"]=>
+        string(63) "create index core_sites_domain_index on "core_sites" ("domain")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.08"
+      }
+      [18]=>
+      array(3) {
+        ["query"]=>
+        string(466) "create table "core_users" ("id" integer not null primary key autoincrement, "username" varchar not null, "email" varchar not null, "password" varchar not null, "salt" varchar not null, "group_id" integer null, "ip_address" varchar not null, "active" tinyint not null default '1', "activation_code" varchar null, "forgotten_password_code" varchar null, "remember_code" varchar null, "created_on" integer not null, "updated_on" integer null, "last_login" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.18"
+      }
+      [19]=>
+      array(3) {
+        ["query"]=>
+        string(69) "create unique index core_users_email_unique on "core_users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [20]=>
+      array(3) {
+        ["query"]=>
+        string(75) "create unique index core_users_username_unique on "core_users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [21]=>
+      array(3) {
+        ["query"]=>
+        string(61) "create index core_users_email_index on "core_users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [22]=>
+      array(3) {
+        ["query"]=>
+        string(67) "create index core_users_username_index on "core_users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [23]=>
+      array(3) {
+        ["query"]=>
+        string(461) "create table "users" ("id" integer not null primary key autoincrement, "username" varchar not null, "email" varchar not null, "password" varchar not null, "salt" varchar not null, "group_id" integer null, "ip_address" varchar not null, "active" tinyint not null default '1', "activation_code" varchar null, "forgotten_password_code" varchar null, "remember_code" varchar null, "created_on" integer not null, "updated_on" integer null, "last_login" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.14"
+      }
+      [24]=>
+      array(3) {
+        ["query"]=>
+        string(59) "create unique index users_email_unique on "users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [25]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create unique index users_username_unique on "users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [26]=>
+      array(3) {
+        ["query"]=>
+        string(51) "create index users_email_index on "users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [27]=>
+      array(3) {
+        ["query"]=>
+        string(57) "create index users_username_index on "users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [28]=>
+      array(3) {
+        ["query"]=>
+        string(221) "create table "sess_table_name" ("session_id" varchar not null default '0', "ip_address" varchar not null default '0', "user_agent" varchar not null, "last_activity" integer not null default '0', "user_data" text not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.21"
+      }
+      [29]=>
+      array(3) {
+        ["query"]=>
+        string(69) "create index last_activity_idx on "sess_table_name" ("last_activity")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [30]=>
+      array(3) {
+        ["query"]=>
+        string(401) "create table "profiles" ("id" integer not null primary key autoincrement, "user_id" integer not null, "display_name" varchar not null, "first_name" varchar not null, "last_name" varchar null, "company" varchar null, "lang" varchar not null default 'en', "bio" text null, "dob" integer null, "gender" varchar not null default '', "phone" varchar null, "website" varchar null, "updated_on" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.17"
+      }
+      [31]=>
+      array(3) {
+        ["query"]=>
+        string(61) "create index profiles_user_id_index on "profiles" ("user_id")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [32]=>
+      array(3) {
+        ["query"]=>
+        string(54) "create table "migrations" ("version" integer not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [33]=>
+      array(3) {
+        ["query"]=>
+        string(47) "insert into "migrations" ("version") values (?)"
+        ["bindings"]=>
+        array(1) {
+          [0]=>
+          int(120)
+        }
+        ["time"]=>
+        string(4) "0.04"
+      }
+      [34]=>
+      array(3) {
+        ["query"]=>
+        string(406) "create table "modules" ("id" integer not null primary key autoincrement, "name" text not null, "slug" varchar not null, "version" varchar not null, "description" text not null, "skip_xss" tinyint not null, "is_frontend" tinyint not null, "is_backend" tinyint not null, "menu" varchar not null, "enabled" tinyint not null, "installed" tinyint not null, "is_core" tinyint not null, "updated_on" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.14"
+      }
+      [35]=>
+      array(3) {
+        ["query"]=>
+        string(61) "create unique index modules_slug_unique on "modules" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [36]=>
+      array(3) {
+        ["query"]=>
+        string(59) "create index modules_enabled_index on "modules" ("enabled")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [37]=>
+      array(3) {
+        ["query"]=>
+        string(67) "create index modules_is_frontend_index on "modules" ("is_frontend")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [38]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create index modules_is_backend_index on "modules" ("is_backend")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [39]=>
+      array(3) {
+        ["query"]=>
+        string(337) "create table "settings" ("slug" varchar not null, "title" varchar not null, "description" text not null, "type" varchar not null, "default" text null, "value" text null, "options" varchar null, "is_required" tinyint not null default '0', "is_gui" tinyint not null default '1', "module" varchar null, "order" integer not null default '0')"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.14"
+      }
+      [40]=>
+      array(3) {
+        ["query"]=>
+        string(63) "create unique index settings_slug_unique on "settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [41]=>
+      array(3) {
+        ["query"]=>
+        string(55) "create index settings_slug_index on "settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [42]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(9) "Site Name"
+          [1]=>
+          string(9) "site_name"
+          [2]=>
+          string(68) "The name of the website for page titles and for use around the site."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(16) "Un-named Website"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(1000)
+        }
+        ["time"]=>
+        string(4) "0.11"
+      }
+      [43]=>
+      array(3) {
+        ["query"]=>
+        string(138) "insert into "settings" ("title", "slug", "description", "type", "value", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(11) "Site Slogan"
+          [1]=>
+          string(11) "site_slogan"
+          [2]=>
+          string(69) "The slogan of the website for page titles and for use around the site"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(20) "Add your slogan here"
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(999)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [44]=>
+      array(3) {
+        ["query"]=>
+        string(152) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(10) "Meta Topic"
+          [1]=>
+          string(10) "meta_topic"
+          [2]=>
+          string(59) "Two or three words describing this type of company/website."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(18) "Content Management"
+          [5]=>
+          string(20) "Add your slogan here"
+          [6]=>
+          bool(false)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(998)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [45]=>
+      array(3) {
+        ["query"]=>
+        string(166) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(10) {
+          [0]=>
+          string(13) "Site Language"
+          [1]=>
+          string(9) "site_lang"
+          [2]=>
+          string(168) "The native language of the website, used to choose templates of e-mail notifications, contact form, and other features that should not depend on the language of a user."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(0) ""
+          [5]=>
+          string(0) ""
+          [6]=>
+          string(23) "func:get_supported_lang"
+          [7]=>
+          bool(true)
+          [8]=>
+          bool(true)
+          [9]=>
+          int(997)
+        }
+        ["time"]=>
+        string(4) "0.08"
+      }
+      [46]=>
+      array(3) {
+        ["query"]=>
+        string(166) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(10) {
+          [0]=>
+          string(16) "Public Languages"
+          [1]=>
+          string(16) "site_public_lang"
+          [2]=>
+          string(86) "Which are the languages really supported and offered on the front-end of your website?"
+          [3]=>
+          string(8) "checkbox"
+          [4]=>
+          string(0) ""
+          [5]=>
+          string(0) ""
+          [6]=>
+          string(23) "func:get_supported_lang"
+          [7]=>
+          bool(true)
+          [8]=>
+          bool(true)
+          [9]=>
+          int(996)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [47]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(11) "Date Format"
+          [1]=>
+          string(11) "date_format"
+          [2]=>
+          string(311) "How should dates be displayed across the website and control panel? Using the <a target="_blank" href="http://php.net/manual/en/function.date.php">date format</a> from PHP - OR - Using the format of <a target="_blank" href="http://php.net/manual/en/function.strftime.php">strings formatted as date</a> from PHP."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(5) "Y-m-d"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(995)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [48]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(8) "Currency"
+          [1]=>
+          string(8) "currency"
+          [2]=>
+          string(55) "The currency symbol for use on products, services, etc."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(7) "&pound;"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(994)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [49]=>
+      array(3) {
+        ["query"]=>
+        string(154) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(16) "Records Per Page"
+          [1]=>
+          string(16) "records_per_page"
+          [2]=>
+          string(62) "How many records should we show per page in the admin section?"
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(2) "25"
+          [5]=>
+          string(29) "5=5|10=10|25=25|50=50|100=100"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(992)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [50]=>
+      array(3) {
+        ["query"]=>
+        string(154) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(15) "Feed item count"
+          [1]=>
+          string(14) "rss_feed_items"
+          [2]=>
+          string(48) "How many items should we show in RSS/blog feeds?"
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(2) "25"
+          [5]=>
+          string(25) "10=10|25=25|50=50|100=100"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(991)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [51]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(18) "Dashboard RSS Feed"
+          [1]=>
+          string(13) "dashboard_rss"
+          [2]=>
+          string(60) "Link to an RSS feed that will be displayed on the dashboard."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(40) "https://www.pyrocms.com/blog/rss/all.rss"
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(990)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [52]=>
+      array(3) {
+        ["query"]=>
+        string(152) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(19) "Dashboard RSS Items"
+          [1]=>
+          string(19) "dashboard_rss_count"
+          [2]=>
+          string(62) "How many RSS items would you like to display on the dashboard?"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(1) "5"
+          [5]=>
+          string(1) "5"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(989)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [53]=>
+      array(3) {
+        ["query"]=>
+        string(154) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(11) "Site Status"
+          [1]=>
+          string(16) "frontend_enabled"
+          [2]=>
+          string(122) "Use this option to the user-facing part of the site on or off. Useful when you want to take the site down for maintenance."
+          [3]=>
+          string(5) "radio"
+          [4]=>
+          bool(true)
+          [5]=>
+          string(15) "1=Open|0=Closed"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(988)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [54]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(19) "Unavailable Message"
+          [1]=>
+          string(19) "unavailable_message"
+          [2]=>
+          string(89) "When the site is turned off or there is a major problem, this message will show to users."
+          [3]=>
+          string(8) "textarea"
+          [4]=>
+          string(45) "Sorry, this website is currently unavailable."
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(987)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [55]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(20) "Google Tracking Code"
+          [1]=>
+          string(11) "ga_tracking"
+          [2]=>
+          string(109) "Enter your Google Analytic Tracking Code to activate Google Analytics view data capturing. E.g: UA-19483569-6"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(985)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [56]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(26) "Google Analytic Profile ID"
+          [1]=>
+          string(10) "ga_profile"
+          [2]=>
+          string(47) "Profile ID for this website in Google Analytics"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(984)
+        }
+        ["time"]=>
+        string(4) "0.12"
+      }
+      [57]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(22) "Google Analytic E-mail"
+          [1]=>
+          string(8) "ga_email"
+          [2]=>
+          string(90) "E-mail address used for Google Analytics, we need this to show the graph on the dashboard."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(983)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [58]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(24) "Google Analytic Password"
+          [1]=>
+          string(11) "ga_password"
+          [2]=>
+          string(252) "This is also needed to show the graph on the dashboard. You will need to allow access to Google to get this to work. See <a href="https://accounts.google.com/b/0/IssuedAuthSubTokens?hl=en_US" target="_blank">Authorized Access to your Google Account</a>"
+          [3]=>
+          string(8) "password"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(982)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [59]=>
+      array(3) {
+        ["query"]=>
+        string(153) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(14) "Contact E-mail"
+          [1]=>
+          string(13) "contact_email"
+          [2]=>
+          string(75) "All e-mails from users, guests and the site will go to this e-mail address."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(0) ""
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(5) "email"
+          [8]=>
+          int(979)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [60]=>
+      array(3) {
+        ["query"]=>
+        string(153) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(13) "Server E-mail"
+          [1]=>
+          string(12) "server_email"
+          [2]=>
+          string(56) "All e-mails to users will come from this e-mail address."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(15) "admin@localhost"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(5) "email"
+          [8]=>
+          int(978)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [61]=>
+      array(3) {
+        ["query"]=>
+        string(179) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(13) "Mail Protocol"
+          [1]=>
+          string(13) "mail_protocol"
+          [2]=>
+          string(30) "Select desired email protocol."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(4) "mail"
+          [5]=>
+          string(4) "mail"
+          [6]=>
+          string(37) "mail=Mail|sendmail=Sendmail|smtp=SMTP"
+          [7]=>
+          bool(true)
+          [8]=>
+          bool(true)
+          [9]=>
+          string(5) "email"
+          [10]=>
+          int(977)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [62]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(14) "SMTP Host Name"
+          [1]=>
+          string(14) "mail_smtp_host"
+          [2]=>
+          string(34) "The host name of your smtp server."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(976)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [63]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(13) "SMTP password"
+          [1]=>
+          string(14) "mail_smtp_pass"
+          [2]=>
+          string(14) "SMTP password."
+          [3]=>
+          string(8) "password"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(975)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [64]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(9) "SMTP Port"
+          [1]=>
+          string(14) "mail_smtp_port"
+          [2]=>
+          string(17) "SMTP port number."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(974)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [65]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(14) "SMTP User Name"
+          [1]=>
+          string(14) "mail_smtp_user"
+          [2]=>
+          string(15) "SMTP user name."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(973)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [66]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(13) "Sendmail Path"
+          [1]=>
+          string(18) "mail_sendmail_path"
+          [2]=>
+          string(31) "Path to server sendmail binary."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(972)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [67]=>
+      array(3) {
+        ["query"]=>
+        string(153) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(10) "Cache time"
+          [1]=>
+          string(13) "twitter_cache"
+          [2]=>
+          string(46) "How many minutes should your Tweets be stored?"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(3) "300"
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(7) "twitter"
+          [8]=>
+          int(969)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [68]=>
+      array(3) {
+        ["query"]=>
+        string(167) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(10) {
+          [0]=>
+          string(30) "Force HTTPS for Control Panel?"
+          [1]=>
+          string(17) "admin_force_https"
+          [2]=>
+          string(59) "Allow only the HTTPS protocol when using the Control Panel?"
+          [3]=>
+          string(5) "radio"
+          [4]=>
+          int(0)
+          [5]=>
+          string(10) "1=Yes|0=No"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          string(0) ""
+          [9]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [69]=>
+      array(3) {
+        ["query"]=>
+        string(179) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(11) "API Enabled"
+          [1]=>
+          string(11) "api_enabled"
+          [2]=>
+          string(61) "Allow API access to all modules which have an API controller."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          int(0)
+          [5]=>
+          int(0)
+          [6]=>
+          string(20) "0=Disabled|1=Enabled"
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(false)
+          [9]=>
+          string(3) "api"
+          [10]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [70]=>
+      array(3) {
+        ["query"]=>
+        string(179) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(13) "API User Keys"
+          [1]=>
+          string(13) "api_user_keys"
+          [2]=>
+          string(60) "Allow users to sign up for API keys (if the API is Enabled)."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          int(0)
+          [5]=>
+          int(0)
+          [6]=>
+          string(20) "0=Disabled|1=Enabled"
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(false)
+          [9]=>
+          string(3) "api"
+          [10]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [71]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(10) "CDN Domain"
+          [1]=>
+          string(10) "cdn_domain"
+          [2]=>
+          string(106) "CDN domains allow you to offload static content to various edge servers, like Amazon CloudFront or MaxCDN."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(1000)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [72]=>
+      array(3) {
+        ["query"]=>
+        string(189) "insert into "modules" ("name", "slug", "version", "description", "skip_xss", "is_frontend", "is_backend", "menu", "enabled", "installed", "is_core") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(696) "a:23:{s:2:"en";s:8:"Settings";s:2:"ar";s:18:"الإعدادات";s:2:"br";s:15:"Configurações";s:2:"pt";s:15:"Configurações";s:2:"cs";s:10:"Nastavení";s:2:"da";s:13:"Indstillinger";s:2:"de";s:13:"Einstellungen";s:2:"el";s:18:"Ρυθμίσεις";s:2:"es";s:15:"Configuraciones";s:2:"fi";s:9:"Asetukset";s:2:"fr";s:11:"Paramètres";s:2:"he";s:12:"הגדרות";s:2:"id";s:10:"Pengaturan";s:2:"it";s:12:"Impostazioni";s:2:"lt";s:10:"Nustatymai";s:2:"nl";s:12:"Instellingen";s:2:"pl";s:10:"Ustawienia";s:2:"ru";s:18:"Настройки";s:2:"sl";s:10:"Nastavitve";s:2:"zh";s:12:"網站設定";s:2:"hu";s:14:"Beállítások";s:2:"th";s:21:"ตั้งค่า";s:2:"se";s:14:"Inställningar";}"
+          [1]=>
+          string(8) "settings"
+          [2]=>
+          string(5) "1.1.0"
+          [3]=>
+          string(3197) "a:23:{s:2:"en";s:89:"Allows administrators to update settings like Site Name, messages and email address, etc.";s:2:"ar";s:161:"تمكن المدراء من تحديث الإعدادات كإسم الموقع، والرسائل وعناوين البريد الإلكتروني، .. إلخ.";s:2:"br";s:120:"Permite com que administradores e a equipe consigam trocar as configurações do website incluindo o nome e descrição.";s:2:"pt";s:113:"Permite com que os administradores consigam alterar as configurações do website incluindo o nome e descrição.";s:2:"cs";s:102:"Umožňuje administrátorům měnit nastavení webu jako jeho jméno, zprávy a emailovou adresu apod.";s:2:"da";s:90:"Lader administratorer opdatere indstillinger som sidenavn, beskeder og email adresse, etc.";s:2:"de";s:92:"Erlaubt es Administratoren die Einstellungen der Seite wie Name und Beschreibung zu ändern.";s:2:"el";s:230:"Επιτρέπει στους διαχειριστές να τροποποιήσουν ρυθμίσεις όπως το Όνομα του Ιστοτόπου, τα μηνύματα και τις διευθύνσεις email, κ.α.";s:2:"es";s:131:"Permite a los administradores y al personal configurar los detalles del sitio como el nombre del sitio y la descripción del mismo.";s:2:"fi";s:105:"Mahdollistaa sivuston asetusten muokkaamisen, kuten sivuston nimen, viestit ja sähköpostiosoitteet yms.";s:2:"fr";s:118:"Permet aux admistrateurs de modifier les paramètres du site : nom du site, description, messages, adresse email, etc.";s:2:"he";s:116:"ניהול הגדרות שונות של האתר כגון: שם האתר, הודעות, כתובות דואר וכו";s:2:"id";s:112:"Memungkinkan administrator untuk dapat memperbaharui pengaturan seperti nama situs, pesan dan alamat email, dsb.";s:2:"it";s:109:"Permette agli amministratori di aggiornare impostazioni quali Nome del Sito, messaggi e indirizzo email, etc.";s:2:"lt";s:104:"Leidžia administratoriams keisti puslapio vavadinimą, žinutes, administratoriaus el. pašta ir kitą.";s:2:"nl";s:114:"Maakt het administratoren en medewerkers mogelijk om websiteinstellingen zoals naam en beschrijving te veranderen.";s:2:"pl";s:103:"Umożliwia administratorom zmianę ustawień strony jak nazwa strony, opis, e-mail administratora, itd.";s:2:"ru";s:135:"Управление настройками сайта - Имя сайта, сообщения, почтовые адреса и т.п.";s:2:"sl";s:98:"Dovoljuje administratorjem posodobitev nastavitev kot je Ime strani, sporočil, email naslova itd.";s:2:"zh";s:99:"網站管理者可更新的重要網站設定。例如：網站名稱、訊息、電子郵件等。";s:2:"hu";s:125:"Lehetővé teszi az adminok számára a beállítások frissítését, mint a weboldal neve, üzenetek, e-mail címek, stb...";s:2:"th";s:232:"ให้ผู้ดูแลระบบสามารถปรับปรุงการตั้งค่าเช่นชื่อเว็บไซต์ ข้อความและอีเมล์เป็นต้น";s:2:"se";s:84:"Administratören kan uppdatera webbplatsens titel, meddelanden och E-postadress etc.";}"
+          [4]=>
+          bool(true)
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(8) "settings"
+          [8]=>
+          bool(true)
+          [9]=>
+          bool(true)
+          [10]=>
+          bool(true)
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [73]=>
+      array(3) {
+        ["query"]=>
+        string(35) "drop table if exists "data_streams""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.05"
+      }
+      [74]=>
+      array(3) {
+        ["query"]=>
+        string(427) "create table "data_streams" ("id" integer not null primary key autoincrement, "stream_name" varchar not null, "stream_slug" varchar not null, "stream_namespace" varchar null, "stream_prefix" varchar null, "about" varchar null, "view_options" blob not null, "title_column" varchar null, "sorting" varchar not null default 'title', "permissions" text not null, "is_hidden" varchar not null default 'no', "menu_path" varchar null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.21"
+      }
+      [75]=>
+      array(3) {
+        ["query"]=>
+        string(34) "drop table if exists "data_fields""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.03"
+      }
+      [76]=>
+      array(3) {
+        ["query"]=>
+        string(294) "create table "data_fields" ("id" integer not null primary key autoincrement, "field_name" varchar not null, "field_slug" varchar not null, "field_namespace" varchar null, "field_type" varchar not null, "field_data" blob null, "view_options" blob null, "is_locked" varchar not null default 'no')"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.12"
+      }
+      [77]=>
+      array(3) {
+        ["query"]=>
+        string(45) "drop table if exists "data_field_assignments""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [78]=>
+      array(3) {
+        ["query"]=>
+        string(322) "create table "data_field_assignments" ("id" integer not null primary key autoincrement, "sort_order" integer not null, "stream_id" integer not null, "field_id" integer not null, "is_required" varchar not null default 'no', "is_unique" varchar not null default 'no', "instructions" text null, "field_name" varchar not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.13"
+      }
+      [79]=>
+      array(3) {
+        ["query"]=>
+        string(189) "insert into "modules" ("name", "slug", "version", "description", "skip_xss", "is_frontend", "is_backend", "menu", "enabled", "installed", "is_core") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(307) "a:9:{s:2:"en";s:12:"Streams Core";s:2:"pt";s:14:"Núcleo Fluxos";s:2:"fr";s:10:"Noyau Flux";s:2:"el";s:23:"Πυρήνας Ροών";s:2:"se";s:18:"Streams grundmodul";s:2:"tw";s:14:"Streams 核心";s:2:"cn";s:14:"Streams 核心";s:2:"ar";s:31:"الجداول الأساسية";s:2:"it";s:12:"Streams Core";}"
+          [1]=>
+          string(12) "streams_core"
+          [2]=>
+          string(5) "1.3.0"
+          [3]=>
+          string(553) "a:9:{s:2:"en";s:29:"Core data module for streams.";s:2:"pt";s:37:"Módulo central de dados para fluxos.";s:2:"fr";s:32:"Noyau de données pour les Flux.";s:2:"el";s:113:"Προγραμματιστικός πυρήνας για την λειτουργία ροών δεδομένων.";s:2:"se";s:50:"Streams grundmodul för enklare hantering av data.";s:2:"tw";s:29:"Streams 核心資料模組。";s:2:"cn";s:29:"Streams 核心资料模组。";s:2:"ar";s:57:"وحدة البيانات الأساسية للجداول";s:2:"it";s:17:"Core dello Stream";}"
+          [4]=>
+          bool(true)
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(false)
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(true)
+          [9]=>
+          bool(true)
+          [10]=>
+          bool(true)
+        }
+        ["time"]=>
+        string(4) "0.11"
+      }
+      [80]=>
+      array(3) {
+        ["query"]=>
+        string(36) "drop table if exists "theme_options""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.05"
+      }
+      [81]=>
+      array(3) {
+        ["query"]=>
+        string(320) "create table "theme_options" ("id" integer not null primary key autoincrement, "slug" varchar not null, "title" varchar not null, "description" text not null, "type" varchar not null, "default" varchar not null, "value" varchar not null, "options" text not null, "is_required" tinyint not null, "theme" varchar not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.19"
+      }
+      [82]=>
+      array(3) {
+        ["query"]=>
+        string(678) "insert into "settings" ("slug", "title", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") select ? as "slug", ? as "title", ? as "description", ? as "type", ? as "default", ? as "value", ? as "options", ? as "is_required", ? as "is_gui", ? as "module", ? as "order" union select ? as "slug", ? as "title", ? as "description", ? as "type", ? as "default", ? as "value", ? as "options", ? as "is_required", ? as "is_gui", ? as "module", ? as "order" union select ? as "slug", ? as "title", ? as "description", ? as "type", ? as "default", ? as "value", ? as "options", ? as "is_required", ? as "is_gui", ? as "module", ? as "order""
+        ["bindings"]=>
+        array(33) {
+          [0]=>
+          string(13) "addons_upload"
+          [1]=>
+          string(25) "Addons Upload Permissions"
+          [2]=>
+          string(50) "Keeps mere admins from uploading addons by default"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(1) "0"
+          [5]=>
+          string(1) "0"
+          [6]=>
+          string(0) ""
+          [7]=>
+          int(1)
+          [8]=>
+          int(0)
+          [9]=>
+          string(0) ""
+          [10]=>
+          int(0)
+          [11]=>
+          string(13) "default_theme"
+          [12]=>
+          string(13) "Default Theme"
+          [13]=>
+          string(50) "Select the theme you want users to see by default."
+          [14]=>
+          string(0) ""
+          [15]=>
+          string(7) "default"
+          [16]=>
+          string(7) "default"
+          [17]=>
+          string(15) "func:get_themes"
+          [18]=>
+          int(1)
+          [19]=>
+          int(0)
+          [20]=>
+          string(0) ""
+          [21]=>
+          int(0)
+          [22]=>
+          string(11) "admin_theme"
+          [23]=>
+          string(19) "Control Panel Theme"
+          [24]=>
+          string(39) "Select the theme for the control panel."
+          [25]=>
+          string(0) ""
+          [26]=>
+          string(0) ""
+          [27]=>
+          string(7) "pyrocms"
+          [28]=>
+          string(15) "func:get_themes"
+          [29]=>
+          int(1)
+          [30]=>
+          int(0)
+          [31]=>
+          string(0) ""
+          [32]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.20"
+      }
+      [83]=>
+      array(3) {
+        ["query"]=>
+        string(189) "insert into "modules" ("name", "slug", "version", "description", "skip_xss", "is_frontend", "is_backend", "menu", "enabled", "installed", "is_core") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(680) "a:24:{s:2:"en";s:7:"Add-ons";s:2:"ar";s:16:"الإضافات";s:2:"br";s:12:"Complementos";s:2:"pt";s:12:"Complementos";s:2:"cs";s:8:"Doplňky";s:2:"da";s:7:"Add-ons";s:2:"de";s:13:"Erweiterungen";s:2:"el";s:16:"Πρόσθετα";s:2:"es";s:9:"Agregados";s:2:"fi";s:9:"Lisäosat";s:2:"fr";s:10:"Extensions";s:2:"he";s:12:"תוספות";s:2:"id";s:7:"Pengaya";s:2:"it";s:7:"Add-ons";s:2:"lt";s:7:"Priedai";s:2:"nl";s:7:"Add-ons";s:2:"pl";s:12:"Rozszerzenia";s:2:"ru";s:20:"Дополнения";s:2:"sl";s:11:"Razširitve";s:2:"tw";s:12:"附加模組";s:2:"cn";s:12:"附加模组";s:2:"hu";s:14:"Bővítmények";s:2:"th";s:27:"ส่วนเสริม";s:2:"se";s:8:"Tillägg";}"
+          [1]=>
+          string(6) "addons"
+          [2]=>
+          string(5) "2.0.0"
+          [3]=>
+          string(2353) "a:24:{s:2:"en";s:59:"Allows admins to see a list of currently installed modules.";s:2:"ar";s:91:"تُمكّن المُدراء من معاينة جميع الوحدات المُثبّتة.";s:2:"br";s:75:"Permite aos administradores ver a lista dos módulos instalados atualmente.";s:2:"pt";s:75:"Permite aos administradores ver a lista dos módulos instalados atualmente.";s:2:"cs";s:68:"Umožňuje administrátorům vidět seznam nainstalovaných modulů.";s:2:"da";s:63:"Lader administratorer se en liste over de installerede moduler.";s:2:"de";s:56:"Zeigt Administratoren alle aktuell installierten Module.";s:2:"el";s:152:"Επιτρέπει στους διαχειριστές να προβάλουν μια λίστα των εγκατεστημένων πρόσθετων.";s:2:"es";s:71:"Permite a los administradores ver una lista de los módulos instalados.";s:2:"fi";s:60:"Listaa järjestelmänvalvojalle käytössä olevat moduulit.";s:2:"fr";s:66:"Permet aux administrateurs de voir la liste des modules installés";s:2:"he";s:160:"נותן אופציה למנהל לראות רשימה של המודולים אשר מותקנים כעת באתר או להתקין מודולים נוספים";s:2:"id";s:57:"Memperlihatkan kepada admin daftar modul yang terinstall.";s:2:"it";s:83:"Permette agli amministratori di vedere una lista dei moduli attualmente installati.";s:2:"lt";s:75:"Vartotojai ir svečiai gali komentuoti jūsų naujienas, puslapius ar foto.";s:2:"nl";s:79:"Stelt admins in staat om een overzicht van geinstalleerde modules te genereren.";s:2:"pl";s:81:"Umożliwiają administratorowi wgląd do listy obecnie zainstalowanych modułów.";s:2:"ru";s:83:"Список модулей, которые установлены на сайте.";s:2:"sl";s:65:"Dovoljuje administratorjem pregled trenutno nameščenih modulov.";s:2:"tw";s:54:"管理員可以檢視目前已經安裝模組的列表";s:2:"cn";s:54:"管理员可以检视目前已经安装模组的列表";s:2:"hu";s:79:"Lehetővé teszi az adminoknak, hogy lássák a telepített modulok listáját.";s:2:"th";s:162:"ช่วยให้ผู้ดูแลระบบดูรายการของโมดูลที่ติดตั้งในปัจจุบัน";s:2:"se";s:67:"Gör det möjligt för administratören att se installerade mouler.";}"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(true)
+          [9]=>
+          bool(true)
+          [10]=>
+          bool(true)
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [84]=>
+      array(3) {
+        ["query"]=>
+        string(27) "drop table if exists "blog""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+    }
+    ["pretending":protected]=>
+    bool(false)
+    ["database":protected]=>
+    string(8) ":memory:"
+    ["tablePrefix":protected]=>
+    string(0) ""
+    ["name":protected]=>
+    NULL
+  }
+}
+array(1) {
+  ["default"]=>
+  object(Illuminate\Database\SQLiteConnection)#243 (12) {
+    ["pdo":protected]=>
+    object(PDO)#244 (0) {
+    }
+    ["queryGrammar":protected]=>
+    object(Illuminate\Database\Query\Grammars\SQLiteGrammar)#245 (3) {
+      ["wrapper":protected]=>
+      string(4) ""%s""
+      ["selectComponents":protected]=>
+      array(10) {
+        [0]=>
+        string(9) "aggregate"
+        [1]=>
+        string(7) "columns"
+        [2]=>
+        string(4) "from"
+        [3]=>
+        string(5) "joins"
+        [4]=>
+        string(6) "wheres"
+        [5]=>
+        string(6) "groups"
+        [6]=>
+        string(7) "havings"
+        [7]=>
+        string(6) "orders"
+        [8]=>
+        string(5) "limit"
+        [9]=>
+        string(6) "offset"
+      }
+      ["tablePrefix":protected]=>
+      string(0) ""
+    }
+    ["schemaGrammar":protected]=>
+    object(Illuminate\Database\Schema\Grammars\SQLiteGrammar)#249 (3) {
+      ["wrapper":protected]=>
+      string(4) ""%s""
+      ["modifiers":protected]=>
+      array(3) {
+        [0]=>
+        string(8) "Nullable"
+        [1]=>
+        string(7) "Default"
+        [2]=>
+        string(9) "Increment"
+      }
+      ["tablePrefix":protected]=>
+      string(0) ""
+    }
+    ["postProcessor":protected]=>
+    object(Illuminate\Database\Query\Processors\Processor)#246 (0) {
+    }
+    ["events":protected]=>
+    NULL
+    ["paginator":protected]=>
+    NULL
+    ["fetchMode":protected]=>
+    int(5)
+    ["queryLog":protected]=>
+    array(86) {
+      [0]=>
+      array(3) {
+        ["query"]=>
+        string(33) "drop table if exists "core_users""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.22"
+      }
+      [1]=>
+      array(3) {
+        ["query"]=>
+        string(36) "drop table if exists "core_settings""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.03"
+      }
+      [2]=>
+      array(3) {
+        ["query"]=>
+        string(33) "drop table if exists "core_sites""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.03"
+      }
+      [3]=>
+      array(3) {
+        ["query"]=>
+        string(38) "drop table if exists "sess_table_name""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [4]=>
+      array(3) {
+        ["query"]=>
+        string(30) "drop table if exists "modules""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [5]=>
+      array(3) {
+        ["query"]=>
+        string(33) "drop table if exists "migrations""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [6]=>
+      array(3) {
+        ["query"]=>
+        string(31) "drop table if exists "settings""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [7]=>
+      array(3) {
+        ["query"]=>
+        string(28) "drop table if exists "users""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [8]=>
+      array(3) {
+        ["query"]=>
+        string(31) "drop table if exists "profiles""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [9]=>
+      array(3) {
+        ["query"]=>
+        string(94) "create table "core_settings" ("slug" varchar not null, "default" text null, "value" text null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.22"
+      }
+      [10]=>
+      array(3) {
+        ["query"]=>
+        string(73) "create unique index core_settings_slug_unique on "core_settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.11"
+      }
+      [11]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create index core_settings_slug_index on "core_settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [12]=>
+      array(3) {
+        ["query"]=>
+        string(164) "insert into "core_settings" ("slug", "default") select ? as "slug", ? as "default" union select ? as "slug", ? as "default" union select ? as "slug", ? as "default""
+        ["bindings"]=>
+        array(6) {
+          [0]=>
+          string(11) "date_format"
+          [1]=>
+          string(13) "g:ia -- m/d/y"
+          [2]=>
+          string(14) "lang_direction"
+          [3]=>
+          string(3) "ltr"
+          [4]=>
+          string(14) "status_message"
+          [5]=>
+          string(53) "This site has been disabled by a super-administrator."
+        }
+        ["time"]=>
+        string(4) "0.17"
+      }
+      [13]=>
+      array(3) {
+        ["query"]=>
+        string(248) "create table "core_sites" ("id" integer not null primary key autoincrement, "name" varchar not null, "ref" varchar not null, "domain" varchar not null, "active" tinyint not null default '1', "created_on" integer not null, "updated_on" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.21"
+      }
+      [14]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create unique index core_sites_ref_unique on "core_sites" ("ref")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [15]=>
+      array(3) {
+        ["query"]=>
+        string(71) "create unique index core_sites_domain_unique on "core_sites" ("domain")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [16]=>
+      array(3) {
+        ["query"]=>
+        string(57) "create index core_sites_ref_index on "core_sites" ("ref")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [17]=>
+      array(3) {
+        ["query"]=>
+        string(63) "create index core_sites_domain_index on "core_sites" ("domain")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.08"
+      }
+      [18]=>
+      array(3) {
+        ["query"]=>
+        string(466) "create table "core_users" ("id" integer not null primary key autoincrement, "username" varchar not null, "email" varchar not null, "password" varchar not null, "salt" varchar not null, "group_id" integer null, "ip_address" varchar not null, "active" tinyint not null default '1', "activation_code" varchar null, "forgotten_password_code" varchar null, "remember_code" varchar null, "created_on" integer not null, "updated_on" integer null, "last_login" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.18"
+      }
+      [19]=>
+      array(3) {
+        ["query"]=>
+        string(69) "create unique index core_users_email_unique on "core_users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [20]=>
+      array(3) {
+        ["query"]=>
+        string(75) "create unique index core_users_username_unique on "core_users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [21]=>
+      array(3) {
+        ["query"]=>
+        string(61) "create index core_users_email_index on "core_users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [22]=>
+      array(3) {
+        ["query"]=>
+        string(67) "create index core_users_username_index on "core_users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [23]=>
+      array(3) {
+        ["query"]=>
+        string(461) "create table "users" ("id" integer not null primary key autoincrement, "username" varchar not null, "email" varchar not null, "password" varchar not null, "salt" varchar not null, "group_id" integer null, "ip_address" varchar not null, "active" tinyint not null default '1', "activation_code" varchar null, "forgotten_password_code" varchar null, "remember_code" varchar null, "created_on" integer not null, "updated_on" integer null, "last_login" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.14"
+      }
+      [24]=>
+      array(3) {
+        ["query"]=>
+        string(59) "create unique index users_email_unique on "users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [25]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create unique index users_username_unique on "users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [26]=>
+      array(3) {
+        ["query"]=>
+        string(51) "create index users_email_index on "users" ("email")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [27]=>
+      array(3) {
+        ["query"]=>
+        string(57) "create index users_username_index on "users" ("username")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [28]=>
+      array(3) {
+        ["query"]=>
+        string(221) "create table "sess_table_name" ("session_id" varchar not null default '0', "ip_address" varchar not null default '0', "user_agent" varchar not null, "last_activity" integer not null default '0', "user_data" text not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.21"
+      }
+      [29]=>
+      array(3) {
+        ["query"]=>
+        string(69) "create index last_activity_idx on "sess_table_name" ("last_activity")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [30]=>
+      array(3) {
+        ["query"]=>
+        string(401) "create table "profiles" ("id" integer not null primary key autoincrement, "user_id" integer not null, "display_name" varchar not null, "first_name" varchar not null, "last_name" varchar null, "company" varchar null, "lang" varchar not null default 'en', "bio" text null, "dob" integer null, "gender" varchar not null default '', "phone" varchar null, "website" varchar null, "updated_on" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.17"
+      }
+      [31]=>
+      array(3) {
+        ["query"]=>
+        string(61) "create index profiles_user_id_index on "profiles" ("user_id")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [32]=>
+      array(3) {
+        ["query"]=>
+        string(54) "create table "migrations" ("version" integer not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [33]=>
+      array(3) {
+        ["query"]=>
+        string(47) "insert into "migrations" ("version") values (?)"
+        ["bindings"]=>
+        array(1) {
+          [0]=>
+          int(120)
+        }
+        ["time"]=>
+        string(4) "0.04"
+      }
+      [34]=>
+      array(3) {
+        ["query"]=>
+        string(406) "create table "modules" ("id" integer not null primary key autoincrement, "name" text not null, "slug" varchar not null, "version" varchar not null, "description" text not null, "skip_xss" tinyint not null, "is_frontend" tinyint not null, "is_backend" tinyint not null, "menu" varchar not null, "enabled" tinyint not null, "installed" tinyint not null, "is_core" tinyint not null, "updated_on" integer null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.14"
+      }
+      [35]=>
+      array(3) {
+        ["query"]=>
+        string(61) "create unique index modules_slug_unique on "modules" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [36]=>
+      array(3) {
+        ["query"]=>
+        string(59) "create index modules_enabled_index on "modules" ("enabled")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [37]=>
+      array(3) {
+        ["query"]=>
+        string(67) "create index modules_is_frontend_index on "modules" ("is_frontend")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [38]=>
+      array(3) {
+        ["query"]=>
+        string(65) "create index modules_is_backend_index on "modules" ("is_backend")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [39]=>
+      array(3) {
+        ["query"]=>
+        string(337) "create table "settings" ("slug" varchar not null, "title" varchar not null, "description" text not null, "type" varchar not null, "default" text null, "value" text null, "options" varchar null, "is_required" tinyint not null default '0', "is_gui" tinyint not null default '1', "module" varchar null, "order" integer not null default '0')"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.14"
+      }
+      [40]=>
+      array(3) {
+        ["query"]=>
+        string(63) "create unique index settings_slug_unique on "settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [41]=>
+      array(3) {
+        ["query"]=>
+        string(55) "create index settings_slug_index on "settings" ("slug")"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.09"
+      }
+      [42]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(9) "Site Name"
+          [1]=>
+          string(9) "site_name"
+          [2]=>
+          string(68) "The name of the website for page titles and for use around the site."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(16) "Un-named Website"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(1000)
+        }
+        ["time"]=>
+        string(4) "0.11"
+      }
+      [43]=>
+      array(3) {
+        ["query"]=>
+        string(138) "insert into "settings" ("title", "slug", "description", "type", "value", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(11) "Site Slogan"
+          [1]=>
+          string(11) "site_slogan"
+          [2]=>
+          string(69) "The slogan of the website for page titles and for use around the site"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(20) "Add your slogan here"
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(999)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [44]=>
+      array(3) {
+        ["query"]=>
+        string(152) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(10) "Meta Topic"
+          [1]=>
+          string(10) "meta_topic"
+          [2]=>
+          string(59) "Two or three words describing this type of company/website."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(18) "Content Management"
+          [5]=>
+          string(20) "Add your slogan here"
+          [6]=>
+          bool(false)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(998)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [45]=>
+      array(3) {
+        ["query"]=>
+        string(166) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(10) {
+          [0]=>
+          string(13) "Site Language"
+          [1]=>
+          string(9) "site_lang"
+          [2]=>
+          string(168) "The native language of the website, used to choose templates of e-mail notifications, contact form, and other features that should not depend on the language of a user."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(0) ""
+          [5]=>
+          string(0) ""
+          [6]=>
+          string(23) "func:get_supported_lang"
+          [7]=>
+          bool(true)
+          [8]=>
+          bool(true)
+          [9]=>
+          int(997)
+        }
+        ["time"]=>
+        string(4) "0.08"
+      }
+      [46]=>
+      array(3) {
+        ["query"]=>
+        string(166) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(10) {
+          [0]=>
+          string(16) "Public Languages"
+          [1]=>
+          string(16) "site_public_lang"
+          [2]=>
+          string(86) "Which are the languages really supported and offered on the front-end of your website?"
+          [3]=>
+          string(8) "checkbox"
+          [4]=>
+          string(0) ""
+          [5]=>
+          string(0) ""
+          [6]=>
+          string(23) "func:get_supported_lang"
+          [7]=>
+          bool(true)
+          [8]=>
+          bool(true)
+          [9]=>
+          int(996)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [47]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(11) "Date Format"
+          [1]=>
+          string(11) "date_format"
+          [2]=>
+          string(311) "How should dates be displayed across the website and control panel? Using the <a target="_blank" href="http://php.net/manual/en/function.date.php">date format</a> from PHP - OR - Using the format of <a target="_blank" href="http://php.net/manual/en/function.strftime.php">strings formatted as date</a> from PHP."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(5) "Y-m-d"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(995)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [48]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(8) "Currency"
+          [1]=>
+          string(8) "currency"
+          [2]=>
+          string(55) "The currency symbol for use on products, services, etc."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(7) "&pound;"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(994)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [49]=>
+      array(3) {
+        ["query"]=>
+        string(154) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(16) "Records Per Page"
+          [1]=>
+          string(16) "records_per_page"
+          [2]=>
+          string(62) "How many records should we show per page in the admin section?"
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(2) "25"
+          [5]=>
+          string(29) "5=5|10=10|25=25|50=50|100=100"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(992)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [50]=>
+      array(3) {
+        ["query"]=>
+        string(154) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(15) "Feed item count"
+          [1]=>
+          string(14) "rss_feed_items"
+          [2]=>
+          string(48) "How many items should we show in RSS/blog feeds?"
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(2) "25"
+          [5]=>
+          string(25) "10=10|25=25|50=50|100=100"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(991)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [51]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(18) "Dashboard RSS Feed"
+          [1]=>
+          string(13) "dashboard_rss"
+          [2]=>
+          string(60) "Link to an RSS feed that will be displayed on the dashboard."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(40) "https://www.pyrocms.com/blog/rss/all.rss"
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(990)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [52]=>
+      array(3) {
+        ["query"]=>
+        string(152) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(19) "Dashboard RSS Items"
+          [1]=>
+          string(19) "dashboard_rss_count"
+          [2]=>
+          string(62) "How many RSS items would you like to display on the dashboard?"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(1) "5"
+          [5]=>
+          string(1) "5"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(989)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [53]=>
+      array(3) {
+        ["query"]=>
+        string(154) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(11) "Site Status"
+          [1]=>
+          string(16) "frontend_enabled"
+          [2]=>
+          string(122) "Use this option to the user-facing part of the site on or off. Useful when you want to take the site down for maintenance."
+          [3]=>
+          string(5) "radio"
+          [4]=>
+          bool(true)
+          [5]=>
+          string(15) "1=Open|0=Closed"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          int(988)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [54]=>
+      array(3) {
+        ["query"]=>
+        string(140) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(19) "Unavailable Message"
+          [1]=>
+          string(19) "unavailable_message"
+          [2]=>
+          string(89) "When the site is turned off or there is a major problem, this message will show to users."
+          [3]=>
+          string(8) "textarea"
+          [4]=>
+          string(45) "Sorry, this website is currently unavailable."
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          int(987)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [55]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(20) "Google Tracking Code"
+          [1]=>
+          string(11) "ga_tracking"
+          [2]=>
+          string(109) "Enter your Google Analytic Tracking Code to activate Google Analytics view data capturing. E.g: UA-19483569-6"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(985)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [56]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(26) "Google Analytic Profile ID"
+          [1]=>
+          string(10) "ga_profile"
+          [2]=>
+          string(47) "Profile ID for this website in Google Analytics"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(984)
+        }
+        ["time"]=>
+        string(4) "0.12"
+      }
+      [57]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(22) "Google Analytic E-mail"
+          [1]=>
+          string(8) "ga_email"
+          [2]=>
+          string(90) "E-mail address used for Google Analytics, we need this to show the graph on the dashboard."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(983)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [58]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(24) "Google Analytic Password"
+          [1]=>
+          string(11) "ga_password"
+          [2]=>
+          string(252) "This is also needed to show the graph on the dashboard. You will need to allow access to Google to get this to work. See <a href="https://accounts.google.com/b/0/IssuedAuthSubTokens?hl=en_US" target="_blank">Authorized Access to your Google Account</a>"
+          [3]=>
+          string(8) "password"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(982)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [59]=>
+      array(3) {
+        ["query"]=>
+        string(153) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(14) "Contact E-mail"
+          [1]=>
+          string(13) "contact_email"
+          [2]=>
+          string(75) "All e-mails from users, guests and the site will go to this e-mail address."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(0) ""
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(5) "email"
+          [8]=>
+          int(979)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [60]=>
+      array(3) {
+        ["query"]=>
+        string(153) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(13) "Server E-mail"
+          [1]=>
+          string(12) "server_email"
+          [2]=>
+          string(56) "All e-mails to users will come from this e-mail address."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(15) "admin@localhost"
+          [5]=>
+          bool(true)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(5) "email"
+          [8]=>
+          int(978)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [61]=>
+      array(3) {
+        ["query"]=>
+        string(179) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(13) "Mail Protocol"
+          [1]=>
+          string(13) "mail_protocol"
+          [2]=>
+          string(30) "Select desired email protocol."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          string(4) "mail"
+          [5]=>
+          string(4) "mail"
+          [6]=>
+          string(37) "mail=Mail|sendmail=Sendmail|smtp=SMTP"
+          [7]=>
+          bool(true)
+          [8]=>
+          bool(true)
+          [9]=>
+          string(5) "email"
+          [10]=>
+          int(977)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [62]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(14) "SMTP Host Name"
+          [1]=>
+          string(14) "mail_smtp_host"
+          [2]=>
+          string(34) "The host name of your smtp server."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(976)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [63]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(13) "SMTP password"
+          [1]=>
+          string(14) "mail_smtp_pass"
+          [2]=>
+          string(14) "SMTP password."
+          [3]=>
+          string(8) "password"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(975)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [64]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(9) "SMTP Port"
+          [1]=>
+          string(14) "mail_smtp_port"
+          [2]=>
+          string(17) "SMTP port number."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(974)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [65]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(14) "SMTP User Name"
+          [1]=>
+          string(14) "mail_smtp_user"
+          [2]=>
+          string(15) "SMTP user name."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(973)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [66]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(13) "Sendmail Path"
+          [1]=>
+          string(18) "mail_sendmail_path"
+          [2]=>
+          string(31) "Path to server sendmail binary."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(5) "email"
+          [7]=>
+          int(972)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [67]=>
+      array(3) {
+        ["query"]=>
+        string(153) "insert into "settings" ("title", "slug", "description", "type", "default", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(9) {
+          [0]=>
+          string(10) "Cache time"
+          [1]=>
+          string(13) "twitter_cache"
+          [2]=>
+          string(46) "How many minutes should your Tweets be stored?"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(3) "300"
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(7) "twitter"
+          [8]=>
+          int(969)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [68]=>
+      array(3) {
+        ["query"]=>
+        string(167) "insert into "settings" ("title", "slug", "description", "type", "default", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(10) {
+          [0]=>
+          string(30) "Force HTTPS for Control Panel?"
+          [1]=>
+          string(17) "admin_force_https"
+          [2]=>
+          string(59) "Allow only the HTTPS protocol when using the Control Panel?"
+          [3]=>
+          string(5) "radio"
+          [4]=>
+          int(0)
+          [5]=>
+          string(10) "1=Yes|0=No"
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(true)
+          [8]=>
+          string(0) ""
+          [9]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [69]=>
+      array(3) {
+        ["query"]=>
+        string(179) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(11) "API Enabled"
+          [1]=>
+          string(11) "api_enabled"
+          [2]=>
+          string(61) "Allow API access to all modules which have an API controller."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          int(0)
+          [5]=>
+          int(0)
+          [6]=>
+          string(20) "0=Disabled|1=Enabled"
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(false)
+          [9]=>
+          string(3) "api"
+          [10]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [70]=>
+      array(3) {
+        ["query"]=>
+        string(179) "insert into "settings" ("title", "slug", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(13) "API User Keys"
+          [1]=>
+          string(13) "api_user_keys"
+          [2]=>
+          string(60) "Allow users to sign up for API keys (if the API is Enabled)."
+          [3]=>
+          string(6) "select"
+          [4]=>
+          int(0)
+          [5]=>
+          int(0)
+          [6]=>
+          string(20) "0=Disabled|1=Enabled"
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(false)
+          [9]=>
+          string(3) "api"
+          [10]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.07"
+      }
+      [71]=>
+      array(3) {
+        ["query"]=>
+        string(139) "insert into "settings" ("title", "slug", "description", "type", "is_required", "is_gui", "module", "order") values (?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(8) {
+          [0]=>
+          string(10) "CDN Domain"
+          [1]=>
+          string(10) "cdn_domain"
+          [2]=>
+          string(106) "CDN domains allow you to offload static content to various edge servers, like Amazon CloudFront or MaxCDN."
+          [3]=>
+          string(4) "text"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(true)
+          [6]=>
+          string(11) "integration"
+          [7]=>
+          int(1000)
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [72]=>
+      array(3) {
+        ["query"]=>
+        string(189) "insert into "modules" ("name", "slug", "version", "description", "skip_xss", "is_frontend", "is_backend", "menu", "enabled", "installed", "is_core") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(696) "a:23:{s:2:"en";s:8:"Settings";s:2:"ar";s:18:"الإعدادات";s:2:"br";s:15:"Configurações";s:2:"pt";s:15:"Configurações";s:2:"cs";s:10:"Nastavení";s:2:"da";s:13:"Indstillinger";s:2:"de";s:13:"Einstellungen";s:2:"el";s:18:"Ρυθμίσεις";s:2:"es";s:15:"Configuraciones";s:2:"fi";s:9:"Asetukset";s:2:"fr";s:11:"Paramètres";s:2:"he";s:12:"הגדרות";s:2:"id";s:10:"Pengaturan";s:2:"it";s:12:"Impostazioni";s:2:"lt";s:10:"Nustatymai";s:2:"nl";s:12:"Instellingen";s:2:"pl";s:10:"Ustawienia";s:2:"ru";s:18:"Настройки";s:2:"sl";s:10:"Nastavitve";s:2:"zh";s:12:"網站設定";s:2:"hu";s:14:"Beállítások";s:2:"th";s:21:"ตั้งค่า";s:2:"se";s:14:"Inställningar";}"
+          [1]=>
+          string(8) "settings"
+          [2]=>
+          string(5) "1.1.0"
+          [3]=>
+          string(3197) "a:23:{s:2:"en";s:89:"Allows administrators to update settings like Site Name, messages and email address, etc.";s:2:"ar";s:161:"تمكن المدراء من تحديث الإعدادات كإسم الموقع، والرسائل وعناوين البريد الإلكتروني، .. إلخ.";s:2:"br";s:120:"Permite com que administradores e a equipe consigam trocar as configurações do website incluindo o nome e descrição.";s:2:"pt";s:113:"Permite com que os administradores consigam alterar as configurações do website incluindo o nome e descrição.";s:2:"cs";s:102:"Umožňuje administrátorům měnit nastavení webu jako jeho jméno, zprávy a emailovou adresu apod.";s:2:"da";s:90:"Lader administratorer opdatere indstillinger som sidenavn, beskeder og email adresse, etc.";s:2:"de";s:92:"Erlaubt es Administratoren die Einstellungen der Seite wie Name und Beschreibung zu ändern.";s:2:"el";s:230:"Επιτρέπει στους διαχειριστές να τροποποιήσουν ρυθμίσεις όπως το Όνομα του Ιστοτόπου, τα μηνύματα και τις διευθύνσεις email, κ.α.";s:2:"es";s:131:"Permite a los administradores y al personal configurar los detalles del sitio como el nombre del sitio y la descripción del mismo.";s:2:"fi";s:105:"Mahdollistaa sivuston asetusten muokkaamisen, kuten sivuston nimen, viestit ja sähköpostiosoitteet yms.";s:2:"fr";s:118:"Permet aux admistrateurs de modifier les paramètres du site : nom du site, description, messages, adresse email, etc.";s:2:"he";s:116:"ניהול הגדרות שונות של האתר כגון: שם האתר, הודעות, כתובות דואר וכו";s:2:"id";s:112:"Memungkinkan administrator untuk dapat memperbaharui pengaturan seperti nama situs, pesan dan alamat email, dsb.";s:2:"it";s:109:"Permette agli amministratori di aggiornare impostazioni quali Nome del Sito, messaggi e indirizzo email, etc.";s:2:"lt";s:104:"Leidžia administratoriams keisti puslapio vavadinimą, žinutes, administratoriaus el. pašta ir kitą.";s:2:"nl";s:114:"Maakt het administratoren en medewerkers mogelijk om websiteinstellingen zoals naam en beschrijving te veranderen.";s:2:"pl";s:103:"Umożliwia administratorom zmianę ustawień strony jak nazwa strony, opis, e-mail administratora, itd.";s:2:"ru";s:135:"Управление настройками сайта - Имя сайта, сообщения, почтовые адреса и т.п.";s:2:"sl";s:98:"Dovoljuje administratorjem posodobitev nastavitev kot je Ime strani, sporočil, email naslova itd.";s:2:"zh";s:99:"網站管理者可更新的重要網站設定。例如：網站名稱、訊息、電子郵件等。";s:2:"hu";s:125:"Lehetővé teszi az adminok számára a beállítások frissítését, mint a weboldal neve, üzenetek, e-mail címek, stb...";s:2:"th";s:232:"ให้ผู้ดูแลระบบสามารถปรับปรุงการตั้งค่าเช่นชื่อเว็บไซต์ ข้อความและอีเมล์เป็นต้น";s:2:"se";s:84:"Administratören kan uppdatera webbplatsens titel, meddelanden och E-postadress etc.";}"
+          [4]=>
+          bool(true)
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          string(8) "settings"
+          [8]=>
+          bool(true)
+          [9]=>
+          bool(true)
+          [10]=>
+          bool(true)
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [73]=>
+      array(3) {
+        ["query"]=>
+        string(35) "drop table if exists "data_streams""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.05"
+      }
+      [74]=>
+      array(3) {
+        ["query"]=>
+        string(427) "create table "data_streams" ("id" integer not null primary key autoincrement, "stream_name" varchar not null, "stream_slug" varchar not null, "stream_namespace" varchar null, "stream_prefix" varchar null, "about" varchar null, "view_options" blob not null, "title_column" varchar null, "sorting" varchar not null default 'title', "permissions" text not null, "is_hidden" varchar not null default 'no', "menu_path" varchar null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.21"
+      }
+      [75]=>
+      array(3) {
+        ["query"]=>
+        string(34) "drop table if exists "data_fields""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.03"
+      }
+      [76]=>
+      array(3) {
+        ["query"]=>
+        string(294) "create table "data_fields" ("id" integer not null primary key autoincrement, "field_name" varchar not null, "field_slug" varchar not null, "field_namespace" varchar null, "field_type" varchar not null, "field_data" blob null, "view_options" blob null, "is_locked" varchar not null default 'no')"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.12"
+      }
+      [77]=>
+      array(3) {
+        ["query"]=>
+        string(45) "drop table if exists "data_field_assignments""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.02"
+      }
+      [78]=>
+      array(3) {
+        ["query"]=>
+        string(322) "create table "data_field_assignments" ("id" integer not null primary key autoincrement, "sort_order" integer not null, "stream_id" integer not null, "field_id" integer not null, "is_required" varchar not null default 'no', "is_unique" varchar not null default 'no', "instructions" text null, "field_name" varchar not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.13"
+      }
+      [79]=>
+      array(3) {
+        ["query"]=>
+        string(189) "insert into "modules" ("name", "slug", "version", "description", "skip_xss", "is_frontend", "is_backend", "menu", "enabled", "installed", "is_core") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(307) "a:9:{s:2:"en";s:12:"Streams Core";s:2:"pt";s:14:"Núcleo Fluxos";s:2:"fr";s:10:"Noyau Flux";s:2:"el";s:23:"Πυρήνας Ροών";s:2:"se";s:18:"Streams grundmodul";s:2:"tw";s:14:"Streams 核心";s:2:"cn";s:14:"Streams 核心";s:2:"ar";s:31:"الجداول الأساسية";s:2:"it";s:12:"Streams Core";}"
+          [1]=>
+          string(12) "streams_core"
+          [2]=>
+          string(5) "1.3.0"
+          [3]=>
+          string(553) "a:9:{s:2:"en";s:29:"Core data module for streams.";s:2:"pt";s:37:"Módulo central de dados para fluxos.";s:2:"fr";s:32:"Noyau de données pour les Flux.";s:2:"el";s:113:"Προγραμματιστικός πυρήνας για την λειτουργία ροών δεδομένων.";s:2:"se";s:50:"Streams grundmodul för enklare hantering av data.";s:2:"tw";s:29:"Streams 核心資料模組。";s:2:"cn";s:29:"Streams 核心资料模组。";s:2:"ar";s:57:"وحدة البيانات الأساسية للجداول";s:2:"it";s:17:"Core dello Stream";}"
+          [4]=>
+          bool(true)
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(false)
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(true)
+          [9]=>
+          bool(true)
+          [10]=>
+          bool(true)
+        }
+        ["time"]=>
+        string(4) "0.11"
+      }
+      [80]=>
+      array(3) {
+        ["query"]=>
+        string(36) "drop table if exists "theme_options""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.05"
+      }
+      [81]=>
+      array(3) {
+        ["query"]=>
+        string(320) "create table "theme_options" ("id" integer not null primary key autoincrement, "slug" varchar not null, "title" varchar not null, "description" text not null, "type" varchar not null, "default" varchar not null, "value" varchar not null, "options" text not null, "is_required" tinyint not null, "theme" varchar not null)"
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.19"
+      }
+      [82]=>
+      array(3) {
+        ["query"]=>
+        string(678) "insert into "settings" ("slug", "title", "description", "type", "default", "value", "options", "is_required", "is_gui", "module", "order") select ? as "slug", ? as "title", ? as "description", ? as "type", ? as "default", ? as "value", ? as "options", ? as "is_required", ? as "is_gui", ? as "module", ? as "order" union select ? as "slug", ? as "title", ? as "description", ? as "type", ? as "default", ? as "value", ? as "options", ? as "is_required", ? as "is_gui", ? as "module", ? as "order" union select ? as "slug", ? as "title", ? as "description", ? as "type", ? as "default", ? as "value", ? as "options", ? as "is_required", ? as "is_gui", ? as "module", ? as "order""
+        ["bindings"]=>
+        array(33) {
+          [0]=>
+          string(13) "addons_upload"
+          [1]=>
+          string(25) "Addons Upload Permissions"
+          [2]=>
+          string(50) "Keeps mere admins from uploading addons by default"
+          [3]=>
+          string(4) "text"
+          [4]=>
+          string(1) "0"
+          [5]=>
+          string(1) "0"
+          [6]=>
+          string(0) ""
+          [7]=>
+          int(1)
+          [8]=>
+          int(0)
+          [9]=>
+          string(0) ""
+          [10]=>
+          int(0)
+          [11]=>
+          string(13) "default_theme"
+          [12]=>
+          string(13) "Default Theme"
+          [13]=>
+          string(50) "Select the theme you want users to see by default."
+          [14]=>
+          string(0) ""
+          [15]=>
+          string(7) "default"
+          [16]=>
+          string(7) "default"
+          [17]=>
+          string(15) "func:get_themes"
+          [18]=>
+          int(1)
+          [19]=>
+          int(0)
+          [20]=>
+          string(0) ""
+          [21]=>
+          int(0)
+          [22]=>
+          string(11) "admin_theme"
+          [23]=>
+          string(19) "Control Panel Theme"
+          [24]=>
+          string(39) "Select the theme for the control panel."
+          [25]=>
+          string(0) ""
+          [26]=>
+          string(0) ""
+          [27]=>
+          string(7) "pyrocms"
+          [28]=>
+          string(15) "func:get_themes"
+          [29]=>
+          int(1)
+          [30]=>
+          int(0)
+          [31]=>
+          string(0) ""
+          [32]=>
+          int(0)
+        }
+        ["time"]=>
+        string(4) "0.20"
+      }
+      [83]=>
+      array(3) {
+        ["query"]=>
+        string(189) "insert into "modules" ("name", "slug", "version", "description", "skip_xss", "is_frontend", "is_backend", "menu", "enabled", "installed", "is_core") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        ["bindings"]=>
+        array(11) {
+          [0]=>
+          string(680) "a:24:{s:2:"en";s:7:"Add-ons";s:2:"ar";s:16:"الإضافات";s:2:"br";s:12:"Complementos";s:2:"pt";s:12:"Complementos";s:2:"cs";s:8:"Doplňky";s:2:"da";s:7:"Add-ons";s:2:"de";s:13:"Erweiterungen";s:2:"el";s:16:"Πρόσθετα";s:2:"es";s:9:"Agregados";s:2:"fi";s:9:"Lisäosat";s:2:"fr";s:10:"Extensions";s:2:"he";s:12:"תוספות";s:2:"id";s:7:"Pengaya";s:2:"it";s:7:"Add-ons";s:2:"lt";s:7:"Priedai";s:2:"nl";s:7:"Add-ons";s:2:"pl";s:12:"Rozszerzenia";s:2:"ru";s:20:"Дополнения";s:2:"sl";s:11:"Razširitve";s:2:"tw";s:12:"附加模組";s:2:"cn";s:12:"附加模组";s:2:"hu";s:14:"Bővítmények";s:2:"th";s:27:"ส่วนเสริม";s:2:"se";s:8:"Tillägg";}"
+          [1]=>
+          string(6) "addons"
+          [2]=>
+          string(5) "2.0.0"
+          [3]=>
+          string(2353) "a:24:{s:2:"en";s:59:"Allows admins to see a list of currently installed modules.";s:2:"ar";s:91:"تُمكّن المُدراء من معاينة جميع الوحدات المُثبّتة.";s:2:"br";s:75:"Permite aos administradores ver a lista dos módulos instalados atualmente.";s:2:"pt";s:75:"Permite aos administradores ver a lista dos módulos instalados atualmente.";s:2:"cs";s:68:"Umožňuje administrátorům vidět seznam nainstalovaných modulů.";s:2:"da";s:63:"Lader administratorer se en liste over de installerede moduler.";s:2:"de";s:56:"Zeigt Administratoren alle aktuell installierten Module.";s:2:"el";s:152:"Επιτρέπει στους διαχειριστές να προβάλουν μια λίστα των εγκατεστημένων πρόσθετων.";s:2:"es";s:71:"Permite a los administradores ver una lista de los módulos instalados.";s:2:"fi";s:60:"Listaa järjestelmänvalvojalle käytössä olevat moduulit.";s:2:"fr";s:66:"Permet aux administrateurs de voir la liste des modules installés";s:2:"he";s:160:"נותן אופציה למנהל לראות רשימה של המודולים אשר מותקנים כעת באתר או להתקין מודולים נוספים";s:2:"id";s:57:"Memperlihatkan kepada admin daftar modul yang terinstall.";s:2:"it";s:83:"Permette agli amministratori di vedere una lista dei moduli attualmente installati.";s:2:"lt";s:75:"Vartotojai ir svečiai gali komentuoti jūsų naujienas, puslapius ar foto.";s:2:"nl";s:79:"Stelt admins in staat om een overzicht van geinstalleerde modules te genereren.";s:2:"pl";s:81:"Umożliwiają administratorowi wgląd do listy obecnie zainstalowanych modułów.";s:2:"ru";s:83:"Список модулей, которые установлены на сайте.";s:2:"sl";s:65:"Dovoljuje administratorjem pregled trenutno nameščenih modulov.";s:2:"tw";s:54:"管理員可以檢視目前已經安裝模組的列表";s:2:"cn";s:54:"管理员可以检视目前已经安装模组的列表";s:2:"hu";s:79:"Lehetővé teszi az adminoknak, hogy lássák a telepített modulok listáját.";s:2:"th";s:162:"ช่วยให้ผู้ดูแลระบบดูรายการของโมดูลที่ติดตั้งในปัจจุบัน";s:2:"se";s:67:"Gör det möjligt för administratören att se installerade mouler.";}"
+          [4]=>
+          bool(false)
+          [5]=>
+          bool(false)
+          [6]=>
+          bool(true)
+          [7]=>
+          bool(false)
+          [8]=>
+          bool(true)
+          [9]=>
+          bool(true)
+          [10]=>
+          bool(true)
+        }
+        ["time"]=>
+        string(4) "0.10"
+      }
+      [84]=>
+      array(3) {
+        ["query"]=>
+        string(27) "drop table if exists "blog""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.06"
+      }
+      [85]=>
+      array(3) {
+        ["query"]=>
+        string(38) "drop table if exists "blog_categories""
+        ["bindings"]=>
+        array(0) {
+        }
+        ["time"]=>
+        string(4) "0.04"
+      }
+    }
+    ["pretending":protected]=>
+    bool(false)
+    ["database":protected]=>
+    string(8) ":memory:"
+    ["tablePrefix":protected]=>
+    string(0) ""
+    ["name":protected]=>
+    NULL
+  }
+}
+string(45) "/var/www/pyrocms/system/libraries/Streams.php"
 
-Configuration read from /var/www/pyrocms/tests/modules/phpunit.xml
+Fatal error: Uncaught exception 'RuntimeException' with message 'CI Error: Unable to load the requested class: Streams' in /var/www/pyrocms/tests/mocks/core/common.php on line 110
 
+RuntimeException: CI Error: Unable to load the requested class: Streams in /var/www/pyrocms/tests/mocks/core/common.php on line 110
 
+Call Stack:
+    0.0003     638696   1. {main}() /usr/bin/phpunit:0
+    0.0159    1204648   2. PHPUnit_TextUI_Command::main() /usr/bin/phpunit:46
+    0.0159    1205664   3. PHPUnit_TextUI_Command->run() /usr/share/php/PHPUnit/TextUI/Command.php:129
+    0.0159    1205664   4. PHPUnit_TextUI_Command->handleArguments() /usr/share/php/PHPUnit/TextUI/Command.php:138
+    0.0779    7007824   5. PHPUnit_Util_Configuration->getTestSuiteConfiguration() /usr/share/php/PHPUnit/TextUI/Command.php:657
+    0.0779    7009336   6. PHPUnit_Util_Configuration->getTestSuite() /usr/share/php/PHPUnit/Util/Configuration.php:776
+    0.0804    7400664   7. PHPUnit_Framework_TestSuite->addTestFiles() /usr/share/php/PHPUnit/Util/Configuration.php:860
+    0.0804    7401272   8. PHPUnit_Framework_TestSuite->addTestFile() /usr/share/php/PHPUnit/Framework/TestSuite.php:416
+    0.0840    8232736   9. PHPUnit_Framework_TestSuite->addTestSuite() /usr/share/php/PHPUnit/Framework/TestSuite.php:389
+    0.0840    8234152  10. PHPUnit_Framework_TestSuite->__construct() /usr/share/php/PHPUnit/Framework/TestSuite.php:315
+    0.0843    8468000  11. PHPUnit_Framework_TestSuite->addTestMethod() /usr/share/php/PHPUnit/Framework/TestSuite.php:212
+    0.0844    8468152  12. PHPUnit_Framework_TestSuite::createTest() /usr/share/php/PHPUnit/Framework/TestSuite.php:834
+    0.0854    8670536  13. GroupTest->__construct() /usr/share/php/PHPUnit/Framework/TestSuite.php:473
+    0.0854    8670536  14. ModelTest->__construct() /var/www/pyrocms/tests/modules/GroupTest.php:18
+    0.1129   10266304  15. Module_import->import_all() /var/www/pyrocms/tests/modules/Model_Test.php:33
+    0.1340   10746616  16. Module_import->install() /var/www/pyrocms/tests/modules/Module_import.php:121
+    0.1340   10769544  17. Module_Blog->install() /var/www/pyrocms/tests/modules/Module_import.php:51
+    0.1503   10798760  18. CI_Loader->driver() /var/www/pyrocms/system/cms/modules/blog/details.php:126
+    0.1503   10799064  19. CI_Loader->library() /var/www/pyrocms/system/codeigniter/core/Loader.php:651
+    0.1503   10799064  20. CI_Loader->_ci_load_class() /var/www/pyrocms/system/codeigniter/core/Loader.php:221
+    0.1511   10882088  21. show_error() /var/www/pyrocms/system/codeigniter/core/Loader.php:934
 
-Time: 0 seconds, Memory: 4.25Mb
-
-[30;43m[2KNo tests executed!
-[0m[2K

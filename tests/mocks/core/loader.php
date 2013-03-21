@@ -29,3 +29,7 @@ class Mock_Core_Loader extends CI_Loader {
 	}
 
 }
+
+class Mock_Pyro_Loader extends MY_Loader
+{
+}
