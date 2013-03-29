@@ -42,31 +42,22 @@ foreach(new RecursiveIteratorIterator($rit) as $file){
     }
 }
 // Prep our test environment
-include_once '../mocks/ci_testcase.php';
-include_once '../mocks/core/common.php';
+include_once 'CI_global.php';
+//include_once '../mocks/ci_testcase.php';
+include_once 'mocks/core/common.php';
 include_once '../../system/codeigniter/core/Loader.php';
 include_once '../../system/codeigniter/core/Lang.php';
 include_once '../../system/codeigniter/core/Config.php';
 include_once '../../system/codeigniter/core/Controller.php';
+include_once '../../system/codeigniter/core/Controller.php';
+//include_once '../../system/cms/libraries/MX/Base.php';
 include_once '../../system/cms/core/MY_Loader.php';
-class Mock_CI_Singleton
-{
-    public $load;
-    public function __construct(){
-        $this->load = new Mock_Pyro_Loader();
-    }
-}
-
-
 include_once '../../system/codeigniter/core/Loader.php';
-include_once '../mocks/ci_testcase.php';
-include_once '../mocks/core/common.php';
-include_once '../mocks/core/loader.php';
+//include_once '../mocks/ci_testcase.php';
+//include_once '../mocks/core/common.php';
+//include_once '../mocks/core/loader.php';
 include_once '../mocks/autoloader.php';
-
 spl_autoload_register('autoload');
-global $ci; 
-$ci = new Mock_CI_Singleton();
 unset($dir);
 unset($rit);
 unset($modules_dir);

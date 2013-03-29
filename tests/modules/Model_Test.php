@@ -2,15 +2,15 @@
 defined('PROJECT_BASE') OR define('PROJECT_BASE', realpath($dir.'/../../').'/');
 include_once PROJECT_BASE.'vendor/autoload.php';
 include_once('Module_import.php');
+include_once('../mocks/ci_testcase.php');
 use Pyro\Module\Navigation\Model\Group as Group;
 use Pyro\Module\Navigation\Model\Link as Link;
-Use Iluminate\Database\SQLiteConnection;
+use Iluminate\Database\SQLiteConnection;
 use Capsule\Database\Connection;
-
 /**
  * @backupGlobals disabled
  */
-class ModelTest extends PHPUnit_Framework_TestCase
+class ModelTest extends CI_TestCase 
 {
     protected $conn;
     public function __construct()

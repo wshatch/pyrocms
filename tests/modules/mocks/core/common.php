@@ -8,9 +8,9 @@ if ( ! function_exists('get_instance'))
 	{
         //$test = new Mock_CI_Singleton();
         //$test = new StdClass();
-		$test = CI_TestCase::instance();
-		$test = $test->ci_instance();
-		return $test;
+		/*$test = CI_TestCase::instance();
+		$test = $test->ci_instance();*/
+		return CI::$APP;
 	}
 }
 
@@ -21,8 +21,9 @@ if ( ! function_exists('get_config'))
 	function &get_config()
 	{
 
-		$test = new CI_TestCase();
-		$config = $test->ci_get_config();
+		//$test = new CI_TestCase();
+        var_dump($CI);
+		$config = $CI->ci_get_config();
 		return $config;
 	}
 }
@@ -52,9 +53,8 @@ if ( ! function_exists('load_class'))
 		{
 			throw new Exception('Not Implemented: Non-core load_class()');
 		}
-
-		$test = CI_TestCase::instance();
-
+        
+		$test = $CI->APP;
 		$obj =& $test->ci_core_class($class);
 
 		if (is_string($obj))
@@ -151,7 +151,7 @@ if ( ! function_exists('is_loaded'))
 {
 	function is_loaded()
 	{
-		//throw new Exception('Bad Isolation: mock up environment');
+		throw new Exception('Bad Isolation: mock up environment');
 	}
 }
 
