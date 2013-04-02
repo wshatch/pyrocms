@@ -19,8 +19,8 @@ class WYSIWYG_Controller extends MY_Controller
 
 		// Not logged in or not an admin and don't have permission to see files
 		if ( ! $this->current_user or
-			($this->current_user->group !== 'admin' AND
-			( ! isset($this->permissions['files']) OR
+			($this->current_user->group !== 'admin' AND 
+			($this->current_user->hasAccess('files')) OR
 			  ! isset($this->permissions['files']['wysiwyg']))))
 		{
 			$this->load->language('files/files');
@@ -30,7 +30,8 @@ class WYSIWYG_Controller extends MY_Controller
 		ci()->admin_theme = $this->theme_m->get_admin();
 
 		// Using a bad slug? Weak
-		if (empty($this->admin_theme->slug)) {
+		if (empty($this->admin_theme->slug))
+		{
 			show_error('This site has been set to use an admin theme that does not exist.');
 		}
 

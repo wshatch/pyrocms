@@ -17,6 +17,13 @@ class Folder extends \Illuminate\Database\Eloquent\Model
     protected $table = 'file_folders';
 
     /**
+     * The attributes that aren't mass assignable
+     *
+     * @var array
+     */
+    protected $guarded = array();
+
+    /**
      * Disable updated_at and created_at on table
      *
      * @var boolean
@@ -50,7 +57,7 @@ class Folder extends \Illuminate\Database\Eloquent\Model
      * @param  string $slug The slug of the folder to retrieve
      * @return object
      */
-    public static function findBySlugAndNotId($slug,$id)
+    public static function findBySlugAndNotId($slug, $id)
     {
         return static::where('slug', '=', $slug)
                         ->where('id','!=',$id)
@@ -63,7 +70,7 @@ class Folder extends \Illuminate\Database\Eloquent\Model
      * @param  string $direction The direction to sort results
      * @return void
      */
-    public static function findAndSortBySort($direction = 'asc')
+    public static function findAllOrdered($direction = 'asc')
     {
         return static::orderBy('sort', $direction)->get();
     }
@@ -76,7 +83,7 @@ class Folder extends \Illuminate\Database\Eloquent\Model
      */
     public static function findByParent($parent_id = 0)
     {
-        return static::where('parent_id','=',$parent_id)->get();
+        return static::where('parent_id', '=', $parent_id)->get();
     }
 
     /**
@@ -85,7 +92,7 @@ class Folder extends \Illuminate\Database\Eloquent\Model
      * @param  int  $parent_id
      * @return void
      */
-    public static function findByParentAndSortByName($parent_id = 0)
+    public static function findByParentByName($parent_id = 0)
     {
         return static::where('parent_id','=',$parent_id)->orderBy('name')->get();
     }
@@ -96,7 +103,7 @@ class Folder extends \Illuminate\Database\Eloquent\Model
      * @param  int  $parent_id
      * @return void
      */
-    public static function findByParentAndSortBySort($parent_id = 0)
+    public static function findByParentBySort($parent_id = 0)
     {
         return static::where('parent_id','=',$parent_id)->orderBy('sort')->get();
     }

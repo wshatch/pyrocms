@@ -7,7 +7,6 @@ use Pyro\Module\Groups;
 /**
  * Navigation model for the navigation module.
  *
- * @author      Phil Sturgeon
  * @author      PyroCMS Dev Team
  * @package     PyroCMS\Core\Modules\Navigation\Models
  */
@@ -19,6 +18,13 @@ class Link extends \Illuminate\Database\Eloquent\Model
      * @var string
      */
     protected $table = 'navigation_links';
+
+    /**
+     * The attributes that aren't mass assignable
+     *
+     * @var array
+     */
+    protected $guarded = array();
 
     /**
      * Disable updated_at and created_at on table

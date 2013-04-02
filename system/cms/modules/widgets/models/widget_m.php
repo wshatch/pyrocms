@@ -10,11 +10,11 @@ class Widget_m extends CI_Model
 {
 	public function find($id)
 	{
-		$instance = $this->pdb
+		$instance = ci()->pdb
 			->table('widget_areas wa')
 			->select('w.id, w.slug, wi.id as instance_id, wi.title as instance_title, w.title, wi.widget_area_id, wa.slug as widget_area_slug, wi.options')
-			->join('widget_instances wi', 'wa.id = wi.widget_area_id')
-			->join('widgets w', 'wi.widget_id = w.id')
+			->join('widget_instances wi', 'wa.id', '=', 'wi.widget_area_id')
+			->join('widgets w', 'wi.widget_id', '=', 'w.id')
 			->where('wi.id', $id)
 			->take(1)
 			->first();
@@ -28,13 +28,13 @@ class Widget_m extends CI_Model
 
 	public function findByArea($slug)
 	{
-		$result = $this->pdb
-			->table('widget_areas wa')
-			->select('wi.id, w.slug, wi.id as instance_id, wi.title as instance_title, w.title, wi.widget_area_id, wa.slug as widget_area_slug, wi.options')
-			->join('widget_instances wi', 'wa.id = wi.widget_area_id')
-			->join('widgets w', 'wi.widget_id = w.id')
-			->where('wa.slug', $slug)
-			->orderBy('wi.order')
+		$result = ci()->pdb
+			->table('widget_areas')
+			->select('widget_instances.id', 'widgets.slug', 'widget_instances.id as instance_id', 'widget_instances.title as instance_title', 'widgets.title', 'widget_instances.widget_area_id', 'widget_areas.slug as widget_area_slug', 'widget_instances.options')
+			->join('widget_instances', 'widget_areas.id', '=', 'widget_instances.widget_area_id')
+			->join('widgets', 'widget_instances.widget_id', '=', 'widgets.id')
+			->where('widget_areas.slug', $slug)
+			->orderBy('widget_instances.order')
 			->get();
 
 		if ($result) {
@@ -53,8 +53,8 @@ class Widget_m extends CI_Model
 		$this->db
 			->select('wi.id, w.slug, wi.id as instance_id, wi.title as instance_title, w.title, wi.widget_area_id, wa.slug as widget_area_slug, wi.options')
 			->from('widget_areas wa')
-			->join('widget_instances wi', 'wa.id = wi.widget_area_id')
-			->join('widgets w', 'wi.widget_id = w.id')
+			->join('widget_instances wi', 'wa.id', '=', 'wi.widget_area_id')
+			->join('widgets w', 'wi.widget_id', '=', 'w.id')
 			->where_in('wa.slug', $slug)
 			->order_by('wi.order');
 
@@ -145,7 +145,7 @@ class Widget_m extends CI_Model
 			'version' 		=> $input['version'],
 			'enabled' 		=> $input['enabled'],
 			'order' 		=> $input['order'],
-			'updated_on'	=> now()
+			'updated_on'	=> time()
 		));
 	}
 
@@ -164,7 +164,7 @@ class Widget_m extends CI_Model
 				'author' 		=> $input['author'],
 				'website' 		=> $input['website'],
 				'version' 		=> $input['version'],
-				'updated_on'	=> now()
+				'updated_on'	=> time()
 			));
 	}
 
@@ -240,7 +240,7 @@ class Widget_m extends CI_Model
 			'widget_area_id'	=> $input['widget_area_id'],
 			'options'			=> $input['options'],
 			'order'				=> $order,
-			'created_on'		=> now(),
+			'created_on'		=> time(),
 		));
 	}
 
@@ -252,7 +252,7 @@ class Widget_m extends CI_Model
         	'title'				=> $input['title'],
 			'widget_area_id'	=> $input['widget_area_id'],
 			'options'			=> $input['options'],
-			'updated_on'		=> now()
+			'updated_on'		=> time()
 		));
 	}
 

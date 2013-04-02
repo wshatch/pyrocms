@@ -105,8 +105,8 @@ class Admin extends Admin_Controller
 		$all_modules = $this->module_m->get_all(array('is_frontend'=>true));
 
 		//only allow modules that user has permissions for
-		foreach ($all_modules as $module) {
-			if (in_array($module['slug'], $this->permissions) or $this->current_user->group == 'admin') {
+		foreach($all_modules as $module) {
+			if ($this->current_user->hasAccess($module['slug']) or $this->current_user->isSuperUser()) {
 				$modules[] = $module;
 			}
 		}

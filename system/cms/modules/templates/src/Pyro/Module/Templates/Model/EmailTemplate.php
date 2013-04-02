@@ -16,6 +16,13 @@ class EmailTemplate extends \Illuminate\Database\Eloquent\Model
     protected $table = 'email_templates';
 
     /**
+     * The attributes that aren't mass assignable
+     *
+     * @var array
+     */
+    protected $guarded = array();
+
+    /**
      * Disable updated_at and created_at on table
      *
      * @var boolean
@@ -31,7 +38,14 @@ class EmailTemplate extends \Illuminate\Database\Eloquent\Model
      */
     public static function findBySlug($slug)
     {
-        return static::where('slug', '=', $slug)->get();
+        $templates = static::where('slug', '=', $slug)->get();
+        
+        $data = array();
+        foreach ($templates as $template) {
+            $data[$template->lang] = $template;
+        }
+
+        return $data;
     }
 
     /**

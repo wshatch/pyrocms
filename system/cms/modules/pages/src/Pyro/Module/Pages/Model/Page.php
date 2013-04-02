@@ -19,6 +19,13 @@ class Page extends \Illuminate\Database\Eloquent\Model
     protected $table = 'pages';
 
     /**
+     * The attributes that aren't mass assignable
+     *
+     * @var array
+     */
+    protected $guarded = array();
+
+    /**
      * Disable updated_at and created_at on table
      *
      * @var boolean
@@ -205,7 +212,7 @@ class Page extends \Illuminate\Database\Eloquent\Model
 			$page = false;
 			$i = 0;
 
-			while ( ! $page and $uri and $i < 15){ /* max of 15 in case it all goes wrong (this shouldn't ever be used) { */
+			while ( ! $page and $uri and $i < 15) { /* max of 15 in case it all goes wrong (this shouldn't ever be used) */
 				$page = static::where('uri', '=', $uri)
 					->with('type')
 					->take(1)
@@ -258,7 +265,9 @@ class Page extends \Illuminate\Database\Eloquent\Model
 
 			if ($stream) {
 				if ($entry = ci()->streams->entries->get_entry($page->entry_id, $stream->stream_slug, $stream->stream_namespace)) {
-					$page = (object) array_merge((array) $entry, (array) $page);
+					foreach ($entry as $key => $value) {
+						$page->{$key} = $value;
+					}
 				}
 			}
 		}

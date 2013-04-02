@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+
 /**
  * The admin class is basically the main controller for the backend.
  *
@@ -60,13 +61,14 @@ class Admin extends Admin_Controller
 		$this->form_validation->set_rules($this->validation_rules);
 
 		// If the validation worked, or the user is already logged in
-		if ($this->form_validation->run() or $this->ion_auth->logged_in()) {
+		if ($this->form_validation->run() or $this->sentry->check()) {
 			// if they were trying to go someplace besides the
+
 			// dashboard we'll have stored it in the session
 			$redirect = $this->session->userdata('admin_redirect');
 			$this->session->unset_userdata('admin_redirect');
 
-			redirect($redirect ? $redirect : 'admin');
+			redirect($redirect ?: 'admin');
 		}
 
 		$this->template
@@ -80,7 +82,7 @@ class Admin extends Admin_Controller
 	public function logout()
 	{
 		$this->load->language('users/user');
-		$this->ion_auth->logout();
+		$this->sentry->logout();
 		$this->session->set_flashdata('success', lang('user:logged_out'));
 		redirect('admin/login');
 	}
@@ -94,14 +96,43 @@ class Admin extends Admin_Controller
 	 */
 	public function _check_login($email)
 	{
-		if ($this->ion_auth->login($email, $this->input->post('password'), (bool) $this->input->post('remember'))) {
-			Events::trigger('post_admin_login');
+		$password = $this->input->post('password');
 
-			return true;
+		try {
+
+			$this->sentry->authenticate(array(
+				'email' => $email,
+				'password' => $password,
+			), (bool) $this->input->post('remember'));
+
+		} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+
+			// Could not log in with password. Maybe its an old style pass?
+			try
+			{
+				// Try logging in with this double-hashed password
+				$this->sentry->authenticate(array(
+					'email' => $email,
+					'password' => whacky_old_password_hasher($email, $password),
+				), (bool) $this->input->post('remember'));
+
+			} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+
+				// That madness didn't work, error
+				$this->form_validation->set_message('_check_login', 'Incorrect login.');
+				return false;
+			}
+
+		} catch (Exception $e) {
+
+			var_dump($e);
+			$this->form_validation->set_message('_check_login', $e->getMessage());
+			return false;
 		}
 
-		$this->form_validation->set_message('_check_login', $this->ion_auth->errors());
-		return false;
+		Events::trigger('post_admin_login');
+
+		return true;
 	}
 
 	/**

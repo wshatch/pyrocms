@@ -15,7 +15,14 @@ class Applied extends Model
      *
      * @var string
      */
-    public $table = 'keywords_applied';
+    protected $table = 'keywords_applied';
+
+    /**
+     * The attributes that aren't mass assignable
+     *
+     * @var array
+     */
+    protected $guarded = array();
 
     /**
      * Disable updated_at and created_at on table
@@ -44,9 +51,15 @@ class Applied extends Model
      */
     public static function getNamesByHash($hash)
     {
+        $keyword_ids = static::where('hash', $hash)->lists('keyword_id');
+        
+        if ( ! $keyword_ids) {
+            return array();    
+        }
+
         return Keyword::select('name')
-                        ->whereIn('id', static::where('hash', $hash)->lists('keyword_id'))
-                        ->get();
+            ->whereIn('id', $keyword_ids)
+            ->get();
     }
 
     /**

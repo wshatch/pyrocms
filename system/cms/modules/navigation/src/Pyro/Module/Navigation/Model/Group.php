@@ -3,7 +3,6 @@
 /**
  * Navigation model for the navigation module.
  *
- * @author      Phil Sturgeon
  * @author      PyroCMS Dev Team
  * @package     PyroCMS\Core\Modules\Navigation\Models
  */
@@ -15,6 +14,13 @@ class Group extends \Illuminate\Database\Eloquent\Model
      * @var string
      */
     protected $table = 'navigation_groups';
+
+    /**
+     * The attributes that aren't mass assignable
+     *
+     * @var array
+     */
+    protected $guarded = array();
 
     /**
      * Disable updated_at and created_at on table
@@ -40,7 +46,7 @@ class Group extends \Illuminate\Database\Eloquent\Model
      */
     public static function getGroupOptions()
     {
-        return self::lists('title', 'id');
+        return static::lists('title', 'id');
     }
 
     /**
@@ -52,7 +58,7 @@ class Group extends \Illuminate\Database\Eloquent\Model
      */
     public static function findGroupByAbbrev($value)
     {
-        return self::where('abbrev', $value)->first();
+        return static::where('abbrev', $value)->first();
     }
 
 }

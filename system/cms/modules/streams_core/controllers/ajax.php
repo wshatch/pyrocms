@@ -117,14 +117,15 @@ class Ajax extends MY_Controller
 
 		// Set the count by the offset for
 		// paginated lists
-		$order_count = $this->input->post('offset')+1;
-
+		$order_count = $this->input->post('offset') + 1;
+		
 		foreach ($ids as $id) {
-			$this->db
-				->where('id', $id)
-				->update('data_field_assignments', array('sort_order' => $order_count));
-
-			$order_count++;
+			$this->pdb
+				->table('data_field_assignments')
+				->where('id', '=', $id)
+				->update(array('sort_order' => $order_count));
+		
+			++$order_count;
 		}
 	}
 
@@ -152,10 +153,11 @@ class Ajax extends MY_Controller
 		$order_count = $this->input->post('offset')+1;
 
 		foreach ($ids as $id) {
-			$this->db
-					->limit(1)
-					->where('id', $id)
-					->update($stream->stream_prefix.$stream->stream_slug, array('ordering_count' => $order_count));
+			ci()->pdb
+				->table($stream->stream_prefix.$stream->stream_slug)
+				->take(1)
+				->where('id', $id)
+				->update(array('ordering_count' => $order_count));
 
 			++$order_count;
 		}
@@ -177,7 +179,7 @@ class Ajax extends MY_Controller
 	private function _check_module_accessibility()
 	{
 		// We always let the admins in
-		if ($this->current_user->group === 'admin') {
+		if ($this->current_user->inSuperUser()) {
 			return;
 		}
 

@@ -17,6 +17,13 @@ class File extends \Illuminate\Database\Eloquent\Model
     protected $table = 'files';
 
     /**
+     * The attributes that aren't mass assignable
+     *
+     * @var array
+     */
+    protected $guarded = array();
+
+    /**
      * Disable updated_at and created_at on table
      *
      * @var boolean
@@ -50,9 +57,10 @@ class File extends \Illuminate\Database\Eloquent\Model
      * @param  int  $parent_id
      * @return void
      */
-    public static function findByFolderIdAndSortBySort($parent_id = 0)
+    public static function findByFolderIdBySort($parent_id = 0)
     {
-        return static::where('folder_id','=',$parent_id)->orderBy('sort')->get();
+        return static::where('folder_id','=',$parent_id)
+            ->orderBy('sort')->get();
     }
 
     /**
