@@ -123,7 +123,7 @@ class Module_Blog extends Module
 			$table->string('slug', 100)->nullable()->unique();
 			$table->string('title', 100)->nullable()->unique();
 		});
-
+        var_dump(get_parent_class($this));
 		$this->load->driver('Streams');
 		$this->streams->utilities->remove_namespace('blogs');
 
