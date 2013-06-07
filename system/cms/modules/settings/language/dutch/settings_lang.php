@@ -67,8 +67,6 @@ $lang['settings:records_per_page_desc'] 		= 'Hoeveel records zal de website per 
 $lang['settings:rss_feed_items'] 				= 'Feed item teller';
 $lang['settings:rss_feed_items_desc'] 			= 'Hoeveel items worden er getoond in de RSS/blog feeds?';
 
-$lang['settings:require_lastname'] 				= 'Achternamen verplicht';
-$lang['settings:require_lastname_desc'] 		= 'Wilt u een ingevulde achternaam als verplicht veld?';
 
 $lang['settings:enable_profiles'] 				= 'Gebruikersprofielen';
 $lang['settings:enable_profiles_desc'] 			= 'Staat gebruikers in staat om een profiel toe te voegen en te bewerken.';
@@ -84,15 +82,6 @@ $lang['settings:ga_profile_desc']				= 'Profiel-ID voor deze website in Google A
 
 $lang['settings:ga_tracking'] 					= 'Google Tracking Code';
 $lang['settings:ga_tracking_desc']				= 'Voer uw Google Analytics Tracking Code in voor het activeren van Google Analytics om datacaptatie te bekijken. E.g: UA-19483569-6';
-
-$lang['settings:twitter_username'] 				= 'Gebruikersnaam';
-$lang['settings:twitter_username_desc'] 		= 'Twitter gebruikersnaam.';
-
-$lang['settings:twitter_feed_count'] 			= 'Feed Teller';
-$lang['settings:twitter_feed_count_desc'] 		= 'Hoeveel tweets moeten getoond worden in het Twitter feed blok?';
-
-$lang['settings:twitter_cache'] 				= 'Cache tijd';
-$lang['settings:twitter_cache_desc'] 			= 'Hoeveel minuten moeten de Tweets tijdelijk bewaard worden?';
 
 $lang['settings:akismet_api_key'] 				= 'Akismet API Sleutel';
 $lang['settings:akismet_api_key_desc'] 			= 'Akismet is een spam-blokker van het WordPress team. Het houdt spam onder controle zonder gebruikers te dwingen een mens-checkend CAPTCHA formulier te gebruiken.';
@@ -133,8 +122,8 @@ $lang['settings:ckeditor_config_desc']          = 'U kunt een lijst van configur
 $lang['settings:enable_registration']           = 'Schakel gebruikersregistratie in';
 $lang['settings:enable_registration_desc']      = 'Sta gebruikers toe zich in te schrijven op uw site.';
 
-$lang['settings:profile_visibility']            = 'Profile Visibility'; #translate
-$lang['settings:profile_visibility_desc']       = 'Specify who can view user profiles on the public site'; #translate
+$lang['settings:profile_visibility']            = 'Zichtbaarheid profiel';
+$lang['settings:profile_visibility_desc']       = 'Bepaal wie de gebruikersprofielen kan zien op de publieke site.';
 
 $lang['settings:cdn_domain']                    = 'CDN Domein';
 $lang['settings:cdn_domain_desc']               = 'CDN domain kan bestanden plaatsen naar verschillende servers, zoals Amazon CloudFront or MaxCDN.';
@@ -145,7 +134,6 @@ $lang['settings:section_integration']			= 'Integratie';
 $lang['settings:section_comments']				= 'Reacties';
 $lang['settings:section_users']					= 'Gebruikers';
 $lang['settings:section_statistics']			= 'Statistieken';
-$lang['settings:section_twitter']				= 'Twitter';
 $lang['settings:section_files']					= 'Bestanden';
 
 #checkbox and radio options
@@ -161,10 +149,10 @@ $lang['settings:form_option_Text Only']			= 'Alleen Text';
 $lang['settings:form_option_Allow Markdown']	= 'Markdown Toestaan';
 $lang['settings:form_option_Yes']				= 'Ja';
 $lang['settings:form_option_No']				= 'Nee';
-$lang['settings:form_option_profile_public']	= 'Visible to everybody'; #translate
-$lang['settings:form_option_profile_owner']		= 'Only visible to the profile owner'; #translate
-$lang['settings:form_option_profile_hidden']	= 'Never visible'; #translate
-$lang['settings:form_option_profile_member']	= 'Visible to any logged in user'; #translate
+$lang['settings:form_option_profile_public']	= 'Zichtbaar voor iedereen';
+$lang['settings:form_option_profile_owner']		= 'Alleen zichtbaar voor de eigenaar';
+$lang['settings:form_option_profile_hidden']	= 'Niet zichtbaar';
+$lang['settings:form_option_profile_member']	= 'Zichtbaar voor ingelogde gebruikers';
 $lang['settings:form_option_activate_by_email']  			= 'Activatie middels email';
 $lang['settings:form_option_activate_by_admin']				= 'Activatie door een admin';
 $lang['settings:form_option_no_activation']				= 'Geen activatie';

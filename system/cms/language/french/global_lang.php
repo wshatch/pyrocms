@@ -53,7 +53,7 @@ $lang['required_error_label'] 			= 'Champ obligatoire';
 $lang['note_label'] 					= 'Note';
 $lang['success_label'] 					= 'Succès';
 $lang['global:fields']					= 'Champs';
-$lang['global:custom_fields']			= 'Custom Fields'; #translate
+$lang['global:custom_fields']			= 'Champs personnalisés';
 
 $lang['login_title'] 					= 'Connexion';
 $lang['global:fatal_error'] 			= 'Erreur Fatale, CMS déjà installé&nbsp;?';
@@ -113,5 +113,6 @@ $lang['global:plugins']					= 'Plugins';
 $lang['global:plugin']					= 'Plugin';
 
 $lang['global:options']					= 'Options';
+$lang['global:plain-text']				= 'Texte intégral';
 
-/* End of file main_lang.php */
+/* End of file global_lang.php */

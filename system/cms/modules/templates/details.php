@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Pyro\Module\Addons\AbstractModule;
 
 /**
  * Templates Module
@@ -6,8 +8,8 @@
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Templates
  */
-class Module_Templates extends Module {
-
+class Module_Templates extends AbstractModule
+{
 	public $version = '1.1.0';
 
 	public function info()
@@ -21,6 +23,7 @@ class Module_Templates extends Module {
 				'da' => 'Email skabeloner',
 				'el' => 'Δυναμικά email',
 				'es' => 'Plantillas de email',
+                            'fa' => 'قالب های ایمیل',
 				'fr' => 'Modèles d\'emails',
 				'he' => 'תבניות',
 				'id' => 'Template Email',
@@ -43,6 +46,7 @@ class Module_Templates extends Module {
 				'da' => 'Opret, redigér og gem dynamiske emailskabeloner.',
 				'el' => 'Δημιουργήστε, επεξεργαστείτε και αποθηκεύστε δυναμικά email.',
 				'es' => 'Crear, editar y guardar plantillas de email dinámicas',
+                            'fa' => 'ایحاد، ویرایش و ذخیره ی قالب های ایمیل به صورت پویا',
 				'fr' => 'Créer, éditer et sauver dynamiquement des modèles d\'emails',
 				'he' => 'ניהול של תבניות דואר אלקטרוני',
 				'id' => 'Membuat, mengedit, dan menyimpan template email dinamis',
@@ -71,33 +75,28 @@ class Module_Templates extends Module {
 		);
 	}
 
-	public function install()
+	public function install($pdb, $schema)
 	{
-		$this->dbforge->drop_table('email_templates');
+		$schema->dropIfExists('email_templates');
 
-		$tables = array(
-			'email_templates' => array(
-				'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true, 'primary' => true,),
-				'slug' => array('type' => 'VARCHAR', 'constraint' => 100, 'unique' => 'slug_lang',),
-				'name' => array('type' => 'VARCHAR', 'constraint' => 100,), // @todo rename this to 'title' to keep coherency with the rest of the modules
-				'description' => array('type' => 'VARCHAR', 'constraint' => 255,), // @todo change this to TEXT to be coherent with the rest of the modules
-				'subject' => array('type' => 'VARCHAR', 'constraint' => 255,),
-				'body' => array('type' => 'TEXT'),
-				'lang' => array('type' => 'VARCHAR', 'constraint' => 2, 'null' => true, 'unique' => 'slug_lang',),
-				'is_default' => array('type' => 'INT', 'constraint' => 1, 'default' => 0,),
-				'module' => array('type' => 'VARCHAR', 'constraint' => 50, 'default' => '',),
-			),
-		);
+		$schema->create('email_templates', function($table) {
+			$table->increments('id');
+			$table->string('slug', 100);
+			$table->string('name', 100);       // @todo rename this to 'title' to keep coherency with the rest of the modules
+			$table->text('description'); // @todo change this to TEXT to be coherent with the rest of the modules
+			$table->string('subject', 255);
+			$table->text('body');
+			$table->string('lang', 2)->nullable();
+			$table->boolean('is_default')->default(false);
+			$table->string('module', 50)->default('');
 
-		if ( !$this->install_tables($tables))
-		{
-			return false;
-		}
+			$table->unique(array('slug', 'lang'), 'slug_lang');
+		});
 
 		// Insert the default email templates
 
 		// @todo move this to the comments module
-		$this->db->insert('email_templates',array(
+		$pdb->table('email_templates')->insert(array(
 			'slug' => 'comments',
 			'name' => 'Comment Notification',
 			'description' => 'Email that is sent to admin when someone creates a comment',
@@ -111,12 +110,12 @@ class Module_Templates extends Module {
 				<p>{{ comment }}</p>
 				<p>View Comment: {{ redirect_url }}</p>",
 			'lang' => 'en',
-			'is_default' => 1,
+			'is_default' => true,
 			'module' => 'comments'
 		));
 
 		// @todo move this to the contact module
-		$this->db->insert('email_templates',array(
+		$pdb->table('email_templates')->insert(array(
 			'slug' => 'contact',
 			'name' => 'Contact Notification',
 			'description' => 'Template for the contact form',
@@ -133,12 +132,12 @@ class Module_Templates extends Module {
 
 				{{ email }}',
 			'lang' => 'en',
-			'is_default' => 1,
+			'is_default' => true,
 			'module' => 'pages'
 		));
 
 		// @todo move this to the users module
-		$this->db->insert('email_templates',array(
+		$pdb->table('email_templates')->insert(array(
 			'slug' => 'registered',
 			'name' => 'New User Registered',
 			'description' => 'Email sent to the site contact e-mail when a new user registers',
@@ -149,12 +148,12 @@ class Module_Templates extends Module {
 				<strong>User Agent: {{ sender_agent }}</strong>
 				</p>',
 			'lang' => 'en',
-			'is_default' => 1,
+			'is_default' => true,
 			'module' => 'users'
 		));
 
 		// @todo move this to the users module
-		$this->db->insert('email_templates',array(
+		$pdb->table('email_templates')->insert(array(
 			'slug' => 'activation',
 			'name' => 'Activation Email',
 			'description' => 'The email which contains the activation code that is sent to a new user',
@@ -167,12 +166,12 @@ class Module_Templates extends Module {
 				<p><a href="{{ url:site }}users/activate">{{ url:site }}users/activate</a></p>
 				<p><strong>Activation Code:</strong> {{ activation_code }}</p>',
 			'lang' => 'en',
-			'is_default' => 1,
+			'is_default' => true,
 			'module' => 'users'
 		));
 
 		// @todo move this to the users module
-		$this->db->insert('email_templates',array(
+		$pdb->table('email_templates')->insert(array(
 			'slug' => 'forgotten_password',
 			'name' => 'Forgotten Password Email',
 			'description' => 'The email that is sent containing a password reset code',
@@ -181,12 +180,12 @@ class Module_Templates extends Module {
 				<p>It seems you have requested a password reset. Please click this link to complete the reset: <a href="{{ url:site }}users/reset_pass/{{ user:forgotten_password_code }}">{{ url:site }}users/reset_pass/{{ user:forgotten_password_code }}</a></p>
 				<p>If you did not request a password reset please disregard this message. No further action is necessary.</p>',
 			'lang' => 'en',
-			'is_default' => 1,
+			'is_default' => true,
 			'module' => 'users'
 		));
 
 		// @todo move this to the users module
-		$this->db->insert('email_templates',array(
+		$pdb->table('email_templates')->insert(array(
 			'slug' => 'new_password',
 			'name' => 'New Password Email',
 			'description' => 'After a password is reset this email is sent containing the new password',
@@ -195,14 +194,14 @@ class Module_Templates extends Module {
 				<p>Your new password is: {{ new_password }}</p>
 				<p>After logging in you may change your password by visiting <a href="{{ url:site }}edit-profile">{{ url:site }}edit-profile</a></p>',
 			'lang' => 'en',
-			'is_default' => 1,
+			'is_default' => true,
 			'module' => 'users'
 		));
 
 		return true;
 	}
 
-	public function uninstall()
+	public function uninstall($pdb, $schema)
 	{
 		// This is a core module, lets keep it around.
 		return false;

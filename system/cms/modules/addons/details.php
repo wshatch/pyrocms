@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
 
 /**
  * Addons Module
@@ -6,7 +6,7 @@
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Modules
  */
-class Module_Addons extends Module
+class Module_Addons extends Pyro\Module\Addons\AbstractModule
 {
 	public $version = '2.0.0';
 
@@ -23,6 +23,7 @@ class Module_Addons extends Module
 				'de' => 'Erweiterungen',
 				'el' => 'Πρόσθετα',
 				'es' => 'Agregados',
+                                'fa' =>'افزونه ها',
 				'fi' => 'Lisäosat',
 				'fr' => 'Extensions',
 				'he' => 'תוספות',
@@ -49,6 +50,7 @@ class Module_Addons extends Module
 				'de' => 'Zeigt Administratoren alle aktuell installierten Module.',
 				'el' => 'Επιτρέπει στους διαχειριστές να προβάλουν μια λίστα των εγκατεστημένων πρόσθετων.',
 				'es' => 'Permite a los administradores ver una lista de los módulos instalados.',
+                            'fa' => 'مشاهده لیست افزونه ها و مدیریت آنها برای ادمین سایت',
 				'fi' => 'Listaa järjestelmänvalvojalle käytössä olevat moduulit.',
 				'fr' => 'Permet aux administrateurs de voir la liste des modules installés',
 				'he' => 'נותן אופציה למנהל לראות רשימה של המודולים אשר מותקנים כעת באתר או להתקין מודולים נוספים',
@@ -67,7 +69,6 @@ class Module_Addons extends Module
 			),
 			'frontend' => false,
 			'backend' => true,
-			'menu' => false,
 
 			'sections' => array(
 				'modules' => array(
@@ -92,10 +93,9 @@ class Module_Addons extends Module
 				),
 			),
 		);
-	
+
 		// Add upload options to various modules
-		if ( ! class_exists('Module_import') and Settings::get('addons_upload'))
-		{
+		if ( ! class_exists('Module_import') and Settings::get('addons_upload')) {
 			$info['sections']['modules']['shortcuts'] = array(
 				array(
 					'name' => 'global:upload',
@@ -108,7 +108,7 @@ class Module_Addons extends Module
 				array(
 					'name' => 'global:upload',
 					'uri' => 'admin/addons/themes/upload',
-					'class' => 'add',
+					'class' => 'add modal',
 				),
 			);
 		}
@@ -129,84 +129,89 @@ class Module_Addons extends Module
 		add_admin_menu_place('lang:cp:nav_addons', 6);
 	}
 
-	public function install()
+	public function install($pdb, $schema)
 	{
-		$this->dbforge->drop_table('theme_options');
+		$schema = $this->pdb->getSchemaBuilder();
 
-		$tables = array(
-			'theme_options' => array(
-				'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true, 'primary' => true),
-				'slug' => array('type' => 'VARCHAR', 'constraint' => 30),
-				'title' => array('type' => 'VARCHAR', 'constraint' => 100),
-				'description' => array('type' => 'TEXT', 'constraint' => 100),
-				'type' => array('type' => 'set', 'constraint' => array('text', 'textarea', 'password', 'select', 'select-multiple', 'radio', 'checkbox', 'colour-picker')),
-				'default' => array('type' => 'VARCHAR', 'constraint' => 255),
-				'value' => array('type' => 'VARCHAR', 'constraint' => 255),
-				'options' => array('type' => 'TEXT'),
-				'is_required' => array('type' => 'INT', 'constraint' => 1),
-				'theme' => array('type' => 'VARCHAR', 'constraint' => 50),
-			),
-		);
+        $schema->dropIfExists('themes');
 
-		if ( ! $this->install_tables($tables)) {
-			return false;
-		}
+        $schema->create('themes', function($table) {
+            $table->increments('id');
+            $table->integer('site_id')->nullable();
+            $table->string('slug');
+            $table->string('name');
+            $table->text('description');
+            $table->string('author')->nullable();
+            $table->string('author_website')->nullable();
+            $table->string('website')->nullable();
+            $table->string('version')->default('1.0.0');
+            $table->boolean('enabled')->default(true);
+            $table->integer('order')->default(0);
+            $table->integer('created_on');
+            $table->integer('updated_on')->nullable();
+        });
 
-		// Install settings
-		$settings = array(
-			array(
-				'slug' => 'addons_upload',
-				'title' => 'Addons Upload Permissions',
-				'description' => 'Keeps mere admins from uploading addons by default',
-				'type' => 'text',
-				'default' => '0',
-				'value' => '0',
-				'options' => '',
-				'is_required' => 1,
-				'is_gui' => 0,
-				'module' => '',
-				'order' => 0,
-			),
-			array(
-				'slug' => 'default_theme',
-				'title' => 'Default Theme',
-				'description' => 'Select the theme you want users to see by default.',
-				'type' => '',
-				'default' => 'default',
-				'value' => 'default',
-				'options' => 'func:get_themes',
-				'is_required' => 1,
-				'is_gui' => 0,
-				'module' => '',
-				'order' => 0,
-			),
-			array(
-				'slug' => 'admin_theme',
-				'title' => 'Control Panel Theme',
-				'description' => 'Select the theme for the control panel.',
-				'type' => '',
-				'default' => '',
-				'value' => 'pyrocms',
-				'options' => 'func:get_themes',
-				'is_required' => 1,
-				'is_gui' => 0,
-				'module' => '',
-				'order' => 0,
-			),
-		);
+        $schema->dropIfExists('theme_options');
 
-		foreach ($settings as $setting)
-		{
-			if ( ! $this->db->insert('settings', $setting))
-			{
-				return false;
-			}
-		}
+        $schema->create('theme_options', function($table) {
+            $table->increments('id');
+            $table->string('slug', 30);
+            $table->string('title', 100);
+            $table->text('description');
+            $table->enum('type', array('text', 'textarea', 'password', 'select', 'select-multiple', 'radio', 'checkbox', 'colour-picker'));
+            $table->string('default', 255);
+            $table->string('value', 255);
+            $table->text('options');
+            $table->boolean('is_required');
+            $table->integer('theme_id')->nullable();
+        });
+
+        $this->pdb->table('settings')->insert(array(
+            array(
+                'slug' => 'addons_upload',
+                'title' => 'Addons Upload Permissions',
+                'description' => 'Keeps mere admins from uploading addons by default',
+                'type' => 'text',
+                'default' => false,
+                'value' => false,
+                'options' => '',
+                'is_required' => true,
+                'is_gui' => false,
+                'module' => '',
+                'order' => 0,
+            ),
+            array(
+                'slug' => 'default_theme',
+                'title' => 'Default Theme',
+                'description' => 'Select the theme you want users to see by default.',
+                'type' => '',
+                'default' => 'default',
+                'value' => 'default',
+                'options' => 'func:get_themes',
+                'is_required' => true,
+                'is_gui' => false,
+                'module' => '',
+                'order' => 0,
+            ),
+            array(
+                'slug' => 'admin_theme',
+                'title' => 'Control Panel Theme',
+                'description' => 'Select the theme for the control panel.',
+                'type' => '',
+                'default' => '',
+                'value' => 'pyrocms',
+                'options' => 'func:get_themes',
+                'is_required' => true,
+                'is_gui' => false,
+                'module' => '',
+                'order' => 0,
+            ),
+        ));
 
 		return true;
 	}
 
-	public function uninstall()
+	public function uninstall($pdb, $schema)
 	{
 		// This is a core module, lets keep it around.
 		return false;

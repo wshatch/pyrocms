@@ -4,7 +4,7 @@
  * Swedish translation.
  *
  * @author		marcus@incore.se
- * @package		PyroCMS  
+ * @package		PyroCMS
  * @link		http://pyrocms.com
  * @date		2012-10-22
  * @version		1.1.0
@@ -54,8 +54,6 @@ $lang['settings:records_per_page'] = 'Poster per sida';
 $lang['settings:records_per_page_desc'] = 'Hur många poster ska visas på varje sida i kontrollpanelen.';
 $lang['settings:rss_feed_items'] = 'Antal RSS objekt';
 $lang['settings:rss_feed_items_desc'] = 'Hur många objekt ska visas i RSS/blogg.';
-$lang['settings:require_lastname'] = 'Använd efternamn.';
-$lang['settings:require_lastname_desc'] = 'Vill du att efternamn ska vara obligatoriskt vid registreringen?';
 $lang['settings:enable_profiles'] = 'Aktivera användardata';
 $lang['settings:enable_profiles_desc'] = 'Tillåt användare att lägga till och ändra sina uppgifter.';
 $lang['settings:ga_email'] = 'Google Analytic e-post';
@@ -66,12 +64,6 @@ $lang['settings:ga_profile'] = 'Google Analytic Profil';
 $lang['settings:ga_profile_desc'] = 'Profil ID för webbplatsen i Google Analytics.';
 $lang['settings:ga_tracking'] = 'Google Tracking Code';
 $lang['settings:ga_tracking_desc'] = 'Ange din "Google Analytic Tracking Code" för att aktivera Google Analytics åtkomst. Ex.: UA-19483569-6';
-$lang['settings:twitter_username'] = 'Användarnamn';
-$lang['settings:twitter_username_desc'] = 'Twitter användarnamn';
-$lang['settings:twitter_feed_count'] = 'Antal Twitterinlägg';
-$lang['settings:twitter_feed_count_desc'] = 'Hur många twitterinlägg ska visas i Twitterarean';
-$lang['settings:twitter_cache'] = 'Cache-tid';
-$lang['settings:twitter_cache_desc'] = 'Hur många minuter ska twitterinläggen cacheas';
 $lang['settings:akismet_api_key'] = 'Akismet API Nyckel';
 $lang['settings:akismet_api_key_desc'] = 'Akismet är en skräppost-blockerare från WordPress teamet. Det håller skräppost borta utan att använda CAPTCHA validering.';
 $lang['settings:comment_order'] = 'Kommentarer, sortering';
@@ -107,7 +99,6 @@ $lang['settings:section_integration'] = 'Integration';
 $lang['settings:section_comments'] = 'Kommentarer';
 $lang['settings:section_users'] = 'Användare';
 $lang['settings:section_statistics'] = 'Statistik';
-$lang['settings:section_twitter'] = 'Twitter';
 $lang['settings:section_files'] = 'Filer';
 $lang['settings:form_option_Open'] = 'Öppen';
 $lang['settings:form_option_Closed'] = 'Stängd';
@@ -124,6 +115,5 @@ $lang['settings:form_option_No'] = 'Nej';
 $lang['settings:no_settings'] = 'Det finns inga inställningar';
 $lang['settings:save_success'] = 'Inställningarna är sparade!';
 
-
-/* End of file settings_lang.php */  
-/* Location: system/cms/modules/settings/language/swedish/settings_lang.php */  
+/* End of file settings_lang.php */
+/* Location: system/cms/modules/settings/language/swedish/settings_lang.php */

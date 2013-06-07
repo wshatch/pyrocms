@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Pyro\Module\Addons\AbstractModule;
 
 /**
  * Blog module
@@ -6,7 +8,7 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Blog
  */
-class Module_Blog extends Module
+class Module_Blog extends AbstractModule
 {
 	public $version = '2.0.0';
 
@@ -19,6 +21,7 @@ class Module_Blog extends Module
 				'br' => 'Blog',
 				'pt' => 'Blog',
 				'el' => 'Ιστολόγιο',
+                            'fa' => 'بلاگ',
 				'he' => 'בלוג',
 				'id' => 'Blog',
 				'lt' => 'Blogas',
@@ -43,7 +46,8 @@ class Module_Blog extends Module
 				'fi' => 'Kirjoita blogi artikkeleita.',
 				'el' => 'Δημιουργήστε άρθρα και εγγραφές στο ιστολόγιο σας.',
 				'es' => 'Escribe entradas para los artículos y blog (web log).', #update translation
-				'fr' => 'Envoyez de nouveaux posts et messages de blog.', #update translation
+                                'fa' => 'مقالات منتشر شده در بلاگ',
+				'fr' => 'Poster des articles d\'actualités.',
 				'he' => 'ניהול בלוג',
 				'id' => 'Post entri blog',
 				'it' => 'Pubblica notizie e post per il blog.', #update translation
@@ -92,52 +96,53 @@ class Module_Blog extends Module
 			),
 		);
 
-		if (function_exists('group_has_role'))
-		{
-			if(group_has_role('blog', 'admin_blog_fields'))
-			{
+		if (function_exists('group_has_role')) {
+			if (group_has_role('blog', 'admin_blog_fields')) {
 				$info['sections']['fields'] = array(
-							'name' 	=> 'global:custom_fields',
-							'uri' 	=> 'admin/blog/fields',
-								'shortcuts' => array(
-									'create' => array(
-										'name' 	=> 'streams:add_field',
-										'uri' 	=> 'admin/blog/fields/create',
-										'class' => 'add'
-										)
-									)
-							);
+					'name' 	=> 'global:custom_fields',
+					'uri' 	=> 'admin/blog/fields',
+						'shortcuts' => array(
+							'create' => array(
+								'name' 	=> 'streams:add_field',
+								'uri' 	=> 'admin/blog/fields/create',
+								'class' => 'add'
+								)
+							)
+					);
 			}
 		}
 
 		return $info;
 	}
 
-	public function install()
+	/**
+     * Install
+     *
+     * This function is run to install the module
+     *
+     * @return bool
+     */
+	public function install($pdb, $schema)
 	{
-		$this->dbforge->drop_table('blog_categories');
+		$schema->dropIfExists('blog');
+		$schema->dropIfExists('blog_categories');
 
-		$this->load->driver('Streams');
-		$this->streams->utilities->remove_namespace('blogs');
+		$schema->create('blog_categories', function($table) {
+			$table->increments('id');
+			$table->string('slug', 100)->nullable()->unique();
+			$table->string('title', 100)->nullable()->unique();
+		});
 
-		// Just in case.
-		$this->dbforge->drop_table('blog');
+		ci()->load->driver('Streams');
+		ci()->streams->utilities->remove_namespace('blogs');
 
-		if ($this->db->table_exists('data_streams'))
-		{
-			$this->db->where('stream_namespace', 'blogs')->delete('data_streams');
+		if ($schema->hasTable('data_streams')) {
+			$pdb->table('data_streams')
+				->where('stream_namespace', 'blogs')
+				->delete();
 		}
 
-		// Create the blog categories table.
-		$this->install_tables(array(
-			'blog_categories' => array(
-				'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true, 'primary' => true),
-				'slug' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => false, 'unique' => true, 'key' => true),
-				'title' => array('type' => 'VARCHAR', 'constraint' => 100, 'null' => false, 'unique' => true),
-			),
-		));
-
-		$this->streams->streams->add_stream(
+		ci()->streams->streams->add_stream(
 			'lang:blog:blog_title',
 			'blog',
 			'blogs',
@@ -145,25 +150,44 @@ class Module_Blog extends Module
 			null
 		);
 
-		$blog_fields = array(
-				'title' => array('type' => 'VARCHAR', 'constraint' => 200, 'null' => false, 'unique' => true),
-				'slug' => array('type' => 'VARCHAR', 'constraint' => 200, 'null' => false),
-				'category_id' => array('type' => 'INT', 'constraint' => 11, 'key' => true),
-				'body' => array('type' => 'TEXT'),
-				'parsed' => array('type' => 'TEXT'),
-				'keywords' => array('type' => 'VARCHAR', 'constraint' => 32, 'default' => ''),
-				'author_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 0),
-				'created_on' => array('type' => 'INT', 'constraint' => 11),
-				'updated_on' => array('type' => 'INT', 'constraint' => 11, 'default' => 0),
-				'comments_enabled' => array('type' => 'ENUM', 'constraint' => array('no','1 day','1 week','2 weeks','1 month', '3 months', 'always'), 'default' => '3 months'),
-				'status' => array('type' => 'ENUM', 'constraint' => array('draft', 'live'), 'default' => 'draft'),
-				'type' => array('type' => 'SET', 'constraint' => array('html', 'markdown', 'wysiwyg-advanced', 'wysiwyg-simple')),
-				'preview_hash' => array('type' => 'CHAR', 'constraint' => 32, 'default' => ''),
+		// Add the intro field.
+		// This can be later removed by an admin.
+		$intro_field = array(
+			'name'		=> 'lang:blog:intro_label',
+			'slug'		=> 'intro',
+			'namespace' => 'blogs',
+			'type'		=> 'wysiwyg',
+			'assign'	=> 'blog',
+			'extra'		=> array('editor_type' => 'simple', 'allow_tags' => 'y'),
+			'required'	=> true
 		);
-		return $this->dbforge->add_column('blog', $blog_fields);
+		ci()->streams->fields->add_field($intro_field);
+
+		// Add fields to streamsy table
+		$schema->table('blog', function($table) {
+			$table->string('slug', 200)->unique();
+			$table->string('title', 200)->unique();
+			$table->integer('category_id');
+			$table->string('attachment', 255)->default('');
+			$table->text('body');
+			$table->text('parsed');
+			$table->string('keywords', 32)->default('');
+			$table->integer('author_id')->nullable();
+			$table->enum('comments_enabled', array('no','1 day','1 week','2 weeks','1 month', '3 months', 'always'))->default('3 months');
+			$table->enum('status', array('draft', 'live'))->default('draft');
+			$table->enum('type', array('html', 'markdown', 'wysiwyg-advanced', 'wysiwyg-simple'));
+	        $table->string('preview_hash', 32)->nullable();
+			$table->string('created_on', 11);
+			$table->string('updated_on', 11)->nullable();
+
+			$table->index('slug');
+			$table->index('category_id');
+		});
+
+		return true;
 	}
 
-	public function uninstall()
+	public function uninstall($pdb, $schema)
 	{
 		// This is a core module, lets keep it around.
 		return false;

@@ -23,6 +23,12 @@
 	<?php echo Asset::css('workless/workless.css'); ?>
 	<?php echo Asset::css('workless/application.css'); ?>
 	<?php echo Asset::css('workless/responsive.css'); ?>
+        <?php
+        $vars = $this->load->_ci_cached_vars;
+        if ($vars['lang']['direction']=='rtl'){
+            echo Asset::css('workless/rtl/rtl.css');
+        }
+        ?>
 	<!-- End CSS-->
 
 	<!-- Load up some favicons -->
@@ -43,7 +49,7 @@
 	<div id="container">
 
 		<section id="content">
-			
+
 			<header class="hide-on-ckeditor-maximize">
 			<?php file_partial('header'); ?>
 			</header>

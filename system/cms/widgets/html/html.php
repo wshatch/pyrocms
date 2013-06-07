@@ -1,15 +1,16 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Pyro\Module\Addons\WidgetAbstract;
 
 /**
  * Show RSS feeds in your site
- * 
+ *
  * @author  	Phil Sturgeon
  * @author		PyroCMS Dev Team
  * @package		PyroCMS\Core\Widgets
  */
-class Widget_Html extends Widgets
+class Widget_Html extends WidgetAbstract
 {
-
 
 	/**
 	 * The widget title
@@ -33,8 +34,9 @@ class Widget_Html extends Widgets
 		'id' => 'Membuat blok HTML apapun',
 		'fi' => 'Luo lohkoja omasta HTML koodista',
 		'fr' => 'Créez des blocs HTML personnalisés',
+            'fa' => 'ایجاد قسمت ها به صورت اچ تی ام ال',
 	);
-	
+
 	/**
 	 * The author of the widget
 	 *
@@ -44,8 +46,8 @@ class Widget_Html extends Widgets
 
 	/**
 	 * The author's website.
-	 * 
-	 * @var string 
+	 *
+	 * @var string
 	 */
 	public $website = 'http://philsturgeon.co.uk/';
 
@@ -59,7 +61,7 @@ class Widget_Html extends Widgets
 	/**
 	 * The fields for customizing the options of the widget.
 	 *
-	 * @var array 
+	 * @var array
 	 */
 	public $fields = array(
 		array(
@@ -73,12 +75,11 @@ class Widget_Html extends Widgets
 	 * The main function of the widget.
 	 *
 	 * @param array $options The options for displaying an HTML widget.
-	 * @return array 
+	 * @return array
 	 */
 	public function run($options)
 	{
-		if (empty($options['html']))
-		{
+		if (empty($options['html'])) {
 			return array('output' => '');
 		}
 

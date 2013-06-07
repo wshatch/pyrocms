@@ -1,13 +1,15 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Pyro\Module\Addons\AbstractModule;
+
 /**
  * Maintenance Module
  *
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Maintenance
  */
-class Module_Maintenance extends Module
+class Module_Maintenance extends AbstractModule
 {
-
 	public $version = '1.0.0';
 
 	public function info()
@@ -19,6 +21,7 @@ class Module_Maintenance extends Module
 				'ar' => 'الصيانة',
 				'el' => 'Συντήρηση',
 				'hu' => 'Karbantartás',
+                            'fa' => 'نگه داری',
 				'fi' => 'Ylläpito',
 				'fr' => 'Maintenance',
 				'id' => 'Pemeliharaan',
@@ -36,6 +39,7 @@ class Module_Maintenance extends Module
 				'el' => 'Διαγραφή αντικειμένων προσωρινής αποθήκευσης μέσω της περιοχής διαχείρισης.',
 				'id' => 'Mengatur cache situs dan mengexport informasi dari database.',
 				'it' => 'Gestisci la cache del sito e esporta le informazioni dal database',
+                            'fa' => 'مدیریت کش سایت و صدور اطلاعات از دیتابیس',
 				'fr' => 'Gérer le cache du site et exporter les contenus de la base de données',
 				'fi' => 'Hallinoi sivuston välimuistia ja vie tietoa tietokannasta.',
 				'hu' => 'Az oldal gyorsítótár kezelése és az adatbázis exportálása.',
@@ -51,19 +55,16 @@ class Module_Maintenance extends Module
 		);
 	}
 
-
-	public function install()
+	public function install($pdb, $schema)
 	{
 		return true;
 	}
 
-
-	public function uninstall()
+	public function uninstall($pdb, $schema)
 	{
 		// This is a core module, lets keep it around.
 		return false;
 	}
-
 
 	public function upgrade($old_version)
 	{

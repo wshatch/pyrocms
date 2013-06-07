@@ -16,8 +16,7 @@ class Ajax extends CI_Controller
 	 */
 	public function __construct()
 	{
-		if ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') === false)
-		{
+		if ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') === false) {
 			show_error('You should not be here');
 		}
 
@@ -25,65 +24,55 @@ class Ajax extends CI_Controller
 
 		$languages = array();
 		$languages_directory = realpath(dirname(__FILE__).'/../language/');
-		foreach (new FilesystemIterator($languages_directory, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS) as $path)
-		{
-			if ($path->isDir())
-			{
-				$languages[] = $path->getBasename();
+		foreach (glob($languages_directory.'/*', GLOB_ONLYDIR) as $path) {
+			$path = basename($path);
+
+			if ( ! in_array($path, array('.', '..'))) {
+				$languages[] = $path;
 			}
 		}
 
 		// Check if the language is supported and set it.
-		if (in_array($this->session->userdata('language'), $languages))
-		{
+		if (in_array($this->session->userdata('language'), $languages)) {
 			$this->config->set_item('language', $this->session->userdata('language'));
 		}
 		unset($languages);
 
-		// let's load the language file belonging to the page i.e. method
-		if (is_file($languages_directory.'/'.$this->config->item('language').'/'.$this->router->method.'_lang'.EXT))
-		{
-			$this->lang->load($this->router->method);
-		}
-
 		// also we load some generic language labels
-		$this->lang->load('global');
-
-		$this->lang->load('step_1');
+		$this->lang->load('installer');
 	}
 
 	public function confirm_database()
 	{
-		$database 	= $this->input->post('database');
+		// TODO Maybe actually use this somewhere?
 		$create_db 	= $this->input->post('create_db') === 'true';
-		$server = $this->input->post('server').':'.$this->input->post('port');
-		$username 	= $this->input->post('username');
-		$password 	= $this->input->post('password');
 
 		// Set some headers for our JSON
 		header('Cache-Control: no-cache, must-revalidate');
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		header('Content-type: application/json');
 
-		$link = @mysql_connect($server, $username, $password, true);
-		// Not good if either we have not connected to the database
-		// or we where required to create the database but couldn't
-		if ( ( ! $link) or ( $create_db && ! mysql_query('CREATE DATABASE IF NOT EXISTS '.$database, $link)) )
-		{
-			echo json_encode(array(
+		try {
+			// Create a connection to see if data is correct
+			$this->installer_lib->create_connection(array(
+				'driver'    => $this->input->post('driver'),
+				'database'  => $this->input->post('database'),
+				'hostname'  => $this->input->post('hostname'),
+				'port'      => $this->input->post('port'),
+				'username' 	=> $this->input->post('username'),
+				'password' 	=> $this->input->post('password'),
+			));
+		} catch (Exception $e) {
+			exit(json_encode(array(
 				'success' => false,
-				'message' => lang('db_failure') . mysql_error()
-			));
+				'message' => lang('db_failure').$e->getMessage(),
+			)));
 		}
-		// We are good to go
-		else
-		{
-			echo json_encode(array(
-				'success' => true,
-				'message' => lang('db_success')
-			));
-		}
-		@mysql_close($link);
+
+		echo json_encode(array(
+			'success' => true,
+			'message' => lang('db_success'),
+		));
 	}
 
 	/**
@@ -109,8 +98,8 @@ class Ajax extends CI_Controller
 			'dbserver' => $this->installer_lib->mysql_server_version,
 			'dbclient' => $this->installer_lib->mysql_client_version,
 			'gd_version' => $this->installer_lib->gd_version,
-			'zlib_version' => $this->installer_lib->zlib_enabled(),
-			'curl' => $this->installer_lib->curl_enabled(),
+			'zlib_version' => $this->installer_lib->zlib_available(),
+			'curl' => $this->installer_lib->curl_available(),
 		);
 
 		include '../system/sparks/curl/1.2.1/libraries/Curl.php';
@@ -127,13 +116,11 @@ class Ajax extends CI_Controller
 	public function check_rewrite()
 	{
 		// if it doesn't exist then warn them at least
-		if ( ! function_exists('apache_get_modules'))
-		{
+		if ( ! function_exists('apache_get_modules')) {
 			return print(lang('rewrite_fail'));
 		}
 
-		if (in_array('mod_rewrite', apache_get_modules()))
-		{
+		if (in_array('mod_rewrite', apache_get_modules())) {
 			return print('enabled');
 		}
 

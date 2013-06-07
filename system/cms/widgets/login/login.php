@@ -1,12 +1,14 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Pyro\Module\Addons\WidgetAbstract;
 
 /**
  * Show a login box in your widget areas
- * 
+ *
  * @author		PyroCMS Dev Team
  * @package		PyroCMS\Core\Widgets
  */
-class Widget_Login extends Widgets
+class Widget_Login extends WidgetAbstract
 {
 
 	/**
@@ -24,6 +26,7 @@ class Widget_Login extends Widgets
 		'id' => 'Login',
 		'fi' => 'Kirjautuminen',
 		'fr' => 'Connexion',
+            'fa' => 'لاگین',
 	);
 
 	/**
@@ -41,6 +44,7 @@ class Widget_Login extends Widgets
 		'id' => 'Menampilkan form login sederhana',
 		'fi' => 'Näytä yksinkertainen kirjautumislomake missä vain',
 		'fr' => 'Affichez un formulaire de connexion où vous souhaitez',
+            'fa' => 'نمایش یک لاگین ساده در هر قسمتی از سایت',
 	);
 
 	/**
@@ -52,8 +56,8 @@ class Widget_Login extends Widgets
 
 	/**
 	 * The author's website.
-	 * 
-	 * @var string 
+	 *
+	 * @var string
 	 */
 	public $website = 'http://philsturgeon.co.uk/';
 

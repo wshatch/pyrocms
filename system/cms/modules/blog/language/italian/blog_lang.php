@@ -10,7 +10,7 @@ $lang['blog:posted_label'] 			= 'Pubblicato';
 $lang['blog:posted_label_alt']			= 'Pubblicato alle';
 $lang['blog:written_by_label']				= 'Scritto da';
 $lang['blog:author_unknown']				= 'Sconosciuto';
-$lang['blog:keywords_label']				= 'Parole chiave'; 
+$lang['blog:keywords_label']				= 'Parole chiave';
 $lang['blog:tagged_label']					= 'Taggato';
 $lang['blog:category_label'] 			= 'Categoria';
 $lang['blog:post_label'] 			= 'Articolo';
@@ -32,7 +32,7 @@ $lang['blog:rss_name_suffix'] 			= ' Notizie';
 $lang['blog:rss_category_suffix'] 		= ' Notizie';
 $lang['blog:author_name_label'] 		= 'Nome autore';
 $lang['blog:read_more_label'] 			= 'Leggi tutto&nbsp;&raquo;';
-$lang['blog:created_hour']                  = 'Time (Ora)'; 
+$lang['blog:created_hour']                  = 'Time (Ora)';
 $lang['blog:created_minute']                = 'Time (Minuto)';
 $lang['blog:comments_enabled_label']         = 'Commenti abilitati';
 
@@ -46,7 +46,7 @@ $lang['blog:blog_title'] 			= 'Notizie';
 $lang['blog:list_title'] 			= 'Elenco articoli';
 
 // messages
-$lang['blog:disabled_after'] 				= 'Posting comments after %s has been disabled.'; #translate
+$lang['blog:disabled_after'] 				= 'Non sarà più possibile inserire commenti dopo %s.';
 $lang['blog:no_posts'] 			= 'Non ci sono articoli.';
 $lang['blog:subscripe_to_rss_desc'] 		= 'Ricevi gli articoli subito abbonandoti al nostro feed RSS. Lo puoi fare con i comuni programmi di posta elettronica, altrimenti prova <a href="http://reader.google.co.uk/">Google Reader</a>.';
 $lang['blog:currently_no_posts'] 		= 'Non ci sono articoli al momento.';
@@ -67,5 +67,3 @@ $lang['blog:twitter_error'] 			= 'Errore per Twitter';
 
 // date
 $lang['blog:archive_date_format']		= "%B %Y"; #translate format - see php strftime documentation
-
-?>

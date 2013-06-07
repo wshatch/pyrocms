@@ -37,7 +37,8 @@ class Field_keywords
 	public function form_output($data)
 	{
 		$options['name'] 	= $data['form_slug'];
-		$options['id']		= $data['form_slug'];
+		$options['id']		= 'id_'.rand(100, 10000);
+		$options['class']	= 'keywords_input';
 		$options['value']	= Keywords::get_string($data['value']);
 
 		return form_input($options);
@@ -48,19 +49,12 @@ class Field_keywords
 		$this->CI->template->append_css('jquery/jquery.tagsinput.css');
 		$this->CI->template->append_js('jquery/jquery.tagsinput.js');
 		$this->CI->type->add_js('keywords', 'keywords.js');
-		$this->CI->type->add_misc(
-			'<script type="text/javascript">
-				jQuery(document).ready(function(){pyro.field_tags_input("'.$field->field_slug.'");});
-			</script>'
-		);
 	}
-
 
 	public function pre_save($input)
 	{
 		return Keywords::process($input);
 	}
-
 
 	public function pre_output($input, $data)
 	{
@@ -87,8 +81,8 @@ class Field_keywords
 		return Keywords::get_string($input);
 	}
 
-
-	public function param_return_type($value = 'array') {
+	public function param_return_type($value = 'array')
+	{
 		return array(
 			'instructions' => $this->CI->lang->line('streams:keywords.return_type.instructions'),
 			'input' =>

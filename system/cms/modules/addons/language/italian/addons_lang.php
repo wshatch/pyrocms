@@ -3,7 +3,7 @@
 /* Date 04/11/2010 */
 
 $lang['addons:modules'] 						= 'Moduli';
-$lang['addons:admin_themes'] 					= 'Admin Themes'; #translate
+$lang['addons:admin_themes'] 					= 'Temi Admin';
 $lang['addons:themes'] 							= 'Temi';
 $lang['addons:widgets'] 						= 'Widgets';
 
@@ -21,7 +21,7 @@ $lang['addons:modules:install_success']			= 'Il modulo "%s" è stato installato.
 $lang['addons:modules:module_upload_success']   = 'Il modulo "%s" è stato caricato.';
 
 $lang['addons:modules:delete_success']			= 'Il modulo "%s" è stato cancellato.';
-$lang['addons:modules:delete_error']			= 'Non è possibile cancellare il modulo "%s".'; 
+$lang['addons:modules:delete_error']			= 'Non è possibile cancellare il modulo "%s".';
 $lang['addons:modules:uninstall_error']			= 'Impossibile disinstallare il modulo "%s".';
 $lang['addons:modules:uninstall_success']		= 'Il modulo "%s" è stato disinstallato.';
 $lang['addons:modules:already_exists_error']	= 'Esiste già un modulo chiamato "%s".';
