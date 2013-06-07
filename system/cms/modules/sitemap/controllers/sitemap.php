@@ -1,48 +1,54 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+use Sitemap\Collection as SitemapCollection;
+use Sitemap\Sitemap\SitemapEntry;
+use Sitemap\Formatter\XML\SitemapIndex;
+
 /**
  * Sitemap module public controller
- * 
+ *
  * Renders a human-readable sitemap with all public pages and blog categories
  * Also renders a machine-readable sitemap for search engines
- * 
+ *
  * @author  	Barnabas Kendall <barnabas@bkendall.biz>
  * @license 	Apache License v2.0
  * @version 	1.1
  * @package		PyroCMS\Core\Modules\Sitemap\Controllers
  */
-class Sitemap extends Public_Controller {
-
+class Sitemap extends Public_Controller
+{
 	/**
 	 * XML method - output sitemap in XML format for search engines
-	 * 
+	 *
 	 * @return void
 	 */
 	public function xml()
 	{
-		$doc = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" />');
-		
 		// first get a list of enabled modules, use them for the listing
-		$modules = $this->module_m->get_all(array('is_frontend' => 1));
+		$modules = $this->moduleManager->getAll(array(
+			'is_frontend' => true,
+		));
 
-		foreach ($modules as $module)
-		{
+		$collection = new SitemapCollection;
+		$collection->setFormatter(new SitemapIndex);
+
+		foreach ($modules as $module) {
 			// To understand recursion, you must first understand recursion
-			if ($module['slug'] == 'sitemap')
-			{
+			if (
+				$module['slug'] == 'sitemap'
+				or ( ! file_exists($module['path'].'/controllers/sitemap.php'))
+			) {
 				continue;
 			}
 
-			if ( ! file_exists($module['path'].'/controllers/sitemap.php'))
-			{
-				continue;
-			}
+			$basic = new SitemapEntry;
+			$basic->setLocation(site_url($module['slug'].'/sitemap/xml'));
 
-			$doc->addChild('sitemap')
-				->addChild('loc', site_url($module['slug'].'/sitemap/xml'));
+			$collection->addSitemap($basic);
 		}
-		
+
 		$this->output
 			->set_content_type('application/xml')
-			->set_output($doc->asXML());
-	}	
+			->set_output($collection->output());
+	}
 }

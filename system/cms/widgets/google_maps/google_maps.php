@@ -1,13 +1,15 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Pyro\Module\Addons\WidgetAbstract;
 
 /**
  * Show a Google Map in your site
- * 
+ *
  * @author		Gregory Athons
  * @author		PyroCMS Dev Team
  * @package		PyroCMS\Core\Widgets
  */
-class Widget_Google_maps extends Widgets
+class Widget_Google_maps extends WidgetAbstract
 {
 
 	/**
@@ -25,6 +27,7 @@ class Widget_Google_maps extends Widgets
 		'id' => 'Google Maps',
 		'fi' => 'Google Maps',
 		'fr' => 'Google Maps',
+            'fa' => 'نقشه گوگل',
 	);
 
 	/**
@@ -42,6 +45,7 @@ class Widget_Google_maps extends Widgets
 		'id' => 'Menampilkan Google Maps di Situs Anda',
 		'fi' => 'Näytä Google Maps kartta sivustollasi',
 		'fr' => 'Publiez un plan Google Maps sur votre site',
+            'fa' => 'نمایش داده نقشه گوگل بر روی سایت ',
 	);
 
 	/**
@@ -53,8 +57,8 @@ class Widget_Google_maps extends Widgets
 
 	/**
 	 * The author's website.
-	 * 
-	 * @var string 
+	 *
+	 * @var string
 	 */
 	public $website = 'http://www.gregathons.com';
 
@@ -68,7 +72,7 @@ class Widget_Google_maps extends Widgets
 	/**
 	 * The fields for customizing the options of the widget.
 	 *
-	 * @var array 
+	 * @var array
 	 */
 	public $fields = array(
 		array(
@@ -101,7 +105,7 @@ class Widget_Google_maps extends Widgets
 	 * The main function of the widget.
 	 *
 	 * @param array $options The options for displaying an Google Maps widget.
-	 * @return array 
+	 * @return array
 	 */
 	public function run($options)
 	{

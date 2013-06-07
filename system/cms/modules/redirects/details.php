@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Pyro\Module\Addons\AbstractModule;
 
 /**
  * Redirects module
@@ -6,8 +8,8 @@
  * @author PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Redirects
  */
-class Module_Redirects extends Module {
-
+class Module_Redirects extends AbstractModule
+{
 	public $version = '1.0.0';
 
 	public function info()
@@ -22,6 +24,7 @@ class Module_Redirects extends Module {
 				'da' => 'Omadressering',
 				'el' => 'Ανακατευθύνσεις',
 				'es' => 'Redirecciones',
+                            'fa' => 'انتقال ها',
 				'fi' => 'Uudelleenohjaukset',
 				'fr' => 'Redirections',
 				'he' => 'הפניות',
@@ -47,6 +50,7 @@ class Module_Redirects extends Module {
 				'da' => 'Omadresser fra en URL til en anden.',
 				'el' => 'Ανακατευθείνετε μια διεύθυνση URL σε μια άλλη',
 				'es' => 'Redireccionar desde una URL a otra',
+                            'fa' => 'انتقال دادن یک صفحه به یک آدرس دیگر',
 				'fi' => 'Uudelleenohjaa käyttäjän paikasta toiseen.',
 				'fr' => 'Redirection d\'une URL à un autre.',
 				'he' => 'הפניות מכתובת אחת לאחרת',
@@ -77,28 +81,23 @@ class Module_Redirects extends Module {
 		);
 	}
 
-	public function install()
+	public function install($pdb, $schema)
 	{
-		$this->dbforge->drop_table('redirects');
+        $schema->dropIfExists('redirects');
 
-		$tables = array(
-			'redirects' => array(
-				'id' => array('type' => 'int', 'constraint' => 11, 'auto_increment' => true, 'primary' => true,),
-				'from' => array('type' => 'varchar', 'constraint' => 250, 'key' => 'request'),
-				'to' => array('type' => 'varchar', 'constraint' => 250,),
-				'type' => array('type' => 'int','constraint' => 3,'default' => 302),
-			),
-		);
+        $schema->create('redirects', function($table) {
+            $table->increments('id');
+			$table->string('from', 250);
+			$table->string('to', 250);
+			$table->integer('type')->default(302);
 
-		if ( ! $this->install_tables($tables))
-		{
-			return false;
-		}
+			$table->index('from', 'request');
+		});
 
 		return true;
 	}
 
-	public function uninstall()
+	public function uninstall($pdb, $schema)
 	{
 		// This is a core module, lets keep it around.
 		return false;

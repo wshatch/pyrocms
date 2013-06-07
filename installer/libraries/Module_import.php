@@ -1,69 +1,60 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
 
-define('PYROPATH', dirname(FCPATH).'/system/cms/');
-define('ADDONPATH', dirname(FCPATH).'/addons/default/');
-define('SHARED_ADDONPATH', dirname(FCPATH).'/addons/shared_addons/');
+use Composer\Autoload\ClassLoader;
 
-// All modules talk to the Module class, best get that!
-include PYROPATH.'libraries/Module'.EXT;
+include PYROPATH.'core/MY_Model.php';
 
 class Module_import
 {
-
-	private $ci;
-
-	public function __construct()
+	public function __construct(array $params)
 	{
-		$this->ci =& get_instance();
+		ci()->pdb = $this->pdb = $params['pdb'];
 
-		// Getting our model and MY_Model class set up
-		class_exists('CI_Model', false) OR load_class('Model', 'core');
-		include(PYROPATH.'/core/MY_Model.php');
+		// Make sure folders exist for addon structure
+		$this->buildFolderStructure(ADDONPATH, dirname(FCPATH));
 
-		// Include some constants that modules may be looking for
-		define('SITE_REF', 'default');
-
-		// Now we can use stuff from our system/cms directory, hooray!
-		// Any dupes are generic so we shouldn't run into any 
-		// meaningful conflicts.
-		$this->ci->load->add_package_path(PYROPATH);
-		$this->ci->load->add_package_path(SHARED_ADDONPATH);
-
-		$db['hostname'] = $this->ci->session->userdata('hostname');
-		$db['username'] = $this->ci->session->userdata('username');
-		$db['password'] = $this->ci->session->userdata('password');
-		$db['database'] = $this->ci->session->userdata('database');
-		$db['port'] 	= $this->ci->session->userdata('port');
-		$db['dbdriver'] = "mysql";
-		$db['dbprefix'] = 'default_';
-		$db['pconnect'] = false;
-		$db['db_debug'] = true;
-		$db['cache_on'] = false;
-		$db['cachedir'] = "";
-		$db['char_set'] = "utf8";
-		$db['dbcollat'] = "utf8_unicode_ci";
-
-		$this->ci->load->database($db);
-		$this->ci->load->helper('file');
-
-		// create the site specific addon folder
-		is_dir(ADDONPATH.'modules') OR mkdir(ADDONPATH.'modules', DIR_READ_MODE, true);
-		is_dir(ADDONPATH.'themes') OR mkdir(ADDONPATH.'themes', DIR_READ_MODE, true);
-		is_dir(ADDONPATH.'widgets') OR mkdir(ADDONPATH.'widgets', DIR_READ_MODE, true);
-		is_dir(ADDONPATH.'field_types') OR mkdir(ADDONPATH.'field_types', DIR_READ_MODE, true);
-
-		// create the site specific upload folder
-		is_dir(dirname(FCPATH).'/uploads/default') OR mkdir(dirname(FCPATH).'/uploads/default', DIR_WRITE_MODE, true);
-
-		//insert empty html files
-		write_file(ADDONPATH.'modules/index.html', '');
-		write_file(ADDONPATH.'themes/index.html', '');
-		write_file(ADDONPATH.'widgets/index.html', '');
-		write_file(ADDONPATH.'field_types/index.html', '');
-		write_file(PYROPATH.'uploads/index.html', '');
-		write_file(ADDONPATH.'uploads/default/index.html', '');
+		// Lets PSR-0 up our modules
+		$this->registerAutoloader(new ClassLoader, realpath(PYROPATH));
 	}
 
+	/**
+	 * Build folder structure
+	 * Creates folders if they are missing for modules, themes, widgets, etc
+	 *
+	 * @param string $app_path The location of the PyroCMS application folder
+	 * @param string $base_path The location of the root of the PyroCMS installation
+	 */
+	public function buildFolderStructure($app_path, $base_path)
+	{
+		// create the site specific addon folder
+		is_dir($app_path.'modules') or mkdir($app_path.'modules', DIR_READ_MODE, true);
+		is_dir($app_path.'themes') or mkdir($app_path.'themes', DIR_READ_MODE, true);
+		is_dir($app_path.'widgets') or mkdir($app_path.'widgets', DIR_READ_MODE, true);
+		is_dir($app_path.'field_types') or mkdir($app_path.'field_types', DIR_READ_MODE, true);
+
+		// create the site specific upload folder
+		if ( ! is_dir($base_path.'/uploads/default')) {
+			mkdir($base_path.'/uploads/default', DIR_WRITE_MODE, true);
+		}
+	}
+
+	/**
+	 * Register Autoloader
+	 *
+	 * @param Composer\Autoload\ClassLoader $loader Instance of the Composer autoloader
+	 * @param string $app_path The location of the PyroCMS application folder
+	 *
+	 * @return Composer\Autoload\ClassLoader
+	 */
+	public function registerAutoloader($loader, $app_path)
+	{
+        $loader->add('Pyro\\Module\\Addons', $app_path.'/modules/addons/src/');
+        
+        // activate the autoloader
+        $loader->register();
+
+        return $loader;
+	}
 
 	/**
 	 * Installs a module
@@ -75,7 +66,9 @@ class Module_import
 	 */
 	public function install($slug, $is_core = false)
 	{
-		$details_class = $this->_spawn_class($slug, $is_core);
+		if ( ! ($details_class = $this->spawnClass($slug, $is_core))) {
+			exit("The module $slug is missing a details.php");
+		}
 
 		// Get some basic info
 		$module = $details_class->info();
@@ -92,106 +85,79 @@ class Module_import
 		$details_class->upload_path = 'uploads/default/';
 
 		// Run the install method to get it into the database
-		if (!$details_class->install())
-		{
-			return false;
-		}
+		// try
+		// {
+			$details_class->install($this->pdb, $this->pdb->getSchemaBuilder());
+		// }
+		// catch (Exception $e)
+		// {
+		// 	// TODO Do something useful
+		// 	exit('HEY '.$e->getMessage()." in ".$e->getFile()."<br />");
+
+		// 	return false;
+		// }
 
 		// Looks like it installed ok, add a record
 		return $this->add($module);
 	}
 
+	/**
+	 * Add
+	 *
+	 * Insert the database record for a single module
+	 *
+	 * @param     array     Array of module informaiton.
+	 * @return    boolean
+	 */
 	public function add($module)
 	{
-		return $this->ci->db->insert('modules', array(
-			'name' => serialize($module['name']),
-			'slug' => $module['slug'],
-			'version' => $module['version'],
-			'description' => serialize($module['description']),
-			'skip_xss' => ! empty($module['skip_xss']),
-			'is_frontend' => ! empty($module['frontend']),
-			'is_backend' => ! empty($module['backend']),
-			'menu' => ( ! empty($module['menu'])) ? $module['menu'] : false,
-			'enabled' => $module['enabled'],
-			'installed' => $module['installed'],
-			'is_core' => $module['is_core']
-		));
+		return $this->pdb
+			->table('modules')
+			->insert(array(
+				'name' => serialize($module['name']),
+				'slug' => $module['slug'],
+				'version' => $module['version'],
+				'description' => serialize($module['description']),
+				'skip_xss' => ! empty($module['skip_xss']),
+				'is_frontend' => ! empty($module['frontend']),
+				'is_backend' => ! empty($module['backend']),
+				'menu' => ! empty($module['menu']) ? $module['menu'] : false,
+				'enabled' => (bool) $module['enabled'],
+				'installed' => (bool) $module['installed'],
+				'is_core' => (bool) $module['is_core']
+			)
+		);
 	}
 
-
+	/**
+	 * Import All
+	 *
+	 * Create settings and streams core, and run the install() method for all modules
+	 *
+	 * @return    boolean
+	 */
 	public function import_all()
 	{
-		//drop the old modules table
-		$this->ci->load->dbforge();
-		$this->ci->dbforge->drop_table('modules');
-
-		$modules = "
-			CREATE TABLE IF NOT EXISTS ".$this->ci->db->dbprefix('modules')." (
-			  `id` int(11) NOT NULL AUTO_INCREMENT,
-			  `name` TEXT NOT NULL,
-			  `slug` varchar(50) NOT NULL,
-			  `version` varchar(20) NOT NULL,
-			  `type` varchar(20) DEFAULT NULL,
-			  `description` TEXT DEFAULT NULL,
-			  `skip_xss` tinyint(1) NOT NULL,
-			  `is_frontend` tinyint(1) NOT NULL,
-			  `is_backend` tinyint(1) NOT NULL,
-			  `menu` varchar(20) NOT NULL,
-			  `enabled` tinyint(1) NOT NULL,
-			  `installed` tinyint(1) NOT NULL,
-			  `is_core` tinyint(1) NOT NULL,
-			  `updated_on` int(11) NOT NULL DEFAULT '0',
-			  PRIMARY KEY (`id`),
-			  UNIQUE KEY `slug` (`slug`),
-			  INDEX `enabled` (`enabled`)
-			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-		";
-
-		//create the modules table so that we can import all modules including the modules module
-		$this->ci->db->query($modules);
-
-		$session = "
-			CREATE TABLE IF NOT EXISTS ".$this->ci->db->dbprefix(str_replace('default_', '', config_item('sess_table_name')))." (
-			 `session_id` varchar(40) DEFAULT '0' NOT NULL,
-			 `ip_address` varchar(16) DEFAULT '0' NOT NULL,
-			 `user_agent` varchar(120) NOT NULL,
-			 `last_activity` int(10) unsigned DEFAULT 0 NOT NULL,
-			 `user_data` text NULL,
-			PRIMARY KEY (`session_id`),
-			KEY `last_activity_idx` (`last_activity`)
-			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-		";
-
-		// create a session table so they can use it if they want
-		$this->ci->db->query($session);
-
-		// In case we are re-installing with existing data,
-		// we'll need to make sure that these tables aren't here.
-		$this->ci->dbforge->drop_table('data_streams');
-		$this->ci->dbforge->drop_table('data_fields');
-		$this->ci->dbforge->drop_table('data_field_assignments');
-
 		// Install settings and streams core first. Other modules may need them.
 		$this->install('settings', true);
-		$this->ci->load->library('settings/settings');
+
+		ci()->load->library('settings/settings');
+		
 		$this->install('streams_core', true);
+		$this->install('templates', true);
 
 		// Are there any modules to install on this path?
-		if ($modules = glob(PYROPATH.'modules/*', GLOB_ONLYDIR))
-		{
+		if ($modules = glob(PYROPATH.'modules/*', GLOB_ONLYDIR)) {
 			// Loop through modules
-			foreach ($modules as $module_name)
-			{
+			foreach ($modules as $module_name) {
 				$slug = basename($module_name);
 
-				if ($slug == 'streams_core' or $slug == 'settings')
-				{
+				if ($slug == 'streams_core' or $slug == 'settings' or $slug == 'templates') {
 					continue;
 				}
 
 				// invalid details class?
-				if ( ! $details_class = $this->_spawn_class($slug, true))
-				{
+				if ( ! $details_class = $this->spawnClass($slug, true)) {
 					continue;
 				}
 
@@ -201,9 +167,10 @@ class Module_import
 
 		// After modules are imported we need to modify the settings table
 		// This allows regular admins to upload addons on the first install but not on multi
-		$this->ci->db
-			->where('slug', 'addons_upload')
-			->update('settings', array('value' => '1'));
+		$this->pdb
+			->table('settings')
+			->where('slug', '=', 'addons_upload')
+			->update(array('value' => true));
 
 		return true;
 	}
@@ -216,22 +183,20 @@ class Module_import
 	 * @param string $slug    The folder name of the module
 	 * @param bool   $is_core
 	 *
-	 * @return    array
+	 * @return    Module
 	 */
-	private function _spawn_class($slug, $is_core = false)
+	private function spawnClass($slug, $is_core = false)
 	{
 		$path = $is_core ? PYROPATH : ADDONPATH;
 
-		// Before we can install anything we need to know some details about the module
-		$details_file = $path.'modules/'.$slug.'/details'.EXT;
+		// Before we can install anything we need to know some details about the module<<<<<<< HEAD
+		$details_file = "{$path}modules/{$slug}/details.php";
 
 		// If it didn't exist as a core module or an addon then check shared_addons
-		if ( ! is_file($details_file))
-		{
-			$details_file = SHARED_ADDONPATH.'modules/'.$slug.'/details'.EXT;
+		if ( ! is_file($details_file)) {
+			$details_file = "{SHARED_ADDONPATH}modules/{$slug}/details.php";
 
-			if ( ! is_file($details_file))
-			{
+			if ( ! is_file($details_file)) {
 				return false;
 			}
 		}
@@ -243,6 +208,6 @@ class Module_import
 		$class = 'Module_'.ucfirst(strtolower($slug));
 
 		// Now we need to talk to it
-		return class_exists($class) ? new $class : false;
+		return class_exists($class) ? new $class($this->pdb) : false;
 	}
 }

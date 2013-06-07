@@ -1,14 +1,14 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+use Pyro\Module\Addons\WidgetAbstract;
 
 /**
  * Show RSS feeds in your site
- * 
+ *
  * @author		PyroCMS Dev Team
  * @package		PyroCMS\Core\Widgets
  */
-class Widget_Social_bookmark extends Widgets
+class Widget_Social_bookmark extends WidgetAbstract
 {
 
 	/**
@@ -26,6 +26,7 @@ class Widget_Social_bookmark extends Widgets
 		'id' => 'Social Bookmark',
 		'fi' => 'Sosiaalinen kirjanmerkki',
 		'fr' => 'Liens sociaux',
+            'fa' => 'بوکمارک های شبکه های اجتماعی',
 	);
 
 	/**
@@ -43,6 +44,7 @@ class Widget_Social_bookmark extends Widgets
 		'id' => 'Tautan social bookmark yang dapat dikonfigurasi dari AddThis',
 		'fi' => 'Konfiguroitava sosiaalinen kirjanmerkki linkit AddThis:stä',
 		'fr' => 'Liens sociaux personnalisables avec AddThis',
+            'fa' => 'تنظیم و نمایش لینک های شبکه های اجتماعی',
 	);
 
 	/**
@@ -54,8 +56,8 @@ class Widget_Social_bookmark extends Widgets
 
 	/**
 	 * The author's website.
-	 * 
-	 * @var string 
+	 *
+	 * @var string
 	 */
 	public $website = 'http://philsturgeon.co.uk/';
 
@@ -69,7 +71,7 @@ class Widget_Social_bookmark extends Widgets
 	/**
 	 * The fields for customizing the options of the widget.
 	 *
-	 * @var array 
+	 * @var array
 	 */
 	public $fields = array(
 		array(
@@ -83,7 +85,7 @@ class Widget_Social_bookmark extends Widgets
 	 * The main function of the widget.
 	 *
 	 * @param array $options The options for the AddThis widget.
-	 * @return array 
+	 * @return array
 	 */
 	public function run($options)
 	{

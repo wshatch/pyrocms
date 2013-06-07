@@ -8,7 +8,7 @@
 			<ul>
 				<?php foreach ($available_widgets as $widget): ?>
 				<li id="widget-<?php echo $widget->slug ?>" class="widget-box">
-					<p><span><?php echo $widget->title ?></span> <?php echo $widget->description ?></p>
+					<p><span><?php echo $widget->name ?></span> <?php echo $widget->description ?></p>
 					<div class="widget_info" style="display: none;">
 						<p class="author"><?php echo lang('widgets:widget_author') . ': ' . ($widget->website ? anchor($widget->website, $widget->author, array('target' => '_blank')) : $widget->author) ?>
 					</div>
@@ -28,7 +28,7 @@
 	</section>
 	<section class="item">
 		<div class="content">
-			<?php if ($widget_areas): ?>
+			<?php if ($areas): ?>
 			<!-- Available Widget Areas -->
 			<div id="widget-areas-list">
 				<?php $this->load->view('admin/areas/index', compact('widget_areas')) ?>

@@ -1,5 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+use Pyro\Module\Addons\ThemeOptionModel;
+
 /**
  * This is the basis for the Admin class that is used throughout PyroCMS.
  * 
@@ -8,8 +10,8 @@
  * @copyright   Copyright (c) 2012, PyroCMS LLC
  * @package PyroCMS\Core\Controllers
  */
-class Admin_Controller extends MY_Controller {
-
+class Admin_Controller extends MY_Controller
+{
 	/**
 	 * Admin controllers can have sections, normally an arbitrary string
 	 *
@@ -30,38 +32,36 @@ class Admin_Controller extends MY_Controller {
 		$this->lang->load('buttons');
 		
 		// Show error and exit if the user does not have sufficient permissions
-		if ( ! self::_check_access())
-		{
+		if ( ! self::checkAccess()) {
 			$this->session->set_flashdata('error', lang('cp:access_denied'));
 			redirect();
 		}
 
 		// If the setting is enabled redirect request to HTTPS
-		if ($this->settings->admin_force_https and strtolower(substr(current_url(), 4, 1)) != 's')
-		{
+		if (Settings::get('admin_force_https') and strtolower(substr(current_url(), 4, 1)) != 's') {
 			redirect(str_replace('http:', 'https:', current_url()).'?session='.session_id());
 		}
 
 		$this->load->helper('admin_theme');
 		
-		ci()->admin_theme = $this->theme_m->get_admin();
-		
+		$theme = $this->themeManager->locate(Settings::get('admin_theme'));
+
 		// Using a bad slug? Weak
-		if (empty($this->admin_theme->slug))
-		{
+		if (is_null($theme)) {
 			show_error('This site has been set to use an admin theme that does not exist.');
 		}
 
+		$this->theme = ci()->theme = $theme;
+
 		// make a constant as this is used in a lot of places
-		defined('ADMIN_THEME') or define('ADMIN_THEME', $this->admin_theme->slug);
+		defined('ADMIN_THEME') or define('ADMIN_THEME', $this->theme->slug);
 			
 		// Set the location of assets
-		Asset::add_path('theme', $this->admin_theme->web_path.'/');
+		Asset::add_path('theme', $this->theme->web_path.'/');
 		Asset::set_path('theme');
 		
-		// grab the theme options if there are any
-		ci()->theme_options = $this->pyrocache->model('theme_m', 'get_values_by', array(array('theme' => ADMIN_THEME)));
-	
+		$this->registerWidgetLocations();
+
 		// Active Admin Section (might be null, but who cares)
 		$this->template->active_section = $this->section;
 		
@@ -82,18 +82,16 @@ class Admin_Controller extends MY_Controller {
 			// This array controls the order of the admin items.
 			$this->template->menu_order = array('lang:cp:nav_content', 'lang:cp:nav_structure', 'lang:cp:nav_data', 'lang:cp:nav_users', 'lang:cp:nav_settings', 'lang:global:profile');
 
-			$modules = $this->module_m->get_all(array(
+			$modules = $this->moduleManager->getAllEnabled(array(
 				'is_backend' => true,
-				'group' => $this->current_user->group,
-				'lang' => CURRENT_LANGUAGE
 			));
 
-			foreach ($modules as $module)
-			{				
+			foreach ($modules as $module) {
+
 				// If we do not have an admin_menu function, we use the
 				// regular way of checking out the details.php data.
-				if ($module['menu'] and (isset($this->permissions[$module['slug']]) or $this->current_user->group == 'admin'))
-				{
+				if ($module['menu'] and ($this->current_user->hasAccess($module['slug']))) {
+
 					// Legacy module routing. This is just a rough
 					// re-route and modules should change using their 
 					// upgrade() details.php functions.
@@ -106,8 +104,7 @@ class Admin_Controller extends MY_Controller {
 				// If a module has an admin_menu function, then
 				// we simply run that and allow it to manipulate the
 				// menu array.
-				if (method_exists($module['module'], 'admin_menu'))
-				{
+				if (method_exists($module['module'], 'admin_menu')) {
 					$module['module']->admin_menu($menu_items);
 				}
 			}
@@ -115,8 +112,8 @@ class Admin_Controller extends MY_Controller {
 			// We always have our 
 			// edit profile links and such.
 			$menu_items['lang:global:profile'] = array(
-				'lang:cp:edit_profile_label'		=> 'edit-profile',
-				'lang:cp:logout_label'				=> 'admin/logout'
+				'lang:cp:edit_profile_label' => 'edit-profile',
+				'lang:cp:logout_label'		 => 'admin/logout'
 			);
 
 			// Trigger an event so modules can mess with the
@@ -125,26 +122,22 @@ class Admin_Controller extends MY_Controller {
 
 			// If we get an array, we assume they have altered the menu items
 			// and are returning them to us to use.
-			if (is_array($event_output))
-			{
+			if (is_array($event_output)) {
 				$menu_items = $event_output;
 			}
 
 			// Order the menu items. We go by our menu_order array.
 			$ordered_menu = array();
 
-			foreach ($this->template->menu_order as $order)
-			{
-				if (isset($menu_items[$order]))
-				{
+			foreach ($this->template->menu_order as $order) {
+				if (isset($menu_items[$order])) {
 					$ordered_menu[lang_label($order)] = $menu_items[$order];
 					unset($menu_items[$order]);
 				}
 			}
 
 			// Any stragglers?
-			if ($menu_items)
-			{
+			if ($menu_items) {
 				$translated_menu_items = array();
 
 				// translate any additional top level menu keys so the array_merge works
@@ -165,12 +158,12 @@ class Admin_Controller extends MY_Controller {
 		// Template configuration
 		$this->template
 			->enable_parser(false)
-			->set('theme_options', $this->theme_options)
+			->set('theme_options', (object) $this->theme->getOptionValues())
 			->set_theme(ADMIN_THEME)
 			->set_layout('default', 'admin');
 
 		// trigger the run() method in the selected admin theme
-		$class = 'Theme_'.ucfirst($this->admin_theme->slug);
+		$class = 'Theme_'.ucfirst($this->theme->slug);
 		call_user_func(array(new $class, 'run'));
 	}
 
@@ -179,7 +172,7 @@ class Admin_Controller extends MY_Controller {
 	 *
 	 * @return boolean 
 	 */
-	private function _check_access()
+	private function checkAccess()
 	{
 		// These pages get past permission checks
 		$ignored_pages = array('admin/login', 'admin/logout', 'admin/help');
@@ -188,39 +181,48 @@ class Admin_Controller extends MY_Controller {
 		$current_page = $this->uri->segment(1, '') . '/' . $this->uri->segment(2, 'index');
 
 		// Dont need to log in, this is an open page
-		if (in_array($current_page, $ignored_pages))
-		{
+		if (in_array($current_page, $ignored_pages)) {
 			return true;
 		}
 
-		if ( ! $this->current_user)
-		{
+		if ( ! $this->current_user) {
+			
 			// save the location they were trying to get to
 			$this->session->set_userdata('admin_redirect', $this->uri->uri_string());
 			redirect('admin/login');
-		}
-
-		// Admins can go straight in
-		if ($this->current_user->group === 'admin')
-		{
-			return true;
-		}
 
 		// Well they at least better have permissions!
-		if ($this->current_user)
-		{
+		} if ($this->current_user) {
+			
+			if ($this->current_user->isSuperUser()) {
+				return true;
+
 			// We are looking at the index page. Show it if they have ANY admin access at all
-			if ($current_page == 'admin/index' && $this->permissions)
-			{
+			} elseif ($current_page === 'admin/index' && $this->current_user->hasAccess('dashboard')){
 				return true;
 			}
 
 			// Check if the current user can view that page
-			return array_key_exists($this->module, $this->permissions);
+			return $this->current_user->hasAccess("{$this->module}.*");
 		}
 
 		// god knows what this is... erm...
 		return false;
+	}
+
+	/**
+	 * Let the Frontend know where Widgets are hiding
+	 */
+	protected function registerWidgetLocations()
+	{
+		$this->widgetManager->setLocations(array(
+		   SHARED_ADDONPATH.'themes/'.ADMIN_THEME.'/widgets/',
+		   APPPATH.'themes/'.ADMIN_THEME.'/widgets/',
+		   ADDONPATH.'themes/'.ADMIN_THEME.'/widgets/',
+		   APPPATH.'widgets/',
+		   ADDONPATH.'widgets/',
+		   SHARED_ADDONPATH.'widgets/',
+		));
 	}
 
 }

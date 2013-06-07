@@ -17,16 +17,17 @@ class Plugin_Asset extends Plugin
 	);
 	public $description = array(
 		'en' => 'Access to static content such as CSS or Javascript file assets.',
+                'fa' => 'دسترسی به فایل های استاتیک مانند CSS و Javascript',
 		'el' => 'Πρόσβαση σε στατικό περιεχόμενο όπως αρχεία CSS ή Javascript.',
 		'fr' => 'Accéder à des ressources CSS et Javascript (Assets).',
 		'it' => 'Accedi ai contenuti statici come file CSS o Javascript',
 	);
 
 	/**
-	 * Returns a PluginDoc array that PyroCMS uses 
+	 * Returns a PluginDoc array that PyroCMS uses
 	 * to build the reference in the admin panel
 	 *
-	 * All options are listed here but refer 
+	 * All options are listed here but refer
 	 * to the Asset plugin for a larger example
 	 *
 	 * @return array
@@ -95,7 +96,7 @@ class Plugin_Asset extends Plugin
 					),
 				),
 			),
-			
+
 			'js' => array(
 				'description' => array(
 					'en' => 'Add a JavaScript file to a specific group. Returns empty.'
@@ -157,7 +158,7 @@ class Plugin_Asset extends Plugin
 					),
 				),
 			),
-			
+
 			'image' => array(
 				'description' => array(
 					'en' => 'Return an <img/> tag with an image from Assets.'
@@ -209,7 +210,7 @@ class Plugin_Asset extends Plugin
 					),
 				),
 			),
-			
+
 			'render' => array(
 				'description' => array(
 					'en' => 'Render the CSS and JS of a specific group.'
@@ -274,7 +275,7 @@ class Plugin_Asset extends Plugin
 				'attributes' => array(),
 			),
 		);
-	
+
 		return $info;
 	}
 
@@ -297,7 +298,7 @@ class Plugin_Asset extends Plugin
 
 		return Asset::css($file, $file_min, $group);
 	}
-	
+
 	/**
 	 * Asset Inline CSS
 	 *
@@ -314,7 +315,7 @@ class Plugin_Asset extends Plugin
 	public function css_inline()
 	{
 		$string = $this->content();
-		
+
 		return Asset::css_inline($string);
 	}
 
@@ -432,7 +433,7 @@ class Plugin_Asset extends Plugin
 
 		return Asset::js($file, $file_min, $group);
 	}
-	
+
 	/**
 	 * Asset Inline JS
 	 *
@@ -449,7 +450,7 @@ class Plugin_Asset extends Plugin
 	public function js_inline()
 	{
 		$string = $this->content();
-		
+
 		return Asset::js_inline($string);
 	}
 
@@ -540,7 +541,7 @@ class Plugin_Asset extends Plugin
 	{
 		return Asset::render_css_inline();
 	}
-	
+
 	/**
 	 * Asset Render Javascript
 	 *
@@ -558,7 +559,7 @@ class Plugin_Asset extends Plugin
 
 		return Asset::render_js($group);
 	}
-	
+
 	/**
 	 * Asset Render JS Inline
 	 *

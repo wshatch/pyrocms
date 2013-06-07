@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Pyro\Module\Addons\AbstractModule;
 
 /**
  * Sitemap Module
@@ -6,8 +8,8 @@
  * @author		PyroCMS Dev Team
  * @package		PyroCMS\Core\Modules\Sitemap
  */
-class Module_Sitemap extends Module {
-
+class Module_Sitemap extends AbstractModule
+{
 	public $version = '1.3.0';
 
 	public function info()
@@ -21,6 +23,7 @@ class Module_Sitemap extends Module {
 				'de' => 'Sitemap',
 				'el' => 'Χάρτης Ιστότοπου',
 				'es' => 'Mapa del Sitio',
+				'fa' => 'نقشه سایت',
 				'fi' => 'Sivukartta',
 				'fr' => 'Plan du site',
 				'id' => 'Peta Situs',
@@ -43,6 +46,7 @@ class Module_Sitemap extends Module {
 				'de' => 'Die Sitemap Modul erstellt einen Index aller Seiten und eine XML-Sitemap für Suchmaschinen.',
 				'el' => 'Δημιουργεί έναν κατάλογο όλων των σελίδων και έναν χάρτη σελίδων σε μορφή XML για τις μηχανές αναζήτησης.',
 				'es' => 'El módulo de mapa crea un índice de todas las páginas y un mapa del sitio XML para los motores de búsqueda.',
+				'fa' => 'ماژول نقشه سایت یک لیست از همه ی صفحه ها به فرمت فایل XML برای موتور های جستجو می سازد',
 				'fi' => 'sivukartta moduuli luo hakemisto kaikista sivuista ja XML sivukartta hakukoneille.',
 				'fr' => 'Le module sitemap crée un index de toutes les pages et un plan de site XML pour les moteurs de recherche.',
 				'id' => 'Modul peta situs ini membuat indeks dari setiap halaman dan sebuah format XML untuk mempermudah mesin pencari.',
@@ -54,20 +58,19 @@ class Module_Sitemap extends Module {
 				'cn' => '站点地图模块创建一个索引的所有网页和XML网站地图搜索引擎。',
 				'th' => 'โมดูลไซต์แมพสามารถสร้างดัชนีของหน้าเว็บทั้งหมดสำหรับเครื่องมือค้นหา.',
 				'hu' => 'Ez a modul indexeli az összes oldalt és egy XML oldaltéképet generál a keresőmotoroknak.',
-				'se' => 'Sajtkarta, modulen skapar ett index av alla sidor och en XML-sitemap för sökmotorer.'
+				'se' => 'Sajtkarta, modulen skapar ett index av alla sidor och en XML-sitemap för sökmotorer.',
 			),
 			'frontend' => true,
 			'backend' => false,
-			'menu' => 'content'
 		);
 	}
 
-	public function install()
+	public function install($pdb, $schema)
 	{
 		return true;
 	}
 
-	public function uninstall()
+	public function uninstall($pdb, $schema)
 	{
 		// This is a core module, lets keep it around.
 		return true;

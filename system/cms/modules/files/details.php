@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Pyro\Module\Addons\AbstractModule;
 
 /**
  * Files module
@@ -6,10 +8,9 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Files
  */
-class Module_Files extends Module
+class Module_Files extends AbstractModule
 {
-
-	public $version = '2.0.0';
+	public $version = '2.1.0';
 
 	public function info()
 	{
@@ -24,6 +25,7 @@ class Module_Files extends Module
 				'de' => 'Dateien',
 				'el' => 'Αρχεία',
 				'es' => 'Archivos',
+                            'fa' => 'فایل ها',
 				'fi' => 'Tiedostot',
 				'fr' => 'Fichiers',
 				'he' => 'קבצים',
@@ -49,6 +51,7 @@ class Module_Files extends Module
 				'de' => 'Verwalte Dateien und Verzeichnisse.',
 				'el' => 'Διαχειρίζεται αρχεία και φακέλους για το ιστότοπό σας.',
 				'es' => 'Administra archivos y carpetas en tu sitio.',
+                            'fa' => 'مدیریت فایل های چند رسانه ای و فولدر ها سایت',
 				'fi' => 'Hallitse sivustosi tiedostoja ja kansioita.',
 				'fr' => 'Gérer les fichiers et dossiers de votre site.',
 				'he' => 'ניהול תיקיות וקבצים שבאתר',
@@ -68,53 +71,50 @@ class Module_Files extends Module
 			'backend' => true,
 			'menu' => 'content',
 			'roles' => array(
-				'wysiwyg', 'upload', 'download_file', 'edit_file', 'delete_file', 'create_folder', 'set_location', 'synchronize', 'edit_folder', 'delete_folder'
+				'wysiwyg', 'upload', 'download_file', 'edit_file', 'delete_file', 'create_folder',
+				'set_location', 'synchronize', 'edit_folder', 'delete_folder',
 			)
 		);
 	}
 
-	public function install()
+	public function install($pdb, $schema)
 	{
-		$this->dbforge->drop_table('files');
-		$this->dbforge->drop_table('file_folders');
+		$schema->dropIfExists('files');
+		$schema->dropIfExists('file_folders');
 
-		$tables = array(
-			'files' => array(
-				'id' => array('type' => 'CHAR', 'constraint' => 15, 'primary' => true,),
-				'folder_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 0,),
-				'user_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 1,),
-				'type' => array('type' => 'ENUM', 'constraint' => array('a', 'v', 'd', 'i', 'o'), 'null' => true, 'default' => null,),
-				'name' => array('type' => 'VARCHAR', 'constraint' => 100,),
-				'filename' => array('type' => 'VARCHAR', 'constraint' => 255,),
-				'path' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
-				'description' => array('type' => 'TEXT',),
-				'extension' => array('type' => 'VARCHAR', 'constraint' => 10,),
-				'mimetype' => array('type' => 'VARCHAR', 'constraint' => 100,),
-				'keywords' => array('type' => 'CHAR', 'constraint' => 32, 'default' => ''),
-				'width' => array('type' => 'INT', 'constraint' => 5, 'null' => true,),
-				'height' => array('type' => 'INT', 'constraint' => 5, 'null' => true,),
-				'filesize' => array('type' => 'INT', 'constraint' => 11, 'default' => 0,),
-				'alt_attribute' => array('type' => 'VARCHAR', 'constraint' => 255, 'null' => true),
-				'download_count' => array('type' => 'INT', 'constraint' => 11, 'default' => 0,),
-				'date_added' => array('type' => 'INT', 'constraint' => 11, 'default' => 0,),
-				'sort' => array('type' => 'INT', 'constraint' => 11, 'default' => 0,),
-			),
-			'file_folders' => array(
-				'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true, 'primary' => true,),
-				'parent_id' => array('type' => 'INT', 'constraint' => 11, 'null' => true, 'default' => 0,),
-				'slug' => array('type' => 'VARCHAR', 'constraint' => 100,),
-				'name' => array('type' => 'VARCHAR', 'constraint' => 100,),
-				'location' => array('type' => 'VARCHAR', 'constraint' => 20, 'default' => 'local',),
-				'remote_container' => array('type' => 'VARCHAR', 'constraint' => 100, 'default' => '',),
-				'date_added' => array('type' => 'INT', 'constraint' => 11,),
-				'sort' => array('type' => 'INT', 'constraint' => 11, 'default' => 0,),
-			),
-		);
+		$schema->create('files', function($table) {
+			$table->increments('id');
+			$table->integer('folder_id');
+			$table->integer('user_id');
+			$table->enum('type', array('a', 'v', 'd', 'i', 'o'));
+			$table->string('name', 100);
+			$table->string('filename', 255);
+			$table->string('path', 255);
+			$table->text('description');
+			$table->string('extension', 10);
+			$table->string('mimetype', 100);
+			$table->string('keywords', 32)->nullable();
+			$table->integer('width')->nullable();
+			$table->integer('height')->nullable();
+			$table->integer('filesize')->nullable();
+			$table->integer('alt_attribute')->nullable();
+			$table->integer('download_count')->default(0);
+			$table->integer('date_added');
+			$table->integer('sort')->default(0);
 
-		if ( ! $this->install_tables($tables))
-		{
-			return false;
-		}
+			$table->index('folder_id');
+		});
+
+		$schema->create('file_folders', function($table) {
+			$table->increments('id');
+			$table->integer('parent_id')->nullable();
+			$table->string('slug', 100);
+			$table->string('name', 100);
+			$table->string('location', 20)->default('local');
+			$table->string('remote_container', 100)->nullable();
+			$table->integer('date_added');
+			$table->integer('sort')->default(0);
+		});
 
 		// Install the settings
 		$settings = array(
@@ -126,8 +126,8 @@ class Module_Files extends Module
 				'default' => '480',
 				'value' => '480',
 				'options' => '0=no-cache|1=1-minute|60=1-hour|180=3-hour|480=8-hour|1440=1-day|43200=30-days',
-				'is_required' => 1,
-				'is_gui' => 1,
+				'is_required' => true,
+				'is_gui' => true,
 				'module' => 'files',
 				'order' => 986,
 			),
@@ -140,7 +140,7 @@ class Module_Files extends Module
 				'value' => '0',
 				'options' => 'amazon-s3=Amazon S3|rackspace-cf=Rackspace Cloud Files',
 				'is_required' => false,
-				'is_gui' => 1,
+				'is_gui' => true,
 				'module' => 'files',
 				'order' => 994,
 			),
@@ -152,8 +152,8 @@ class Module_Files extends Module
 				'default' => '',
 				'value' => '',
 				'options' => '',
-				'is_required' => 0,
-				'is_gui' => 1,
+				'is_required' => false,
+				'is_gui' => true,
 				'module' => 'files',
 				'order' => 993,
 			),
@@ -165,8 +165,8 @@ class Module_Files extends Module
 				'default' => '',
 				'value' => '',
 				'options' => '',
-				'is_required' => 0,
-				'is_gui' => 1,
+				'is_required' => false,
+				'is_gui' => true,
 				'module' => 'files',
 				'order' => 992,
 			),
@@ -178,8 +178,8 @@ class Module_Files extends Module
 				'default' => 'US',
 				'value' => 'US',
 				'options' => 'US=United States|EU=Europe',
-				'is_required' => 1,
-				'is_gui' => 1,
+				'is_required' => true,
+				'is_gui' => true,
 				'module' => 'files',
 				'order' => 991,
 			),
@@ -191,8 +191,8 @@ class Module_Files extends Module
 				'default' => 'http://{{ bucket }}.s3.amazonaws.com/',
 				'value' => 'http://{{ bucket }}.s3.amazonaws.com/',
 				'options' => '',
-				'is_required' => 0,
-				'is_gui' => 1,
+				'is_required' => false,
+				'is_gui' => true,
 				'module' => 'files',
 				'order' => 991,
 			),
@@ -205,8 +205,8 @@ class Module_Files extends Module
 				'default' => '',
 				'value' => '',
 				'options' => '',
-				'is_required' => 0,
-				'is_gui' => 1,
+				'is_required' => false,
+				'is_gui' => true,
 				'module' => 'files',
 				'order' => 990,
 			),
@@ -218,8 +218,8 @@ class Module_Files extends Module
 				'default' => '',
 				'value' => '',
 				'options' => '',
-				'is_required' => 0,
-				'is_gui' => 1,
+				'is_required' => false,
+				'is_gui' => true,
 				'module' => 'files',
 				'order' => 989,
 			),
@@ -231,25 +231,17 @@ class Module_Files extends Module
 				'default' => '5',
 				'value' => '5',
 				'options' => '',
-				'is_required' => 1,
-				'is_gui' => 1,
+				'is_required' => true,
+				'is_gui' => true,
 				'module' => 'files',
 				'order' => 987,
 			),
 		);
 
-		foreach ($settings as $setting)
-		{
-			if ( ! $this->db->insert('settings', $setting))
-			{
-				return false;
-			}
-		}
-
-		return true;
+		return $pdb->table('settings')->insert($settings);
 	}
 
-	public function uninstall()
+	public function uninstall($pdb, $schema)
 	{
 		// This is a core module, lets keep it around.
 		return false;
@@ -259,5 +251,4 @@ class Module_Files extends Module
 	{
 		return true;
 	}
-
 }

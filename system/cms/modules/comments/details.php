@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+use Pyro\Module\Addons\AbstractModule;
 
 /**
  * Comments module
@@ -6,9 +8,8 @@
  * @author  PyroCMS Dev Team
  * @package PyroCMS\Core\Modules\Comments
  */
-class Module_Comments extends Module
+class Module_Comments extends AbstractModule
 {
-
 	public $version = '1.1.0';
 
 	public function info()
@@ -26,6 +27,7 @@ class Module_Comments extends Module
 				'es' => 'Comentarios',
 				'fi' => 'Kommentit',
 				'fr' => 'Commentaires',
+                            'fa' => 'نظرات',
 				'he' => 'תגובות',
 				'id' => 'Komentar',
 				'it' => 'Commenti',
@@ -50,7 +52,8 @@ class Module_Comments extends Module
 				'de' => 'Benutzer und Gäste können für fast alles Kommentare schreiben.',
 				'el' => 'Οι χρήστες και οι επισκέπτες μπορούν να αφήνουν σχόλια για περιεχόμενο όπως το ιστολόγιο, τις σελίδες και τις φωτογραφίες.',
 				'es' => 'Los usuarios y visitantes pueden escribir comentarios en casi todo el contenido con el soporte de un sistema de captcha incluído.',
-				'fi' => 'Käyttäjät ja vieraat voivat kirjoittaa kommentteja eri sisältöihin kuten uutisiin, sivuihin ja kuviin.',
+                            'fa' => 'کاربران و مهمان ها می توانند نظرات خود را بر روی محتوای سایت در بلاگ و دیگر قسمت ها ارائه دهند',
+                                'fi' => 'Käyttäjät ja vieraat voivat kirjoittaa kommentteja eri sisältöihin kuten uutisiin, sivuihin ja kuviin.',
 				'fr' => 'Les utilisateurs et les invités peuvent écrire des commentaires pour quasiment tout grâce au générateur de captcha intégré.',
 				'he' => 'משתמשי האתר יכולים לרשום תגובות למאמרים, תמונות וכו',
 				'id' => 'Pengguna dan pengunjung dapat menuliskan komentaruntuk setiap konten seperti blog, halaman dan foto.',
@@ -72,45 +75,40 @@ class Module_Comments extends Module
 		);
 	}
 
-	public function install()
+	public function install($pdb, $schema)
 	{
-		$this->dbforge->drop_table('comments');
-		$this->dbforge->drop_table('comment_blacklists');
+		$schema->dropIfExists('comments');
 
-		$tables = array(
-			'comments' => array(
-				'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true, 'primary' => true),
-				'is_active' => array('type' => 'INT', 'constraint' => 1, 'default' => 0),
-				'user_id' => array('type' => 'INT', 'constraint' => 11, 'default' => 0),
-				'user_name' => array('type' => 'VARCHAR', 'constraint' => 40, 'default' => ''),
-				'user_email' => array('type' => 'VARCHAR', 'constraint' => 40, 'default' => ''), // @todo Shouldn't this be 255?
-				'user_website' => array('type' => 'VARCHAR', 'constraint' => 255),
-				'comment' => array('type' => 'TEXT'),
-				'parsed' => array('type' => 'TEXT'),
-				'module' => array('type' => 'VARCHAR', 'constraint' => 40),
-				'entry_id' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => 0),
-				'entry_title' => array('type' => 'char', 'constraint' => 255, 'null' => false),
-				'entry_key' => array('type' => 'varchar', 'constraint' => 100, 'null' => false),
-				'entry_plural' => array('type' => 'varchar', 'constraint' => 100, 'null' => false),
-				'uri' => array('type' => 'varchar', 'constraint' => 255, 'null' => true),
-				'cp_uri' => array('type' => 'varchar', 'constraint' => 255, 'null' => true),
-				'created_on' => array('type' => 'INT', 'constraint' => 11, 'default' => '0'),
-				'ip_address' => array('type' => 'VARCHAR', 'constraint' => 15, 'default' => ''),
-			),
-			'comment_blacklists' => array(
-				'id' => array('type' => 'INT', 'constraint' => 11, 'auto_increment' => true, 'primary' => true),
-				'website' => array('type' => 'VARCHAR', 'constraint' => 255, 'default' => ''),
-				'email' => array('type' => 'VARCHAR', 'constraint' => 150, 'default' => ''),
-			),
-		);
+		$schema->create('comments', function($table) {
+			$table->increments('id');
+			$table->boolean('is_active')->default(false);
+			$table->integer('user_id')->nullable();
+			$table->string('user_name', 40)->nullable();
+			$table->string('user_email', 40)->nullable();
+			$table->string('user_website', 255)->nullable();
+			$table->text('comment');
+			$table->text('parsed');
+			$table->string('module', 40);
+			$table->string('entry_id', 255)->nullable();
+			$table->string('entry_title', 255)->nullable();
+			$table->string('entry_key', 100);
+			$table->string('entry_plural', 100);
+			$table->string('uri', 255)->nullable();
+			$table->string('cp_uri', 255)->nullable();
+			$table->integer('created_on')->nullable();
+			$table->integer('ip_address')->nullable();
+		});
 
-		if ( ! $this->install_tables($tables))
-		{
-			return false;
-		}
+		$schema->dropIfExists('comment_blacklists');
 
-		// Install the setting
-		$settings = array(
+		$schema->create('comment_blacklists', function($table) {
+			$table->increments('id');
+			$table->string('website', 255);
+			$table->string('email', 150);
+		});
+
+		// Install the settings
+		$pdb->table('settings')->insert(array(
 			array(
 				'slug' => 'akismet_api_key',
 				'title' => 'Akismet API Key',
@@ -176,20 +174,12 @@ class Module_Comments extends Module
 				'module' => 'comments',
 				'order' => 965,
 			),
-		);
-
-		foreach ($settings as $setting)
-		{
-			if ( ! $this->db->insert('settings', $setting))
-			{
-				return false;
-			}
-		}
+		));
 
 		return true;
 	}
 
-	public function uninstall()
+	public function uninstall($pdb, $schema)
 	{
 		// This is a core module, lets keep it around.
 		return false;
@@ -199,5 +189,4 @@ class Module_Comments extends Module
 	{
 		return true;
 	}
-
 }

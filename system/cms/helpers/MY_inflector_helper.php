@@ -1,8 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed.');
 
+use Patchwork\Utf8;
+
 /**
  * PyroCMS Inflector Helpers
- * 
+ *
  * This overrides Codeigniter's helpers/inflector_helper.php file.
  *
  * @author      PyroCMS Dev Team
@@ -10,8 +12,7 @@
  * @package		PyroCMS\Core\Helpers
  */
 
-if ( ! function_exists('keywords'))
-{
+if ( ! function_exists('keywords')) {
 	/**
 	 * Keywords
 	 *
@@ -27,22 +28,41 @@ if ( ! function_exists('keywords'))
 	}
 }
 
-if(!function_exists('slugify'))
-{
+if (!function_exists('slugify')) {
+
 	/**
 	 * Make slug from a given string
-	 * 
+	 *
 	 * @param string $str The string you want to convert to a slug.
 	 * @param string $separator The symbol you want in between slug parts.
 	 * @return string The string in slugified form.
 	 */
 	function slugify($string, $separator = '-')
-	{	
-		$string = trim($string);
-		$string = strtolower($string);
-		$string = preg_replace('/[\s-]+/', $separator, $string);
-		$string = preg_replace("/[^0-9a-zA-Z-]/", '', $string);
+	{
+		$string = strtolower(trim(Utf8::toAscii($string)));
+		$string = preg_replace('/[\s]+/', $separator, $string);
 		
+		return preg_replace("/[^0-9a-z]/i", '', $string);
+	}
+}
+
+if ( ! function_exists('rand_string')) {
+
+	/**
+	 * Create a random hash string based on microtime
+	 * @param 	int $length
+	 * @return 	string
+	*/
+	function rand_string($length = 10)
+	{
+		$chars = 'ABCDEFGHKLMNOPQRSTWXYZabcdefghjkmnpqrstwxyz';
+		$max = strlen($chars)-1;
+		$string = '';
+		mt_srand((double)microtime() * 1000000);
+		while (strlen($string) < $length)
+		{
+			$string .= $chars{mt_rand(0, $max)};
+		}
 		return $string;
 	}
 }

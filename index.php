@@ -1,11 +1,10 @@
 <?php
 
 # If you have already installed then delete this
-if ( ! file_exists('system/cms/config/database.php'))
-{
+if ( ! file_exists('system/cms/config/database.php')) {
+	
 	// Make sure we've not already tried this
-	if (strpos($_SERVER['REQUEST_URI'], 'installer/'))
-	{
+	if (strpos($_SERVER['REQUEST_URI'], 'installer/')) {
 		header('Status: 404');
 		exit('PyroCMS is missing system/cms/config/database.php and cannot find the installer folder. Does your server have permission to access these files?');
 	}
@@ -136,37 +135,6 @@ define('ENVIRONMENT', (isset($_SERVER['PYRO_ENV']) ? $_SERVER['PYRO_ENV'] : PYRO
 	$addon_folder = 'addons';
 
 /*
- * --------------------------------------------------------------------
- * DEFAULT CONTROLLER
- * --------------------------------------------------------------------
- *
- * Normally you will set your default controller in the routes.php file.
- * You can, however, force a custom routing by hard-coding a 
- * specific controller class/function here.  For most applications, you
- * WILL NOT set your routing here, but it's an option for those 
- * special instances where you might want to override the standard
- * routing in a specific front controller that shares a common CI installation.
- *
- * IMPORTANT:  If you set the routing here, NO OTHER controller will be
- * callable. In essence, this preference limits your application to ONE
- * specific controller.  Leave the function name blank if you need
- * to call functions dynamically via the URI.
- *
- * Un-comment the $routing array below to use this feature
- *
- */
- 	// The directory name, relative to the "controllers" folder.  Leave blank
- 	// if your controller is not in a sub-folder within the "controllers" folder
-	// $routing['directory'] = '';
-	
-	// The controller class file name.  Example:  Mycontroller.php
-	// $routing['controller'] = '';
-	
-	// The controller function you wish to be called. 
-	// $routing['function']	= '';
-
-
-/*
  * -------------------------------------------------------------------
  *  CUSTOM CONFIG VALUES
  * -------------------------------------------------------------------
@@ -219,9 +187,6 @@ define('ENVIRONMENT', (isset($_SERVER['PYRO_ENV']) ? $_SERVER['PYRO_ENV'] : PYRO
 	// The name of THIS file
 	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
-	// The PHP file extension
-	define('EXT', '.php');
-
  	// Path to the system folder
 	define('BASEPATH', str_replace("\\", "/", $system_path));
 	
@@ -230,15 +195,6 @@ define('ENVIRONMENT', (isset($_SERVER['PYRO_ENV']) ? $_SERVER['PYRO_ENV'] : PYRO
 
  	// This only allows you to change the name. ADDONPATH should still be used in the app
 	define('ADDON_FOLDER', $addon_folder.'/');
-	
-	// The site ref. Used for building site specific paths
-	define('SITE_REF', 'default');
-					
-	// Path to uploaded files for this site
-	define('UPLOAD_PATH', 'uploads/'.SITE_REF.'/');
-					
-	// Path to the addon folder for this site
-	define('ADDONPATH', ADDON_FOLDER.SITE_REF.'/');
 	
 	// Path to the addon folder that is shared between sites
 	define('SHARED_ADDONPATH', 'addons/shared_addons/');
@@ -271,12 +227,35 @@ define('ENVIRONMENT', (isset($_SERVER['PYRO_ENV']) ? $_SERVER['PYRO_ENV'] : PYRO
 
 /*
  * --------------------------------------------------------------------
+ * LOAD THE COMPOSER AUTOLOADER
+ * --------------------------------------------------------------------
+ *
+ * ...and it will take care of our classes
+ *
+ */
+require_once FCPATH.'vendor/autoload.php';
+
+/*
+ * --------------------------------------------------------------------------
+ * SETUP PATCHWORK UTF-8 HANDLING
+ * --------------------------------------------------------------------------
+ *
+ * The Patchwork library provides solid handling of UTF-8 strings as well
+ * as provides replacements for all mb_* and iconv type functions that
+ * are not available by default in PHP. We'll setup this stuff here.
+ *
+*/
+
+Patchwork\Utf8\Bootup::initAll();
+
+/*
+ * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
  * --------------------------------------------------------------------
  *
  * And away we go...
  *
  */
-require_once BASEPATH.'core/CodeIgniter'.EXT;
+require_once BASEPATH.'core/CodeIgniter.php';
 
 /* End of file index.php */

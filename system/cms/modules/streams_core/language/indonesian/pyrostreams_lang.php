@@ -131,7 +131,7 @@ $lang['streams:start.no_fields']						= "You have not created any fields yet. To
 $lang['streams:start.no_assign'] 						= "Looks like there are no fields yet for this stream. To start, you can"; #translate
 $lang['streams:start.add_field_here']					= "add a field here"; #translate
 $lang['streams:start.create_field_here']				= "create a field here"; #translate
-$lang['streams:start.no_streams']						= "There are no streams yet, but can start by"; #translate
+$lang['streams:start.no_streams']						= "There are no streams yet, but you can start by"; #translate
 $lang['streams:start.no_streams_yet']					= "There are no streams yet."; #translate
 $lang['streams:start.adding_one']						= "adding one"; #translate
 $lang['streams:start.no_fields_to_add']					= "No Fields to Add";		 #translate
@@ -193,6 +193,5 @@ $lang['streams:about_instructions']						= 'A short description of your stream.'
 $lang['streams:slug_instructions']						= 'This will also be the database table name for your stream.'; #translate
 $lang['streams:prefix_instructions']					= 'If used, this will prefix the table in the database. Useful for naming collisons.'; #translate
 $lang['streams:menu_path_instructions']					= 'Where you what section and sub section this stream should show up in the menu. Separate by a forward slash. Ex: <strong>Main Section / Sub Section</strong>.'; #translate
-
 
 /* End of file pyrostreams_lang.php */

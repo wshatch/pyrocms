@@ -13,13 +13,15 @@ class Plugin_Settings extends Plugin
 	public $version = '1.0.0';
 	public $name = array(
 		'en' => 'Settings',
+            'fa' => 'تنظیمات',
 	);
 	public $description = array(
 		'en' => 'Retrieve a setting from the database.',
+            'fa' => 'دریافت تنظیمات سایت از دیتابیس',
 	);
 
 	/**
-	 * Returns a PluginDoc array that PyroCMS uses 
+	 * Returns a PluginDoc array that PyroCMS uses
 	 * to build the reference in the admin panel
 	 *
 	 * @return array
@@ -32,8 +34,7 @@ class Plugin_Settings extends Plugin
 		$settings = Settings::get_all();
 		ksort($settings);
 
-		foreach ($settings as $slug => $value)
-		{
+		foreach ($settings as $slug => $value) {
 			$info[$slug]['description'] = array(
 				'en' => 'Retrieve the value for setting '.$slug.'.'
 			);

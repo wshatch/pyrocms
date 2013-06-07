@@ -12,7 +12,7 @@ abstract class Plugin
 	 * Holds attribute data
 	 */
 	private $attributes = array();
-	
+
 	/**
 	 * Holds content between tags
 	 */
@@ -28,23 +28,29 @@ abstract class Plugin
 	 */
 	public function set_data($content, $attributes)
 	{
-		$content AND $this->content = $content;
+		$content and $this->content = $content;
 
 		if ($attributes)
 		{
-			// Let's get parse_params first since it
-			// dictates how we handle all tags
-			if ( ! isset($attributes['parse_params'])) $attributes['parse_params'] = true;
-			
-			if (str_to_bool($attributes['parse_params']))
-			{
-				// For each attribute, let's see if we need to parse it.
-				foreach ($attributes as $key => $attr)
-				{
-					$attributes[$key] = $this->parse_parameter($attr);
+			// Let's get parse-params first since it dictates how we handle all tags
+			// Default: true
+			$parse_params = true;
+			$set = false;
+			foreach (array('parse_params','parse-params') as $attr) {
+				if (isset($attributes[$attr]) and ! $set) {
+					$parse_params = str_to_bool($attributes[$attr]);
+					$set = true;
 				}
 			}
 			
+			if ($parse_params)
+			{
+				// For each attribute, let's see if we need to parse it.
+				foreach ($attributes as $key => $attr) {
+					$attributes[$key] = $this->parse_parameter($attr);
+				}
+			}
+
 			$this->attributes = $attributes;
 		}
 	}
@@ -58,8 +64,7 @@ abstract class Plugin
 	 */
 	public function __get($var)
 	{
-		if (isset(get_instance()->$var))
-		{
+		if (isset(get_instance()->$var)) {
 			return get_instance()->$var;
 		}
 	}
@@ -122,11 +127,10 @@ abstract class Plugin
 	{
 		// Parse for variables. Before we do anything crazy,
 		// let's check for a bracket.
-		if (strpos($value, '[[') !== false)
-		{
+		if (strpos($value, '[[') !== false) {
 			// Change our [[ ]] to {{ }}. Sneaky.
 			$value = str_replace(array('[[', ']]'), array('{{', '}}'), $value);
-			
+
 			$default_data = array(
 				'segment_1' => $this->uri->segment(1),
 				'segment_2' => $this->uri->segment(2),
@@ -136,7 +140,7 @@ abstract class Plugin
 				'segment_6' => $this->uri->segment(6),
 				'segment_7' => $this->uri->segment(7)
 			);
-	
+
 			// user info
 			if ($this->current_user) {
 				$default_data['user_id']	= $this->current_user->id;
@@ -161,12 +165,9 @@ abstract class Plugin
 	 */
 	public function module_view($module, $view, $vars = array(), $parse_output = true)
 	{
-		if (file_exists($this->template->get_views_path().'modules/'.$module.'/'.$view.(pathinfo($view, PATHINFO_EXTENSION) ? '' : '.php')))
-		{
+		if (file_exists($this->template->get_views_path().'modules/'.$module.'/'.$view.(pathinfo($view, PATHINFO_EXTENSION) ? '' : '.php'))) {
 			$path = $this->template->get_views_path().'modules/'.$module.'/';
-		}
-		else
-		{
+		} else {
 			list($path, $view) = Modules::find($view, $module, 'views/');
 		}
 
@@ -176,19 +177,19 @@ abstract class Plugin
 		// add this view location to the array
 		$this->load->set_view_path($path);
 
-		$content = $this->load->_ci_load(array('_ci_view' => $view, '_ci_return' => true));
+		$content = $this->load->_ci_load(array('_ci_view' => $view, '_ci_vars' => ((array)$vars), '_ci_return' => TRUE));
 
 		// Put the old array back
 		$this->load->set_view_path($save_path);
-		
+
 		// Parse output with LEX if desired
 		if ($parse_output) {
-			$content = $this->parser->parse_string($content, ((array)$vars), true);
+			$content = $this->parser->parse_string($content, ((array) $vars), true);
 		}
 
 		return $content;
 	}
-	
+
 	/**
 	 * Render a view located in your theme folder.
 	 *
@@ -202,21 +203,21 @@ abstract class Plugin
 	{
 		// default to .html extension like the {{ theme:partial }} plugin
 		$view = strpos($view, '.') ? $view : $view . '.html';
-		
+
 		// save the existing view array so we can restore it
 		$save_path = $this->load->get_view_paths();
 
 		// add this view location to the array
 		$this->load->set_view_path($this->load->get_var('template_views'));
-		
+
 		$content = $this->load->_ci_load(array('_ci_view' => $view, '_ci_return' => true));
-		
+
 		// Put the old array back
 		$this->load->set_view_path($save_path);
-		
+
 		// Parse output with LEX if desired
 		if ($parse_output) {
-			$content = $this->parser->parse_string($content, ((array)$vars), true);
+			$content = $this->parser->parse_string($content, ((array) $vars), true);
 		}
 
 		return $content;
@@ -235,32 +236,24 @@ class Plugins
 
 	public function locate($plugin, $attributes, $content)
 	{
-		if (strpos($plugin, ':') === false)
-		{
+		if (strpos($plugin, ':') === false) {
 			return false;
 		}
 		// Setup our paths from the data array
 		list($class, $method) = explode(':', $plugin);
 
-		foreach (array(APPPATH, ADDONPATH, SHARED_ADDONPATH) as $directory)
-		{
-			if (file_exists($path = $directory.'plugins/'.$class.'.php'))
-			{
+		foreach (array(APPPATH, ADDONPATH, SHARED_ADDONPATH) as $directory) {
+			if (file_exists($path = $directory.'plugins/'.$class.'.php')) {
 				return $this->_process($path, $class, $method, $attributes, $content);
-			}
-
-			else {
-				if (defined('ADMIN_THEME') and file_exists($path = APPPATH.'themes/'.ADMIN_THEME.'/plugins/'.$class.'.php'))
-				{
+			} else {
+				if (defined('ADMIN_THEME') and file_exists($path = APPPATH.'themes/'.ADMIN_THEME.'/plugins/'.$class.'.php')) {
 					return $this->_process($path, $class, $method, $attributes, $content);
 				}
 			}
 
 			// Maybe it's a module
-			if (module_exists($class))
-			{
-				if (file_exists($path = $directory.'modules/'.$class.'/plugin.php'))
-				{
+			if (module_exists($class)) {
+				if (file_exists($path = $directory.'modules/'.$class.'/plugin.php')) {
 					$dirname = dirname($path).'/';
 
 					// Set the module as a package so I can load stuff
@@ -300,14 +293,12 @@ class Plugins
 		$class = strtolower($class);
 		$class_name = 'Plugin_'.ucfirst($class);
 
-		if ( ! isset($this->loaded[$class]))
-		{
+		if ( ! isset($this->loaded[$class])) {
 			include $path;
 			$this->loaded[$class] = true;
 		}
 
-		if ( ! class_exists($class_name))
-		{
+		if ( ! class_exists($class_name)) {
 			//throw new Exception('Plugin "' . $class_name . '" does not exist.');
 			//return false;
 
@@ -319,11 +310,9 @@ class Plugins
 		$class_init = new $class_name;
 		$class_init->set_data($content, $attributes);
 
-		if ( ! is_callable(array($class_init, $method)))
-		{
+		if ( ! is_callable(array($class_init, $method))) {
 			// But does a property exist by that name?
-			if (property_exists($class_init, $method))
-			{
+			if (property_exists($class_init, $method)) {
 				return true;
 			}
 
