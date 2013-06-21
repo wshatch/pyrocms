@@ -132,9 +132,8 @@ class Module_Blog extends AbstractModule
 			$table->string('slug', 100)->nullable()->unique();
 			$table->string('title', 100)->nullable()->unique();
 		});
-
-		ci()->load->driver('Streams');
-		ci()->streams->utilities->remove_namespace('blogs');
+		$this->load->driver('Streams');
+		$this->streams->utilities->remove_namespace('blogs');
 
 		if ($schema->hasTable('data_streams')) {
 			$pdb->table('data_streams')

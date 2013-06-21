@@ -222,14 +222,16 @@ class MY_Controller extends MX_Controller
 
         $config = $db[ENVIRONMENT];
 
+        $dsn = $this->buildDsn($config);
+        $prefix = $this->generatePrefix($config);
+        $subdriver = current(explode(':', $dsn));
         // Is this a PDO connection?
         if ($pdo instanceof PDO) {
 
         	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            preg_match('/dbname=(\w+)/', $config['dsn'], $matches);
 
-            preg_match('/(mysql|pgsql|sqlite)+:.+dbname=(\w+)/', $config['dsn'], $matches);
-            $subdriver = $matches[1];
-            $database = $matches[2];
+            $database = $matches[1];
             unset($matches);
 
             $drivers = array(
@@ -250,12 +252,11 @@ class MY_Controller extends MX_Controller
         // Not using the new PDO driver
         } else {
 
-            $capsule = new Capsule;
-
-            $capsule->addConnection(array(
-                'driver' => $config['dbdriver'],
-                'host' => $config["hostname"],
+            $conn = Capsule\Database\Connection::make('default', array(
+                'driver' => $subdriver,
+                'host' => $config['hostname'],
                 'database' => $config["database"],
+                'prefix' => $config["dbprefix"]."_",
                 'username' => $config["username"],
                 'prefix' => $prefix,
                 'password' => $config["password"],
@@ -279,6 +280,40 @@ class MY_Controller extends MX_Controller
         $conn->setFetchMode(PDO::FETCH_OBJ);
 
         return $conn;
+    }
+
+    /**
+    * Build the DSN from the config options.
+    * TODO: decide if this is ok or build the DSN somewhere else
+    * in the code base.
+    */
+    private function buildDsn($config)
+    {
+        //Assume the database config is being upgraded from a previous version 
+        //of pyro and use the mysql driver.
+        if(!isset($config['driver']))
+        {
+            $ret_string = "mysql:";
+        }
+        else{
+            $ret_string = $config['driver'] . ':';
+        }
+        $ret_string .= "host={$config['hostname']};db={$config['database']}";
+        if(isset($config['port'])){
+            $ret_string .= ";{$config['port']}";
+        }
+        return $ret_string;
+    }
+
+    /*
+    * Ensures that we're using the proper database prefix.
+    */
+    private function generatePrefix($prefix)
+    {
+        if($prefix === ''){
+            return 'default_';
+        }
+        return $prefix . '_';
     }
 
     /**
